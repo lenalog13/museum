@@ -1,7 +1,11 @@
+import Navbar from "./Components/Navbar";
+import Home from "./Pages/Home";
 
 function App() {
   return (
-    <div>Museum</div>
+    <>
+      <Home></Home>
+    </>
   );
 }
 
