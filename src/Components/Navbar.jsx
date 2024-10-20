@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import './Navbar.css';  // Добавляем стили для навбара
+import './Components/Navbar.css';
 
 
 export default function Navbar() {
