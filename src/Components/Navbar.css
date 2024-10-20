@@ -1,0 +1,41 @@
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Распределяет элементы по краям */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    padding: 10px 20px;
+    background-color: #f8f9fa; /* Цвет фона */
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center; /* Вертикальное выравнивание логотипа и ссылок */
+  }
+  
+  .navbar-logo h2 {
+    margin: 0;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 15px; /* Промежуток между ссылками */
+    margin-left: 20px; /* Отступ между логотипом и ссылками */
+  }
+  
+  .navbar-links li {
+    display: inline;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: #007bff; /* Цвет ссылок */
+  }
+  
+  .navbar-links a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+  }
+  
+  .navbar-right {
+    margin-left: auto; /* Отталкивает элемент вправо */
+  }
+  
