@@ -6,12 +6,13 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-logo">
         <h2>Музей истории <br /> детского движения</h2>
+        <p>Вспоминая прошлое, создаем будущее</p>
       </div>
   
       <div className="navbar-left">
         <ul className="navbar-links">
           <li>
-            <a href="#" onClick={(e) => e.preventDefault()}>Все экспонаты</a>
+            <a href="#" onClick={(e) => e.preventDefault()}>Склад</a>
           </li>
           <li>
             <a href="#" onClick={(e) => e.preventDefault()}>Выставки</a>
