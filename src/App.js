@@ -1,7 +1,8 @@
 import React from 'react'
 import Navbar from "./Components/Navbar"
-import Home from "./Pages/Home"
 import Header from "./Components/Header"
+import Home from "./Pages/Home"
+
 
 function App() {
   return (
