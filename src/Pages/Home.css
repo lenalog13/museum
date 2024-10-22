@@ -1,15 +1,11 @@
 
-
 .classHome {
     background-color: #f9f9f9; /* Светлый фон */
-    padding: 15px; /* Отступы вокруг содержимого */
+    padding: 5px 30px 5px 30px; /* Отступы вокруг содержимого */
     border-radius: 8px; /* Закругленные углы */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для глубины */
     margin: 35px; /* Центрирование контейнера */
 }
-
-
-
 
 
 ul {
