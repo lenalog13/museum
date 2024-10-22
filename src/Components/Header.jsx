@@ -5,12 +5,14 @@ export default function Header() {
 
     let catalog = [
         {
+            id: 0,
             exhibition: 'выставка 1',
             showcases: [ 'витрина 1', 'витрина 2' ]
         },
         {
+            id: 1,
             exhibition: 'выставка 2',
-            showcases: [ 'витрина 1', 'витрина 2' ]
+            showcases: [ 'витрина 1', 'витрина 2', 'витрина 3' ]
         }
     ];
 
