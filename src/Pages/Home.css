@@ -14,10 +14,10 @@ ul {
 }
 
 
-li {
-    margin: 10px 0; /* Отступы между элементами списка */
-    padding-bottom: 10px; /* Отступ снизу для создания пространства */
-    border-bottom: 1px solid #ddd; /* Нижняя граница для разделения */
+.home-list-item {
+    margin: 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 li:last-child {
