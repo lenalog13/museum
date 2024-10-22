@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Header.css';
 
-const Header = ({ catalog }) => {
+const Header = ({ catalog = { exhibition: [] } }) => {
+
+    console.log(catalog); // Проверьте, что передается
 
     // Проверка на наличие catalog и exhibition
-    const exhibitionCount = catalog.exhibition.length;
+    const exhibitionCount = catalog.exhibition ? catalog.exhibition.length : 0;
 
     const getWord = (title) => {
         if (title == 'Выставки') {

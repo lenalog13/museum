@@ -1,21 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Home.css';
+import Header from '../Components/Header'; 
 
-const Home = ({ catalog }) => {
+export default function Home() {
+  const catalog = {
+    title: 'Выставки',
+    exhibition: [
+      {
+        id: 0,
+        exhibitionName: 'выставка 1',
+        showcases: ['витрина 1', 'витрина 2']
+      },
+      {
+        id: 1,
+        exhibitionName: 'выставка 2',
+        showcases: ['витрина 1', 'витрина 2', 'витрина 3']
+      },
+      {
+        id: 2,
+        exhibitionName: 'выставка 3',
+        showcases: ['витрина 1', 'витрина 2']
+      }
+    ]
+  };
+
+  const [value, setValue] = useState(catalog);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  }
+
   return (
-      <div className='classHome'>
-          <ul>
-              {catalog.exhibition.map((item) => (
-                  <li key={item.id} className="home-list-item">
-                      <a href="#" onClick={(e) => e.preventDefault()}>
-                          {item.exhibitionName}
-                      </a>
-                  </li>
-              ))}
-          </ul>
-      </div>
+    <div>{ <Header catalog={catalog} /> }
+    <div className='classHome'>
+      <ul>
+        {catalog.exhibition.map((item) => (
+          <li key={item.id} className="home-list-item">
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              {item.exhibitionName}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    </div>
   );
-};
+}
 
-export default Home;
 
