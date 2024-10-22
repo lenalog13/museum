@@ -5,10 +5,10 @@ const Home = ({ catalog }) => {
   return (
       <div className='classHome'>
           <ul>
-              {catalog.map((item) => (
+              {catalog.exhibition.map((item) => (
                   <li key={item.id} className="home-list-item">
                       <a href="#" onClick={(e) => e.preventDefault()}>
-                          {item.exhibition}
+                          {item.exhibitionName}
                       </a>
                   </li>
               ))}

@@ -6,23 +6,28 @@ import Home from "./Pages/Home"
 
 function App() {
 
-  const catalog = [
-    {
+  const catalog = 
+  {
+    title: 'Выставки',
+    exhibition: 
+    [
+      {
         id: 0,
-        exhibition: 'выставка 1',
+        exhibitionName: 'выставка 1',
         showcases: ['витрина 1', 'витрина 2']
-    },
-    {
+      },
+      {
         id: 1,
-        exhibition: 'выставка 2',
+        exhibitionName: 'выставка 2',
         showcases: ['витрина 1', 'витрина 2', 'витрина 3']
-    },
-    {
-      id: 2,
-      exhibition: 'выставка 3',
-      showcases: ['витрина 1', 'витрина 2', 'витрина 3']
-  }
-];
+      },
+      {
+        id: 2,
+        exhibitionName: 'выставка 3',
+        showcases: ['витрина 1', 'витрина 2']
+      }
+    ]
+  };
 
   return (
     <>
