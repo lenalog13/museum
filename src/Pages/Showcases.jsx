@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import './Home.css';
 import Header from '../Components/Header'; 
 
-export default function Home() {
+export default function Showcases() {
 
   const catalog = {
-    title: 'Выставки',
-    exhibition: [
+    title: 'Витрины',
+    showcases: [
       {
         id: 0,
-        exhibitionName: 'выставка 1'
+        showcasesName: 'витрина 1'
       },
       {
         id: 1,
-        exhibitionName: 'выставка 2'
+        showcasesName: 'витрина 2'
       },
       {
         id: 2,
-        exhibitionName: 'выставка 3'
+        showcasesName: 'витрина 3'
       } 
     ]
   };
@@ -26,13 +26,13 @@ export default function Home() {
     <div>
       { <Header 
         title={catalog.title} 
-        count = {(catalog.exhibition == 0)? 0 : catalog.exhibition? catalog.exhibition.length : null} /> }
+        count = {(catalog.showcases == 0)? 0 : catalog.showcases? catalog.showcases.length : null} /> }
     <div className='classHome'>
       <ul>
-        {catalog.exhibition.map((item) => (
+        {catalog.showcases.map((item) => (
           <li key={item.id} className="home-list-item">
             <a href="#" onClick={(e) => e.preventDefault()}>
-              {item.exhibitionName}
+              {item.showcasesName}
             </a>
           </li>
         ))}
@@ -41,5 +41,3 @@ export default function Home() {
     </div>
   );
 }
-
-

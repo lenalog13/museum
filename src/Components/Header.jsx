@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 
-const Header = ({ title, exhibitionCount }) => {
+const Header = ({ title, count }) => {
 
     const getFirstWord = (count, title) => {
         const isPlural = count > 1;
@@ -51,9 +51,9 @@ const Header = ({ title, exhibitionCount }) => {
             </div>
 
             {/* Условный рендеринг для количества выставок */}
-            {exhibitionCount > 0 && (
+            {count > 0 && (
                 <div className="header-right">
-                    {getFirstWord(exhibitionCount, title)} {exhibitionCount} {getWordEnding(exhibitionCount,title)}
+                    {getFirstWord(count, title)} {count} {getWordEnding(count,title)}
                 </div>
             )}
         </nav>
