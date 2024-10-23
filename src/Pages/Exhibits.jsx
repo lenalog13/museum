@@ -1,17 +1,17 @@
 import React from 'react';
-import { useParams, Link  } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
-export default function Shelves() {
+export default function Exhibits() {
 
     const { id } = useParams(); // Получение id из параметров URL 
     const catalog = {
-        title: 'Полки',
-        description: ' Тут описание конкретно этой витрины',
-        shelves: [  { id: 0, shelvesName: 'полка 1' },
-                    { id: 1, shelvesName: 'полка 2' },
-                    { id: 2, shelvesName: 'полка 3' } ]
+        title: 'Экспонаты',
+        description: ' Тут описание конкретно этой полки ',
+        exhibits: [  { id: 0, exhibitsName: 'экспонат 1' },
+                     { id: 1, exhibitsName: 'экспонат 2' },
+                     { id: 2, exhibitsName: 'экспонат 3' } ]
     };
 
       // Функция для преобразования текста 
@@ -29,15 +29,15 @@ export default function Shelves() {
     <div>
       { <Header 
         title={catalog.title} 
-        count = {(catalog.shelves == 0)? 0 : catalog.shelves? catalog.shelves.length : null} /> }
+        count = {(catalog.exhibits == 0)? 0 : catalog.exhibits? catalog.exhibits.length : null} /> }
     <div className='classHome'>{formatText(catalog.description)}</div>
     <div className='classHome'>
       <ul>
-        {catalog.shelves.map((item) => (
+        {catalog.exhibits.map((item) => (
           <li key={item.id} className="home-list-item">
-            <Link to={'/exhibition/showcase/exhibit/${item.id}'}>
-              {item.shelvesName}
-            </Link>
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              {item.exhibitsName}
+            </a>
           </li>
         ))}
       </ul>
