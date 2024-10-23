@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -15,7 +16,7 @@ export default function Navbar() {
             <a href="#" onClick={(e) => e.preventDefault()}>Склад</a>
           </li>
           <li>
-            <a href="#" onClick={(e) => e.preventDefault()}>Выставки</a>
+          <Link to="/">Выставки</Link>
           </li>
         </ul>
       </div>

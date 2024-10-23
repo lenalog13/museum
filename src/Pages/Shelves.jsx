@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
 export default function Shelves() {
 
-  const catalog = {
-    title: 'Полки',
-    shelves: [
-      {
-        id: 0,
-        shelvesName: 'полка 1'
-      },
-      {
-        id: 1,
-        shelvesName: 'полка 2'
-      },
-      {
-        id: 2,
-        shelvesName: 'полка 3'
-      } 
-    ]
-  };
+    const { id } = useParams(); // Получение id из параметров URL 
+    const catalog = {
+        title: 'Полки',
+        shelves: [  { id: 0, shelvesName: 'полка 1' },
+                    { id: 1, shelvesName: 'полка 2' },
+                    { id: 2, shelvesName: 'полка 3' } ]
+    };
 
   return (
     <div>
