@@ -1,102 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Header.css';
 
-const Header = ({ catalog = { exhibition: [] } }) => {
+const Header = ({ title, exhibitionCount }) => {
 
-    console.log(catalog); // Проверьте, что передается
-
-    // Проверка на наличие catalog и exhibition
-    const exhibitionCount = catalog.exhibition ? catalog.exhibition.length : 0;
-
-    const getWord = (title) => {
-        if (title == 'Выставки') {
-            return getExhibitionWord(exhibitionCount)
-        } else if (title == 'Экспонаты') {
-            return getExhibitWord(exhibitionCount)
-        } else if (title == 'Стеллажи') {
-            return getRackWord(exhibitionCount)
-        } else if (title == 'Полки') {
-            return getShelfWord(exhibitionCount)
-        } else if (title == 'Коробки') {
-            return getBoxWord(exhibitionCount)
-        } else if (title == 'Витрины') {
-            return getShowcaseWord(exhibitionCount)
-        }
-    }
-
-    // Функции для определения правильного окончания слова
-
-    const getExhibitionWord = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) {
-            return 'выставка';
-        } else if ((count % 10 >= 2 && count % 10 <= 4) && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'выставки';
-        } else {
-            return 'выставок';
-        }
+    const getFirstWord = (count, title) => {
+        const isPlural = count > 1;
+        const singularForm = {
+            'Выставки': 'Найдена',
+            'Экспонаты': 'Найден',
+            'Стеллажи': 'Найден',
+            'Полки': 'Найдена',
+            'Коробки': 'Найдена',
+            'Витрины': 'Найдена'
+        };
+        return isPlural ? 'Найдено' : singularForm[title] || 'Найдено';
     };
 
-    const getExhibitWord = (count) => {
+    const getWordEnding = (count, baseWord) => {
+        // Объект с окончаниями для каждого слова
+        const endings = {
+            'Стеллажи': ['стеллаж', 'стеллажа', 'стеллажей'], // [единственное, несколько, много]
+            'Экспонаты': ['экспонат', 'экспоната', 'экспонатов'],
+            'Витрины': ['витрина', 'витрины', 'витрин'],
+            'Полки': ['полка', 'полки', 'полок'],
+            'Коробки': ['коробка', 'коробки', 'коробок'],
+            'Выставки': ['выставка', 'выставки', 'выставок']
+        };
+    
+        const baseForms = endings[baseWord];
+    
+        // Если слово не найдено в словаре, возвращаем "штуки"
+        if (!baseForms) return 'штуки';
+    
+        // Определяем окончание в зависимости от количества 
         if (count % 10 === 1 && count % 100 !== 11) {
-            return 'экспонат';
-        } else if ((count % 10 >= 2 && count % 10 <= 4) && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'экспоната';
-        } else {
-            return 'экспонатов';
-        }
-    };
-
-    const getRackWord = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) {
-            return 'стеллаж';
-        } else if ((count % 10 >= 2 && count % 10 <= 4) && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'стеллажа';
-        } else {
-            return 'стеллажей';
-        }
-    };
-
-    const getShelfWord = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) {
-            return 'полка';
-        } else if ((count % 10 >= 2 && count % 10 <= 4) && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'полки';
-        } else {
-            return 'полок';
-        }
+            return baseForms[0]; // единственное число 
+            } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
+            return baseForms[1]; // несколько 
+            } else {
+            return baseForms[2]; // много
+             }
     };
     
-    const getBoxWord = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) {
-            return 'коробка';
-        } else if ((count % 10 >= 2 && count % 10 <= 4) && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'коробки';
-        } else {
-            return 'коробок';
-        }
-    };
-    
-    const getShowcaseWord = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) {
-            return 'витрина';
-        } else if ((count % 10 >= 2 && count % 10 <= 4) && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'витрины';
-        } else {
-            return 'витрин';
-        }
-    };
-    
+
 
     return (
         <nav className="header">
             <div className="header-left">
-                {catalog.title}
+                {title}
             </div>
 
             {/* Условный рендеринг для количества выставок */}
-            {exhibitionCount > 1 && (
+            {exhibitionCount > 0 && (
                 <div className="header-right">
-                    Найдено {exhibitionCount} {getWord(catalog.title)}
+                    {getFirstWord(exhibitionCount, title)} {exhibitionCount} {getWordEnding(exhibitionCount,title)}
                 </div>
             )}
         </nav>
@@ -104,5 +61,4 @@ const Header = ({ catalog = { exhibition: [] } }) => {
 };
 
 export default Header;
-
 
