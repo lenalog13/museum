@@ -36,7 +36,7 @@ export default function Showcases() {
         <ul>
           {catalog.showcases.map((item) => (
             <li key={item.id} className="home-list-item">
-                <Link to={'/exhibition/showcase/${item.id}'}>
+                <Link to={`/exhibition/showcase/${item.id}`}>
                 {item.showcasesName}
               </Link>
             </li>

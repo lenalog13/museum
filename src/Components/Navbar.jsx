@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="navbar-left">
         <ul className="navbar-links">
           <li>
-            <a href="#" onClick={(e) => e.preventDefault()}>Склад</a>
+          <Link to="/warehouse">Склад</Link>
           </li>
           <li>
           <Link to="/">Выставки</Link>

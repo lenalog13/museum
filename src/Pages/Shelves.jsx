@@ -35,7 +35,7 @@ export default function Shelves() {
       <ul>
         {catalog.shelves.map((item) => (
           <li key={item.id} className="home-list-item">
-            <Link to={'/exhibition/showcase/exhibit/${item.id}'}>
+            <Link to={`/exhibition/showcase/shelf/${item.id}`}>
               {item.shelvesName}
             </Link>
           </li>
