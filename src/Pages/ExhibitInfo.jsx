@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import './Home.css';
+import './ExhibitInfo.css';
 import Header from '../Components/Header'; 
 import ExhibitImage from '../Images/IMG_1497.jpeg';
 import { useLocation } from 'react-router-dom';
