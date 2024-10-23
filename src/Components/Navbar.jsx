@@ -13,10 +13,10 @@ export default function Navbar() {
       <div className="navbar-left">
         <ul className="navbar-links">
           <li>
-          <Link to="/warehouse">Склад</Link>
+          <Link to="/">Выставки</Link>
           </li>
           <li>
-          <Link to="/">Выставки</Link>
+          <Link to="/warehouse">Склад</Link>
           </li>
         </ul>
       </div>
