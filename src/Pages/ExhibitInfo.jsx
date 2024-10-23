@@ -43,7 +43,7 @@ export default function ExhibitInfo() {
                         {formatText(catalog.description)}
                     </div>
                     <div className='classHome'>
-                        Местоположение: {fullLocation}
+                        Местоположение: на окне
                     </div>
                 </div>
             </div>
