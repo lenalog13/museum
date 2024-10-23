@@ -19,7 +19,7 @@ export default function WarehouseShelves() {
   return (
     <div>
       <Header title={catalog.title} 
-        count={(catalog.shelves.length === 0) ? 0 : catalog.shelves.length} />
+        count={catalog.shelves.length} />
       <div className='classHome'>
         <ul>
           {catalog.shelves.map((item) => (

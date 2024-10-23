@@ -16,7 +16,7 @@ export default function Racks() {
   return (
     <div>
       <Header title={catalog.title} 
-        count={(catalog.racks.length === 0) ? 0 : catalog.racks.length} />
+        count={catalog.racks.length} />
       <div className='classHome'>
         <ul>
           {catalog.racks.map((item) => (

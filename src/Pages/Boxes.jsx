@@ -19,7 +19,7 @@ export default function Boxes() {
   return (
     <div>
       <Header title={catalog.title} 
-        count={(catalog.boxes.length === 0) ? 0 : catalog.boxes.length} />
+        count={catalog.boxes.length} />
       <div className='classHome'>
         <ul>
           {catalog.boxes.map((item) => (

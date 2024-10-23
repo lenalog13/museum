@@ -18,7 +18,6 @@ export default function Exhibits() {
       const formatText = (text) => {
         return text.split('\n').map((line, index) => (
           <span key={index}>
-              {'\u00A0\u00A0\u00A0\u00A0'} {/* 4 пробела */}
               {line.trim()}
               <br />
           </span>
@@ -29,7 +28,7 @@ export default function Exhibits() {
     <div>
       { <Header 
         title={catalog.title} 
-        count = {(catalog.exhibits == 0)? 0 : catalog.exhibits? catalog.exhibits.length : null} /> }
+        count = {catalog.exhibits.length} /> }
     <div className='classHome'>{formatText(catalog.description)}</div>
     <div className='classHome'>
       <ul>

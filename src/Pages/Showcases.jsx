@@ -20,7 +20,6 @@ export default function Showcases() {
     const formatText = (text) => {
       return text.split('\n').map((line, index) => (
         <span key={index}>
-          {'\u00A0\u00A0\u00A0\u00A0'} {/* 4 пробела */}
           {line.trim()}
           <br />
         </span>
@@ -30,7 +29,7 @@ export default function Showcases() {
   return (
     <div>
       <Header title={catalog.title} 
-        count={(catalog.showcases.length === 0) ? 0 : catalog.showcases.length} />
+        count={catalog.showcases.length} />
       <div className='classHome'>{formatText(catalog.description)}</div>
       <div className='classHome'>
         <ul>

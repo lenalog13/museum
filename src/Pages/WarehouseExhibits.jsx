@@ -19,7 +19,7 @@ export default function WarehouseExhibits() {
   return (
     <div>
       <Header title={catalog.title} 
-        count={(catalog.exhibits.length === 0) ? 0 : catalog.exhibits.length} />
+        count={catalog.exhibits.length} />
       <div className='classHome'>
         <ul>
           {catalog.exhibits.map((item) => (
