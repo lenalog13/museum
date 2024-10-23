@@ -3,29 +3,29 @@ import { Link, useParams } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
-export default function WarehouseShelves() {
+export default function Boxes() {
 
   const { id } = useParams(); // Получение id из параметров URL 
 
   const catalog = {
-    title: 'Полки',
-    shelves: [
-      { id: 0, shelvesName: 'полка 1' },
-      { id: 1, shelvesName: 'полка 2' },
-      { id: 2, shelvesName: 'полка 3' }
+    title: 'Коробки',
+    boxes: [
+      { id: 0, boxesName: 'коробка 1' },
+      { id: 1, boxesName: 'коробка 2' },
+      { id: 2, boxesName: 'коробка 3' }
     ]
   };
   
   return (
     <div>
       <Header title={catalog.title} 
-        count={(catalog.shelves.length === 0) ? 0 : catalog.shelves.length} />
+        count={(catalog.boxes.length === 0) ? 0 : catalog.boxes.length} />
       <div className='classHome'>
         <ul>
-          {catalog.shelves.map((item) => (
+          {catalog.boxes.map((item) => (
             <li key={item.id} className="home-list-item">
-              <Link to={`/warehouse/rack/shelf/${item.id}`}>
-                {item.shelvesName}
+              <Link to={`/warehouse/rack/shelf/box/${item.id}`}>
+                {item.boxesName}
               </Link>
             </li>
           ))}

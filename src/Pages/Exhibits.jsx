@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
@@ -35,9 +35,9 @@ export default function Exhibits() {
       <ul>
         {catalog.exhibits.map((item) => (
           <li key={item.id} className="home-list-item">
-            <a href="#" onClick={(e) => e.preventDefault()}>
+            <Link to={`/exhibition/showcase/shelf/exhibit/${item.id}`}>
               {item.exhibitsName}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
