@@ -24,12 +24,6 @@ export default function Home() {
     ]
   };
 
-  const [value, setValue] = useState(catalog);
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  }
-
   return (
     <div>{ <Header catalog={catalog} /> }
     <div className='classHome'>
