@@ -9,10 +9,10 @@
   
   .header-left {
     align-items: center; /* Вертикальное выравнивание логотипа и ссылок */
-    margin-left: 10px; /* Отступ между логотипом и ссылками */
+    margin-left: 0px;
   }
 
   .header-right {
     margin-left: auto; /* Отталкивает элемент вправо */
-    margin-right: 10px;
+    margin-right: 0px;
   }
