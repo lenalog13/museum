@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from "./Components/Navbar";
 import Authorization from "./Pages/Authorization";
@@ -14,11 +14,22 @@ import ExhibitInfo from "./Pages/ExhibitInfo";
 
 
 function App() {
+
+  const [user, setUser ] = useState(null); // Состояние для хранения пользователя
+
+  const handleLogin = (username) => {
+    setUser (username); // Устанавливаем пользователя при входе
+  };
+
+  const handleLogout = () => {
+    setUser (null) // Сбрасываем состояние пользователя при выходе
+  }
+
   return (
     <>
-      <Navbar />
+      <Navbar user={user} onLogout={handleLogout} />
       <Routes>
-        <Route path="/authorization" element={<Authorization />} />
+        <Route path="/authorization" element={<Authorization setUser ={setUser}/>} />
         <Route path="/warehouse" element={<Racks />} />
         <Route path="/warehouse/rack/:id" element={<WarehouseShelves />} />
         <Route path="/warehouse/rack/shelf/:id" element={<Boxes />} />

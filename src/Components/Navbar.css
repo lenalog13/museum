@@ -39,3 +39,28 @@
   margin-left: auto; /* Отталкивает элемент вправо */
   margin-right: 0px;
 }
+
+.dropdown-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Скругление углов */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  right: 10px; /* Отступ от правого края */
+}
+
+.dropdown-menu p {
+  margin: 0;
+  cursor: pointer;
+  color: #333;
+  padding: 8px 12px; /* Добавьте отступы для элементов */
+}
+
+.dropdown-menu p:hover {
+  color: #007bff; /* Цвет при наведении */
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+
