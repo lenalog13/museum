@@ -13,8 +13,11 @@ export default function ExhibitInfo() {
 
     const pathParts = location.pathname.split('/').filter(part => part);
 
-    // Объединяем все части пути в строку, разделенную символом '\'
-    const fullLocation = pathParts.join('\ -> ');
+    const getLocation = (word) => {
+        if (word == 'warehouse') {
+            return 1
+        }
+    }
 
     const catalog = {
         title: 'Моя кошка',
@@ -42,9 +45,11 @@ export default function ExhibitInfo() {
                     <div className='classHome'>
                         {formatText(catalog.description)}
                     </div>
-                    <div className='classHome'>
-                        Местоположение: на окне
-                    </div>
+                    {getLocation(pathParts[0]) > 0 && (
+                        <div className="classHome">
+                            Местоположение: на окне
+                        </div>
+                     )}
                 </div>
             </div>
         </div>
