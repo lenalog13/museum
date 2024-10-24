@@ -24,7 +24,7 @@ export default function Navbar() {
       <div className="navbar-right">
         <ul className="navbar-links">
           <li>
-            <a href="#" onClick={(e) => e.preventDefault()}>Войти</a>
+          <Link to="/authorization">Войти</Link>
           </li>
         </ul>
       </div>

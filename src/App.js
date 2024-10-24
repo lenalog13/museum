@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from "./Components/Navbar";
+import Authorization from "./Pages/Authorization";
 import Home from "./Pages/Home";
 import Racks from './Pages/Racks';
 import WarehouseShelves from './Pages/WarehouseShelves';
@@ -17,6 +18,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        <Route path="/authorization" element={<Authorization />} />
         <Route path="/warehouse" element={<Racks />} />
         <Route path="/warehouse/rack/:id" element={<WarehouseShelves />} />
         <Route path="/warehouse/rack/shelf/:id" element={<Boxes />} />

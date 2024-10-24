@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .authorization {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .left-side {
+    flex: 1;
+    background-color: #f0f0f0; /* Цвет фона для левой части */
+  }
+  
+  .left-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Обеспечивает корректное отображение изображения */
+  }
+  
+  .right-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Цвет фона для правой части */
+  }
+  
+  .login-form {
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  h2 {
+    margin-bottom: 14px; /* Увеличиваем отступ между заголовком и формой */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left; /* Выравнивание текста в форме по левому краю */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px; /* Уменьшаем шрифт для надписей */
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .back-link {
+    display: block; /* Делаем ссылку блочным элементом */
+    margin-top: 20px; /* Отступ сверху */
+    text-align: right; /* Выравнивание текста вправо */
+    color: #007bff; /* Цвет текста ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+  }
+  
+  .back-link:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+  }
+  
