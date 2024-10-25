@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from "./Components/Navbar";
 import Authorization from "./Pages/Authorization";
 import Home from "./Pages/Home";
@@ -16,18 +16,21 @@ import ExhibitInfo from "./Pages/ExhibitInfo";
 function App() {
 
   const [user, setUser ] = useState(null); // Состояние для хранения пользователя
+  const location = useLocation(); // Получаем текущий путь
 
   const handleLogin = (username) => {
     setUser (username); // Устанавливаем пользователя при входе
   };
 
   const handleLogout = () => {
-    setUser (null) // Сбрасываем состояние пользователя при выходе
-  }
+    setUser (null); // Сбрасываем состояние пользователя при выходе
+  };
 
   return (
     <>
-      <Navbar user={user} onLogout={handleLogout} />
+      {location.pathname !== '/authorization' && (
+        <Navbar user={user} onLogout={handleLogout} />
+      )}
       <Routes>
         <Route path="/authorization" element={<Authorization setUser ={setUser}/>} />
         <Route path="/warehouse" element={<Racks />} />
