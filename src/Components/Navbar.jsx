@@ -33,7 +33,7 @@ export default function Navbar({ user, onLogout }) {
             <Link to="/">Выставки</Link>
           </li>
           <li>
-            <Link to="/warehouse">Склад</Link>
+            <Link to="/warehouse">Фонды</Link>
           </li>
         </ul>
       </div>
