@@ -13,7 +13,6 @@ export default function Shelves() {
                     { id: 2, shelvesName: 'полка 3' } ]
     };
 
-      // Функция для преобразования текста 
       const formatText = (text) => {
         return text.split('\n').map((line, index) => (
           <span key={index}>

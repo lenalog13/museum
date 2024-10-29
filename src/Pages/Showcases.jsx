@@ -15,7 +15,6 @@ export default function Showcases() {
     ]
   };
 
-    // Функция для преобразования текста 
     const formatText = (text) => {
       return text.split('\n').map((line, index) => (
         <span key={index}>
