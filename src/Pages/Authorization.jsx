@@ -1,6 +1,6 @@
 import React from 'react';
 import './Authorization.css';
-import BackgroundImage from '../Images/plase of poineers.jpg';
+import BackgroundImage from '../Images/plase of poineers.svg';
 
 function Authorization({ setUser  }) {
 
