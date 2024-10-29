@@ -17,9 +17,8 @@ const Header = ({ title, count }) => {
     };
 
     const getWordEnding = (count, baseWord) => {
-        // Объект с окончаниями для каждого слова
         const endings = {
-            'Стеллажи': ['стеллаж', 'стеллажа', 'стеллажей'], // [единственное, несколько, много]
+            'Стеллажи': ['стеллаж', 'стеллажа', 'стеллажей'],
             'Экспонаты': ['экспонат', 'экспоната', 'экспонатов'],
             'Витрины': ['витрина', 'витрины', 'витрин'],
             'Полки': ['полка', 'полки', 'полок'],
@@ -29,16 +28,14 @@ const Header = ({ title, count }) => {
     
         const baseForms = endings[baseWord];
     
-        // Если слово не найдено в словаре, возвращаем "штуки"
         if (!baseForms) return 'штуки';
     
-        // Определяем окончание в зависимости от количества 
         if (count % 10 === 1 && count % 100 !== 11) {
-            return baseForms[0]; // единственное число 
+            return baseForms[0];
             } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
-            return baseForms[1]; // несколько 
+            return baseForms[1];
             } else {
-            return baseForms[2]; // много
+            return baseForms[2];
              }
     };
     
@@ -50,7 +47,6 @@ const Header = ({ title, count }) => {
                 {title}
             </div>
 
-            {/* Условный рендеринг для количества выставок */}
             {count > 0 && (
                 <div className="header-right">
                     {getFirstWord(count, title)} {count} {getWordEnding(count,title)}

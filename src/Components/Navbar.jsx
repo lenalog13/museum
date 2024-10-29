@@ -39,11 +39,11 @@ export default function Navbar() {
             </li>
           ) : (
             <li 
-              onMouseEnter={() => setIsDropdownOpen(true)} // Открытие выпадающего меню при наведении
-              onMouseLeave={() => setIsDropdownOpen(false)} // Закрытие выпадающего меню при уходе курсора
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
             >
               <span>{userName}</span>
-              {isDropdownOpen && ( // Условное отображение выпадающего меню
+              {isDropdownOpen && (
                 <div className="dropdown-menu">
                   <p>Выйти</p> 
                 </div>

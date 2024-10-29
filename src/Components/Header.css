@@ -1,18 +1,18 @@
 .header {
     display: flex;
-    justify-content: space-between; /* Распределяет элементы по краям */
-    align-items: center; /* Вертикальное выравнивание по центру */
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    background-color: #3991ef; /* Цвет фона */
+    background-color: #3991ef;
     color: white;
   }
   
   .header-left {
-    align-items: center; /* Вертикальное выравнивание логотипа и ссылок */
+    align-items: center;
     margin-left: 0px;
   }
 
   .header-right {
-    margin-left: auto; /* Отталкивает элемент вправо */
+    margin-left: auto;
     margin-right: 0px;
   }

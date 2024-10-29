@@ -1,15 +1,16 @@
 .navbar {
   display: flex;
-  justify-content: space-between; /* Распределяет элементы по краям */
-  align-items: center; /* Вертикальное выравнивание по центру */
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 20px;
-  background-color: #007bff; /* Цвет фона */
+  background-color: #007bff;
   color: white;
 }
 
 .navbar-left {
-  align-items: center; /* Вертикальное выравнивание логотипа и ссылок */
-  margin-left: 45px; /* Отступ между логотипом и ссылками */
+  align-items: center;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 .navbar-logo h2 {
@@ -19,7 +20,7 @@
 .navbar-links {
   list-style: none;
   display: flex;
-  gap: 20px; /* Промежуток между ссылками */
+  gap: 5%;
 }
 
 .navbar-links li {
@@ -28,15 +29,15 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #fff; /* Цвет ссылок */
+  color: #fff; 
 }
 
 .navbar-links a:hover {
-  text-decoration: underline; /* Подчеркивание при наведении */
+  text-decoration: underline;
 }
 
 .navbar-right {
-  margin-left: auto; /* Отталкивает элемент вправо */
+  margin-left: auto; 
   margin-right: 0px;
 }
 
@@ -44,23 +45,23 @@
   position: absolute;
   background-color: white;
   border: 1px solid #ccc;
-  border-radius: 8px; /* Скругление углов */
+  border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
   z-index: 1000;
-  right: 10px; /* Отступ от правого края */
+  right: 10px;
 }
 
 .dropdown-menu p {
   margin: 0;
   cursor: pointer;
   color: #333;
-  padding: 8px 12px; /* Добавьте отступы для элементов */
+  padding: 2px 3px;
 }
 
 .dropdown-menu p:hover {
-  color: #007bff; /* Цвет при наведении */
-  text-decoration: underline; /* Подчеркивание при наведении */
+  color: #007bff;
+  text-decoration: underline;
 }
 
 
