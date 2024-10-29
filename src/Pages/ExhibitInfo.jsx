@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import './ExhibitInfo.css';
 import Header from '../Components/Header'; 
@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 export default function ExhibitInfo() {
 
-    const { id } = useParams(); // Получение id из параметров URL 
     const location = useLocation();
 
     const pathParts = location.pathname.split('/').filter(part => part);
@@ -22,9 +21,9 @@ export default function ExhibitInfo() {
     const catalog = {
         title: 'Моя кошка',
         description: 'Имя: Тася. \n Порода: шотландская вислоухая. \n Возраст: 3,5 года. \n Характер: скверный. ',
-        photo: ExhibitImage };
+        photo: ExhibitImage 
+    };
 
-    // Функция для преобразования текста 
     const formatText = (text) => {
         return text.split('\n').map((line, index) => (
             <span key={index}>

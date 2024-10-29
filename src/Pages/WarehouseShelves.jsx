@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
 export default function WarehouseShelves() {
 
-  const { id } = useParams(); // Получение id из параметров URL 
 
   const catalog = {
     title: 'Полки',

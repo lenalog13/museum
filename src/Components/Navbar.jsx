@@ -2,23 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
-export default function Navbar({ user, onLogout }) {
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+export default function Navbar() {
 
-  const handleMouseEnter = () => {
-    setDropdownVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setDropdownVisible(false);
-  };
-
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Вы точно хотите выйти?");
-    if (confirmLogout) {
-      onLogout(); // Вызываем функцию выхода, если пользователь подтвердил
-    }
-  };
+  let userName = 'aaa'
+  let userRights = 'admin'
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
 
   return (
     <nav className="navbar">
@@ -32,29 +20,34 @@ export default function Navbar({ user, onLogout }) {
           <li>
             <Link to="/">Выставки</Link>
           </li>
-          <li>
+          <li> { userRights != 'user' && (
             <Link to="/warehouse">Фонды</Link>
+          )}
+          </li>
+          <li> { userRights == 'admin' && (
+            <Link to="/settings">Настройка</Link>
+          )}
           </li>
         </ul>
       </div>
 
       <div className="navbar-right">
         <ul className="navbar-links">
-          {user ? (
-            <li 
-              onMouseEnter={handleMouseEnter} 
-              onMouseLeave={handleMouseLeave}
-            >
-              {user}
-              {isDropdownVisible && (
-                <div className="dropdown-menu">
-                  <p onClick={handleLogout}>Выйти</p> {/* Изменено на handleLogout */}
-                </div>
-              )}
-            </li>
-          ) : (
+        {userRights === 'user' ? (
             <li>
               <Link to="/authorization">Войти</Link>
+            </li>
+          ) : (
+            <li 
+              onMouseEnter={() => setIsDropdownOpen(true)} // Открытие выпадающего меню при наведении
+              onMouseLeave={() => setIsDropdownOpen(false)} // Закрытие выпадающего меню при уходе курсора
+            >
+              <span>{userName}</span>
+              {isDropdownOpen && ( // Условное отображение выпадающего меню
+                <div className="dropdown-menu">
+                  <p>Выйти</p> 
+                </div>
+              )}
             </li>
           )}
         </ul>

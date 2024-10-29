@@ -4,6 +4,7 @@ import './Home.css';
 import Header from '../Components/Header'; 
 
 export default function Racks() {
+  
   const catalog = {
     title: 'Стеллажи',
     racks: [

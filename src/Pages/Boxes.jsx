@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
-export default function Boxes() {
-
-  const { id } = useParams(); // Получение id из параметров URL 
+export default function Boxes() { 
 
   const catalog = {
     title: 'Коробки',

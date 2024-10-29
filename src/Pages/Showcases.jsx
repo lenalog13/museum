@@ -1,11 +1,10 @@
 import React from 'react';
-import { useParams, Link  } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
 export default function Showcases() {
 
-  const { id } = useParams(); // Получение id из параметров URL 
   const catalog = {
     title: 'Витрины',
     description: ' Тут описание конкретно этой выставки ',

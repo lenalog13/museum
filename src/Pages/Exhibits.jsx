@@ -1,11 +1,10 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import Header from '../Components/Header'; 
 
 export default function Exhibits() {
-
-    const { id } = useParams(); // Получение id из параметров URL 
+ 
     const catalog = {
         title: 'Экспонаты',
         description: ' Тут описание конкретно этой полки ',
@@ -14,7 +13,6 @@ export default function Exhibits() {
                      { id: 2, exhibitsName: 'экспонат 3' } ]
     };
 
-      // Функция для преобразования текста 
       const formatText = (text) => {
         return text.split('\n').map((line, index) => (
           <span key={index}>
