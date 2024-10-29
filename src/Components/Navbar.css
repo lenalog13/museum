@@ -5,6 +5,7 @@
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
+  font-size: 15px;
 }
 
 .navbar-left {
@@ -21,6 +22,7 @@
   list-style: none;
   display: flex;
   gap: 5%;
+  font-size: 15px;
 }
 
 .navbar-links li {
@@ -30,6 +32,7 @@
 .navbar-links a {
   text-decoration: none;
   color: #fff; 
+  font-size: 15px;
 }
 
 .navbar-links a:hover {
@@ -50,6 +53,7 @@
   padding: 10px;
   z-index: 1000;
   right: 10px;
+  font-size: 13px;
 }
 
 .dropdown-menu p {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css';
+import './List.css';
 import Header from '../Components/Header'; 
 
 export default function Racks() {
-  
+
   const catalog = {
     title: 'Стеллажи',
     racks: [

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css';
+import './List.css';
 import './ExhibitInfo.css';
 import Header from '../Components/Header'; 
 import ExhibitImage from '../Images/Tasy.jpeg';
