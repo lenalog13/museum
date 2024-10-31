@@ -1,7 +1,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    vertical-align: top;
     padding: 10px 20px;
     background-color: #3991ef;
     color: white;
@@ -9,11 +9,31 @@
   }
   
   .header-left {
-    align-items: center;
+    display: block;
+    text-align: left;
     margin-left: 0px;
+    gap: 20px 5px;
+  }
+
+  .header-left a {
+    text-decoration: none;
+    color: #fff; 
+    font-size: 15px;
+  }
+  
+  .header-left a:hover {
+    text-decoration: underline;
   }
 
   .header-right {
     margin-left: auto;
-    margin-right: 0px;
+  }
+
+  button.back-btn { 
+    background-color: transparent; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    font-size: inherit; 
+    left: 0px; 
   }

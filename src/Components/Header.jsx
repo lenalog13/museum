@@ -1,7 +1,17 @@
 import React from 'react';
 import './Header.css';
+import { useLocation } from 'react-router-dom';
 
 const Header = ({ title, count }) => {
+
+    const location = useLocation();
+
+    const pathParts = location.pathname.split('/')
+
+    const getLink = (links) => {
+        const newLink = links .slice(0, -1) .join('/');
+        return links.length > 3 ? newLink : '/';
+    }
 
     const getFirstWord = (count, title) => {
         const isPlural = count > 1;
@@ -42,17 +52,19 @@ const Header = ({ title, count }) => {
 
 
     return (
-        <nav className="header">
-            <div className="header-left">
-                {title}
-            </div>
+    <nav className="header"> 
+        <div className="header-left"> 
+            <div>{title}</div> 
+            <a href={getLink(pathParts)}>Назад</a>
+        </div>  
 
-            {count > 0 && (
-                <div className="header-right">
-                    {getFirstWord(count, title)} {count} {getWordEnding(count,title)}
-                </div>
-            )}
-        </nav>
+        {count > 0 && ( 
+        <div className="header-right"> 
+            {getFirstWord(count, title)} {count} {getWordEnding(count, title)} 
+        </div> 
+        )}  
+            
+    </nav>
     );
 };
 
