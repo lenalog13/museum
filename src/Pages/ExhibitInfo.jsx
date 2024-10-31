@@ -9,7 +9,7 @@ export default function ExhibitInfo() {
 
     const location = useLocation();
 
-    const pathParts = location.pathname.split('/').filter(part => part);
+    const pathParts = location.pathname.split('/')
 
     const getLocation = (word) => {
         if (word == 'warehouse') {
