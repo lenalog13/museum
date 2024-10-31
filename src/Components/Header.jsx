@@ -55,7 +55,9 @@ const Header = ({ title, count }) => {
     <nav className="header"> 
         <div className="header-left"> 
             <div>{title}</div> 
-            <a href={getLink(pathParts)}>Назад</a>
+            {location !== '/' ? ( 
+                <a href={getLink(pathParts)}>Назад</a> ) 
+                : null}
         </div>  
 
         {count > 0 && ( 
