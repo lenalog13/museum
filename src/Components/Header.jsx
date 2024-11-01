@@ -6,11 +6,18 @@ const Header = ({ title, count }) => {
 
     const location = useLocation();
 
-    const pathParts = location.pathname.split('/')
+    const pathParts = location.pathname.split('/').filter(item => item)
 
-    const getLink = (links) => {
+    const getLink = (location) => {
+        const links = location.pathname.split('/')
         const newLink = links .slice(0, -1) .join('/');
         return links.length > 3 ? newLink : '/';
+    }
+
+    const getLocation = (word) => {
+        if ((word == 'warehouse') || (word == 'exhibition')) {
+            return 1
+        }
     }
 
     const getFirstWord = (count, title) => {
@@ -55,9 +62,9 @@ const Header = ({ title, count }) => {
     <nav className="header"> 
         <div className="header-left"> 
             <div>{title}</div> 
-            {location !== '/' ? ( 
-                <a href={getLink(pathParts)}>Назад</a> ) 
-                : null}
+            {getLocation(pathParts[0]) > 0 && (
+                <a href={getLink(location)}>Назад</a> 
+            )}
         </div>  
 
         {count > 0 && ( 

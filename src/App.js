@@ -15,7 +15,7 @@ import ExhibitInfo from "./Pages/ExhibitInfo";
 
 function App() {
 
-  const location = useLocation(); // Получаем текущий путь
+  const location = useLocation();
 
   return (
     <>
@@ -24,7 +24,7 @@ function App() {
       )}
       <Routes>
         <Route path="/authorization" element={<Authorization />} />
-        <Route path="/warehouse" element={<Racks />} />
+        <Route path="/warehouse/rack" element={<Racks />} />
         <Route path="/warehouse/rack/:id" element={<WarehouseShelves />} />
         <Route path="/warehouse/rack/shelf/:id" element={<Boxes />} />
         <Route path="/warehouse/rack/shelf/box/:id" element={<WarehouseExhibits />} />

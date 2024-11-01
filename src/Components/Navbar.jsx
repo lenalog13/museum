@@ -21,7 +21,7 @@ export default function Navbar() {
             <Link to="/">Выставки</Link>
           </li>
           <li> { userRights != 'user' && (
-            <Link to="/warehouse">Фонды</Link>
+            <Link to="/warehouse/rack">Фонды</Link>
           )}
           </li>
         </ul>
