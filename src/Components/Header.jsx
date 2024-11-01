@@ -61,9 +61,11 @@ const Header = ({ title, count }) => {
     return (
     <nav className="header"> 
         <div className="header-left"> 
-            <div className="header-title">{title}</div> 
+            <div>{title}</div> 
             {getLocation(pathParts[0]) > 0 && (
-                <a href={getLink(location)}>Назад</a> 
+                <div className="header-back">
+                    <a href={getLink(location)}>Назад</a> 
+                </div>
             )}
         </div>  
 
