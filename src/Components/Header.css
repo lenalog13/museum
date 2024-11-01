@@ -32,11 +32,19 @@
     margin-left: auto;
   }
 
-  button.back-btn { 
-    background-color: transparent; 
-    color: white; 
-    border: none; 
-    cursor: pointer; 
-    font-size: inherit; 
-    left: 0px; 
+  .beack-button {
+    width: 100%;
+    padding: 8px 0px 0px 0px;
+    background-color: #3991ef;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: left;
+  }
+  
+  .beack-button:hover {
+    background-color: #3991ef;
+    text-decoration: underline;
   }

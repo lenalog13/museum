@@ -48,7 +48,7 @@
   label {
     display: block;
     margin-bottom: 5px;
-    font-size: 13px;
+    font-size: 15px;
   }
   
   input {
@@ -58,7 +58,7 @@
     border-radius: 5px;
   }
   
-  button {
+  .login-button {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -66,13 +66,13 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 15px;
   }
   
-  button:hover {
+  .login-button:hover {
     background-color: #0056b3;
   }
-  
+
   .back-link {
     display: block;
     margin-top: 20px;

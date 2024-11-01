@@ -1,21 +1,17 @@
 import React from 'react';
 import './Header.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Header = ({ title, count }) => {
+
+    const navigate = useNavigate();
 
     const location = useLocation();
 
     const pathParts = location.pathname.split('/').filter(item => item)
 
-    const getLink = (location) => {
-        const links = location.pathname.split('/')
-        const newLink = links .slice(0, -1) .join('/');
-        return links.length > 3 ? newLink : '/';
-    }
-
-    const getLocation = (word) => {
-        if ((word == 'warehouse') || (word == 'exhibition')) {
+    const getLocation = (path) => {
+        if (((path[0] == 'warehouse') && (path.length)>2) || (path[0] == 'exhibition')) {
             return 1
         }
     }
@@ -62,10 +58,8 @@ const Header = ({ title, count }) => {
     <nav className="header"> 
         <div className="header-left"> 
             <div>{title}</div> 
-            {getLocation(pathParts[0]) > 0 && (
-                <div className="header-back">
-                    <a href={getLink(location)}>Назад</a> 
-                </div>
+            {getLocation(pathParts) > 0 && (
+                <button class="beack-button" onClick={() => navigate(-1)}>Назад</button>
             )}
         </div>  
 

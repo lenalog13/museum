@@ -4,8 +4,8 @@ import './Navbar.css';
 
 export default function Navbar() {
 
-  let userName = 'aaa'
-  let userRights = 'admin'
+  let userName = ''
+  let userRights = 'user'
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
 
   return (

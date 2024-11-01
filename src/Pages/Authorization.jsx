@@ -22,7 +22,7 @@ function Authorization({ setUser  }) {
               <label htmlFor="password">Пароль</label>
               <input/>
             </div>
-            <button type="submit">Войти</button>
+            <button class="login-button">Войти</button>
           </form>
           <a href="/" className="back-link">Назад</a>
         </div>
