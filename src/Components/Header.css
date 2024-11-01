@@ -11,8 +11,11 @@
   .header-left {
     display: block;
     text-align: left;
-    margin-left: 0px;
-    gap: 20px 5px;
+    margin: 0px 0px;
+  }
+
+  .header-title {
+    margin: 0px 0px 8px;
   }
 
   .header-left a {
