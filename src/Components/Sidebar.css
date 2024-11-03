@@ -1,0 +1,47 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: #dfe8f2;
+    border-right: 1px solid #ccc;
+    font-size: 15px;
+    text-align: left;
+    display: flex;
+    flex-direction: column; /* Для вертикального расположения кнопок */
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    background-color: #dfe8f2;
+}
+
+.sidebar-buttons {
+    background-color: #dfe8f2;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: left;
+    color: #007bff;
+}
+
+button:hover {
+    background-color: #dfe8f2;
+    text-decoration: underline;
+}
+
+.selected-item {
+    background-color: #dfe8f2;
+    text-decoration: underline;
+}
