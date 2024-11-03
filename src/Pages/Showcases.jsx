@@ -28,11 +28,11 @@ export default function Showcases() {
     <div>
       <Header title={catalog.title} 
         count={catalog.showcases.length} />
-      <div className='classHome'>{formatText(catalog.description)}</div>
-      <div className='classHome'>
+      <div className='classList'>{formatText(catalog.description)}</div>
+      <div className='classList'>
         <ul>
           {catalog.showcases.map((item) => (
-            <li key={item.id} className="home-list-item">
+            <li key={item.id} className="list-item">
                 <Link to={`/exhibition/showcase/${item.id}`}>
                 {item.showcasesName}
               </Link>

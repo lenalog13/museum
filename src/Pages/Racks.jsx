@@ -18,10 +18,10 @@ export default function Racks() {
     <div>
       <Header title={catalog.title} 
         count={catalog.racks.length} />
-      <div className='classHome'>
+      <div className='classList'>
         <ul>
           {catalog.racks.map((item) => (
-            <li key={item.id} className="home-list-item">
+            <li key={item.id} className="list-item">
               <Link to={`/warehouse/rack/${item.id}`}>
                 {item.racksName}
               </Link>

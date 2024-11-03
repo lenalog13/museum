@@ -27,11 +27,11 @@ export default function Exhibits() {
       { <Header 
         title={catalog.title} 
         count = {catalog.exhibits.length} /> }
-    <div className='classHome'>{formatText(catalog.description)}</div>
-    <div className='classHome'>
+    <div className='classList'>{formatText(catalog.description)}</div>
+    <div className='classList'>
       <ul>
         {catalog.exhibits.map((item) => (
-          <li key={item.id} className="home-list-item">
+          <li key={item.id} className="list-item">
             <Link to={`/exhibition/showcase/shelf/exhibit/${item.id}`}>
               {item.exhibitsName}
             </Link>

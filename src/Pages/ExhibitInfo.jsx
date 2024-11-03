@@ -40,11 +40,11 @@ export default function ExhibitInfo() {
             <div className='exhibit-container'>
                 <img src={catalog.photo} className='exhibit-photo' alt={catalog.title} />
                 <div className='exhibit-description'>
-                    <div className='classHome'>
+                    <div className='classList'>
                         {formatText(catalog.description)}
                     </div>
                     {getLocation(pathParts[0]) > 0 && (
-                        <div className="classHome">
+                        <div className="classList">
                             Местоположение: на окне
                         </div>
                      )}

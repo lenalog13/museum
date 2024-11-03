@@ -18,10 +18,10 @@ export default function Boxes() {
     <div>
       <Header title={catalog.title} 
         count={catalog.boxes.length} />
-      <div className='classHome'>
+      <div className='classList'>
         <ul>
           {catalog.boxes.map((item) => (
-            <li key={item.id} className="home-list-item">
+            <li key={item.id} className="list-item">
               <Link to={`/warehouse/rack/shelf/box/${item.id}`}>
                 {item.boxesName}
               </Link>

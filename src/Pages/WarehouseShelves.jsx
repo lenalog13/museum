@@ -19,10 +19,10 @@ export default function WarehouseShelves() {
     <div>
       <Header title={catalog.title} 
         count={catalog.shelves.length} />
-      <div className='classHome'>
+      <div className='classList'>
         <ul>
           {catalog.shelves.map((item) => (
-            <li key={item.id} className="home-list-item">
+            <li key={item.id} className="list-item">
               <Link to={`/warehouse/rack/shelf/${item.id}`}>
                 {item.shelvesName}
               </Link>

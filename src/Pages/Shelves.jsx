@@ -27,11 +27,11 @@ export default function Shelves() {
       { <Header 
         title={catalog.title} 
         count = {catalog.shelves.length} /> }
-    <div className='classHome'>{formatText(catalog.description)}</div>
-    <div className='classHome'>
+    <div className='classList'>{formatText(catalog.description)}</div>
+    <div className='classList'>
       <ul>
         {catalog.shelves.map((item) => (
-          <li key={item.id} className="home-list-item">
+          <li key={item.id} className="list-item">
             <Link to={`/exhibition/showcase/shelf/${item.id}`}>
               {item.shelvesName}
             </Link>

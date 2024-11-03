@@ -29,11 +29,11 @@ export default function Home() {
     <div>
       <Header title={catalog.title} 
         count={catalog.exhibition.length} />
-      <div className='classHome'>{formatText(catalog.description)}</div>
-      <div className='classHome'>
+      <div className='classList'>{formatText(catalog.description)}</div>
+      <div className='classList'>
         <ul>
           {catalog.exhibition.map((item) => (
-            <li key={item.id} className="home-list-item">
+            <li key={item.id} className="list-item">
               <Link to={`/exhibition/${item.id}`}>
                 {item.exhibitionName}
               </Link>

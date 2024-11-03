@@ -1,5 +1,5 @@
 
-.classHome {
+.classList {
     background-color: #f9f9f9;
     padding: 5px 10px 5px 10px;
     border-radius: 8px;
@@ -15,7 +15,7 @@ ul {
 }
 
 
-.home-list-item {
+.list-item {
     margin: 10px 0;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
