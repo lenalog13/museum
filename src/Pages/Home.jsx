@@ -11,7 +11,7 @@ export default function Home() {
     exhibition: [
       { id: 0, exhibitionName: 'выставка 1' },
       { id: 1, exhibitionName: 'выставка 2' },
-      { id: 2, exhibitionName: 'выставка 3' }
+      { id: 2, exhibitionName: 'выставка 3' },
     ]
   };
 
