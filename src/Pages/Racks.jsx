@@ -22,7 +22,7 @@ export default function Racks() {
         <ul>
           {catalog.racks.map((item) => (
             <li key={item.id} className="list-item">
-              <Link to={`/warehouse/rack/${item.id}`}>
+              <Link to={`/warehouse/room/rack/${item.id}`}>
                 {item.racksName}
               </Link>
             </li>

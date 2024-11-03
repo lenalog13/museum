@@ -22,7 +22,7 @@ export default function Boxes() {
         <ul>
           {catalog.boxes.map((item) => (
             <li key={item.id} className="list-item">
-              <Link to={`/warehouse/rack/shelf/box/${item.id}`}>
+              <Link to={`/warehouse/room/rack/shelf/box/${item.id}`}>
                 {item.boxesName}
               </Link>
             </li>

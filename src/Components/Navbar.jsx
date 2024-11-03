@@ -4,8 +4,8 @@ import './Navbar.css';
 
 export default function Navbar() {
 
-  let userName = ''
-  let userRights = 'user'
+  let userName = 'aaa'
+  let userRights = 'admin'
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
 
   return (
@@ -21,7 +21,7 @@ export default function Navbar() {
             <Link to="/">Выставки</Link>
           </li>
           <li> { userRights != 'user' && (
-            <Link to="/warehouse/rack">Фонды</Link>
+            <Link to="/warehouse/room">Фонды</Link>
           )}
           </li>
         </ul>

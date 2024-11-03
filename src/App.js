@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from "./Components/Navbar";
 import Authorization from "./Pages/Authorization";
 import Home from "./Pages/Home";
+import Rooms from './Pages/Rooms';
 import Racks from './Pages/Racks';
 import WarehouseShelves from './Pages/WarehouseShelves';
 import Boxes from './Pages/Boxes';
@@ -24,11 +25,12 @@ function App() {
       )}
       <Routes>
         <Route path="/authorization" element={<Authorization />} />
-        <Route path="/warehouse/rack" element={<Racks />} />
-        <Route path="/warehouse/rack/:id" element={<WarehouseShelves />} />
-        <Route path="/warehouse/rack/shelf/:id" element={<Boxes />} />
-        <Route path="/warehouse/rack/shelf/box/:id" element={<WarehouseExhibits />} />
-        <Route path="/warehouse/rack/shelf/box/exhibit/:id" element={<ExhibitInfo />} />
+        <Route path="/warehouse/room" element={<Rooms />} />
+        <Route path="/warehouse/room/:id" element={<Racks />} />
+        <Route path="/warehouse/room/rack/:id" element={<WarehouseShelves />} />
+        <Route path="/warehouse/room/rack/shelf/:id" element={<Boxes />} />
+        <Route path="/warehouse/room/rack/shelf/box/:id" element={<WarehouseExhibits />} />
+        <Route path="/warehouse/room/rack/shelf/box/exhibit/:id" element={<ExhibitInfo />} />
         <Route path="/" element={<Home />} />
         <Route path="/exhibition/:id" element={<Showcases />} />
         <Route path="/exhibition/showcase/:id" element={<Shelves />} />
