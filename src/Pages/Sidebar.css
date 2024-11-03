@@ -11,7 +11,7 @@ html, body {
 .sidebar {
     width: 150px;
     padding: 20px;
-    background-color: #dfe8f2;
+    background-color: #f6f6f6;
     border-right: 1px solid #ccc;
     font-size: 15px;
     text-align: left;
@@ -22,26 +22,25 @@ html, body {
 .buttons {
     display: flex;
     flex-direction: column;
-    background-color: #dfe8f2;
+    background-color: #f6f6f6;
 }
 
 .sidebar-buttons {
-    background-color: #dfe8f2;
+    background-color: #f6f6f6;
     border: none;
     border-radius: 5px;
-    padding: 10px 0;
+    padding: 8px 0;
     cursor: pointer;
     font-size: 15px;
     text-align: left;
-    color: #007bff;
+    color: #323233;
 }
 
 button:hover {
-    background-color: #dfe8f2;
     text-decoration: underline;
 }
 
 .selected-item {
-    background-color: #dfe8f2;
+    background-color: #f6f6f6;
     text-decoration: underline;
 }

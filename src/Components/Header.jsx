@@ -63,7 +63,7 @@ const Header = ({ title, count }) => {
     return (
     <nav className="header"> 
         <div className="header-left"> 
-            <div>{title}</div> 
+            <h4>{title}</h4> 
             {getLocation(pathParts) > 0 && (
                 <button class="beack-button" onClick={() => navigate(-1)}>Назад</button>
             )}

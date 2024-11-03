@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './List.css';
+import './Sidebar.css';
 import Header from '../Components/Header'; 
-import Sidebar from '../Components/Sidebar';
+
 
 export default function Racks() {
 
@@ -14,13 +15,30 @@ export default function Racks() {
 
   const [selectedItem, setSelectedItem] = useState(items[0]);
 
+  const handleSelect = (item) => {
+    setSelectedItem(item);
+  };
+
+
   return (
     <div>
       {selectedItem ? (
         <>
           <Header title={selectedItem.title} count={selectedItem.racks.length} />
           <div className="layout">
-            <Sidebar onSelect={setSelectedItem} />
+            <div className="sidebar">
+              <div className="buttons">
+                {items.map(item => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleSelect(item)}
+                    className={selectedItem.id === item.id ? 'sidebar-buttons selected-item' : 'sidebar-buttons'}
+                  >
+                    {item.title}
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className='classList'>
               <ul>
                 {selectedItem.racks.map((item) => (
@@ -40,3 +58,4 @@ export default function Racks() {
     </div>
   );
 }
+
