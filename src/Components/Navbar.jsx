@@ -30,7 +30,7 @@ export default function Navbar() {
       <div className="navbar-right">
         <ul className="navbar-links">
         <li> { userRights == 'admin' && (
-            <Link to="/settings">Настройка</Link>
+            <Link to="/setting">Настройка</Link>
           )}
           </li>
         {userRights === 'user' ? (
