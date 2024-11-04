@@ -73,7 +73,6 @@ export default function Setting() {
                         value={newUser.name}
                     />
                     <div className="rights-container">
-                        <label htmlFor="rights">Права:</label>
                         <select name="rights" value={newUser.rights} id="rights">
                             <option value="moderator">Модератор</option>
                             <option value="admin">Админ</option>
@@ -92,12 +91,10 @@ export default function Setting() {
                         value={newUser.password}
                     />
                     <div className="modal-buttons">
-                        <button className="cancel-button" onClick={handleCancel}>Отменить</button>
                         {editingUserId !== null && (
-                                <button className="delete-button" onClick={handleCancel}>
-                                    Удалить
-                                </button>
+                                <button className="delete-button" onClick={handleCancel}>Удалить</button>
                         )}
+                        <button className="cancel-button" onClick={handleCancel}>Назад</button>
                         <button className="save-button" onClick={handleCancel}>Сохранить</button>
                     </div>
                 </div>
