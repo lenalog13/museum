@@ -19,11 +19,9 @@ export default function Setting() {
     <div>
       <Header title={catalog.title} 
         count={null} />
-      <div className='classList'>
         <button className="adding-button">
-            Добавить пользователя
+            + Добавить пользователя
         </button>
-        </div>
       <div className='classList'>
         <ul>
         {catalog.users.map((item) => (
