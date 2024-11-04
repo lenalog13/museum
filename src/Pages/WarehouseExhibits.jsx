@@ -22,7 +22,7 @@ export default function WarehouseExhibits() {
         <ul>
           {catalog.exhibits.map((item) => (
             <li key={item.id} className="list-item">
-              <Link to={`/warehouse/room/rack/shelf/box/exhibit/${item.id}`}>
+              <Link to={`/warehouse/room/rack/shelf/exhibit/${item.id}`}>
                 {item.exhibitsName}
               </Link>
             </li>
