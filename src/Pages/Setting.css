@@ -62,11 +62,6 @@
     margin-bottom: 15px;
 }
 
-.rights-container label {
-    font-size: 15px;
-    margin-right: 10px; 
-}
-
 .rights-container select {
     font-size: 15px;
     padding: 5px 5px 5px 0px;
@@ -83,43 +78,54 @@
 
 .modal-buttons {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 7px;
 }
 
 .save-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
+    background-color: white;
+    color: #007bff;
+    border: 1.5px solid #007bff;
     border-radius: 8px;
-    padding: 8px 12px;
+    padding: 8px 8px;
     cursor: pointer;
     font-size: 15px;
     width: 100%;
+    font-weight: bold;
+}
+
+.save-button:hover {
+    text-decoration: underline;
 }
 
 .cancel-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
+    background-color: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 8px 8px;
     border-radius: 8px;
     cursor: pointer;
-    padding: 8px 12px;
-    margin: 0 5px 0 0;
     font-size: 15px;
     width: 100%;
 }
 
+.cancel-button:hover {
+    text-decoration: underline;
+}
+
 .delete-button {
-    background-color: rgb(196, 3, 3);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin: 0 5px 0 0;
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    padding: 8px 8px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 15px;
     width: 100%;
+}
+
+.delete-button:hover {
+    text-decoration: underline;
 }
 
 
