@@ -4,9 +4,7 @@ import './Navbar.css';
 
 export default function Navbar() {
 
-  let userName = 'aaa'
-  let userRights = 'admin'
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
+  const[userRights, setUserRights] = useState('admin');
 
   return (
     <nav className="navbar">
@@ -38,16 +36,10 @@ export default function Navbar() {
               <Link to="/authorization">Войти</Link>
             </li>
           ) : (
-            <li 
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              onMouseLeave={() => setIsDropdownOpen(false)}
-            >
-              <span>{userName}</span>
-              {isDropdownOpen && (
-                <div className="dropdown-menu">
-                  <p>Выйти</p> 
-                </div>
-              )}
+            <li>
+              <Link to="/">
+                <button class="logout-button" onClick={() => setUserRights('user')}>Выйти</button>
+              </Link>
             </li>
           )}
         </ul>

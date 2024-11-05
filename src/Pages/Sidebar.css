@@ -43,11 +43,8 @@ html, body {
     box-sizing: border-box;
 }
 
-button:hover {
-    text-decoration: underline;
-}
 
 .selected-item {
-    background-color: #f6f6f6;
-    text-decoration: underline;
+    background-color: #e0e0e0;
+    text-decoration: none;
 }
