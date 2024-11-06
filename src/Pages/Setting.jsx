@@ -72,7 +72,7 @@ export default function Setting() {
 
 
   const resetForm = () => {
-      setNewUser ({ name: '', rights: 'moderator', login: '', password: '' });
+      setNewUser ({ name: '', rights: 'moderator', login: '', password: '' }); 
       setEditingUserId(null);
       setModalVisible(false);
   };
@@ -83,9 +83,12 @@ export default function Setting() {
     <div>
       <Header title={catalog.title} 
         count={null} />
+
+      <div className="pages-buttons">
         <button className="adding-button" onClick={() => setModalVisible(true)}>
             Добавить пользователя
         </button>
+      </div>
 
       <div className='classList'>
         <ul>
