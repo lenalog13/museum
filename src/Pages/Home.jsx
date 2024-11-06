@@ -15,6 +15,7 @@ export default function Home() {
       { id: 0, exhibitionName: 'выставка 1' },
       { id: 1, exhibitionName: 'выставка 2' },
       { id: 2, exhibitionName: 'выставка 3' },
+      { id: 3, exhibitionName: 'выставка 4' },
     ]
   });
 
@@ -115,7 +116,7 @@ export default function Home() {
                 {item.exhibitionName}
               </Link>
               { userRights != 'user' && (
-                <button className="setting-button" onClick={() => handleEditExhibition(item)}f >
+                <button className="setting-button" onClick={() => handleEditExhibition(item)} >
                   Изменить
                 </button>
               )}
