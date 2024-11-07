@@ -88,24 +88,24 @@
 }
 
 .large-textarea {
-    width: 100%; /* Устанавливает ширину на 100% родительского контейнера */
-    height: 100px; /* Устанавливает высоту на 100 пикселей */
-    padding: 10px; /* Добавляет внутренние отступы */
-    font-size: 16px; /* Устанавливает размер шрифта */
-    border: 1px solid #ccc; /* Устанавливает цвет рамки */
-    border-radius: 4px; /* Скругляет углы */
-    box-sizing: border-box; /* Учитывает padding и border в общей ширине и высоте */
-    resize: none; /* Отключает возможность изменения размера */
+    width: 100%;
+    height: 100px; 
+    padding: 10px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
+    resize: none; 
     margin-bottom: 15px;
 }
-.large-textarea::placeholder {
-    color: #aaa; /* Цвет плейсхолдера */
-    opacity: 1; /* Убирает прозрачность */
-    position: absolute; /* Позволяет позиционировать плейсхолдер */
-    top: 10px; /* Отступ сверху */
-    left: 10px; /* Отступ слева */
-}
 
+.large-textarea::placeholder {
+    color: #aaa; 
+    opacity: 1; 
+    position: absolute; 
+    top: 10px; 
+    left: 10px;
+}
 
 .modal-buttons {
     display: flex;
@@ -159,4 +159,46 @@
     text-decoration: underline;
 }
 
+.dropdown {
+    position: relative;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
 
+.dropdown input {
+    width: 100%; 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    padding: 5px;
+}
+
+.dropdown ul {
+    position: absolute; 
+    background-color: white; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    margin: 0; 
+    padding: 0; 
+    list-style-type: none; 
+    max-height: 200px; 
+    overflow-y: auto; 
+    z-index: 1000; 
+    width: 100%;
+}
+
+.dropdown li {
+    padding: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.2s; 
+}
+
+.dropdown li:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown li:active {
+    background-color: #e0e0e0;
+ }
+  
+  
