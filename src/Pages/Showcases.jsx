@@ -149,7 +149,7 @@ export default function Showcases() {
       <div className="modal-overlay">
         <div className="modal">
           <h3>{editingShowcasesId !== null ?
-            'Редактировать выставку' : 'Добавить выставку'}
+            'Редактировать витрину' : 'Добавить витрину'}
           </h3>
           <input
             type="text"
