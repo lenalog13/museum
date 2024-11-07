@@ -87,6 +87,26 @@
     font-size: 15px;
 }
 
+.large-textarea {
+    width: 100%; /* Устанавливает ширину на 100% родительского контейнера */
+    height: 100px; /* Устанавливает высоту на 100 пикселей */
+    padding: 10px; /* Добавляет внутренние отступы */
+    font-size: 16px; /* Устанавливает размер шрифта */
+    border: 1px solid #ccc; /* Устанавливает цвет рамки */
+    border-radius: 4px; /* Скругляет углы */
+    box-sizing: border-box; /* Учитывает padding и border в общей ширине и высоте */
+    resize: none; /* Отключает возможность изменения размера */
+    margin-bottom: 15px;
+}
+.large-textarea::placeholder {
+    color: #aaa; /* Цвет плейсхолдера */
+    opacity: 1; /* Убирает прозрачность */
+    position: absolute; /* Позволяет позиционировать плейсхолдер */
+    top: 10px; /* Отступ сверху */
+    left: 10px; /* Отступ слева */
+}
+
+
 .modal-buttons {
     display: flex;
     align-items: center;
