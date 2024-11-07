@@ -185,7 +185,6 @@ export default function Showcases() {
           <h3>Редактировать описание выставки</h3>
           <textarea
             name="exhibitionDescription"
-            placeholder="Описание музея"
             value={exhibitionDescription}
             onChange={(e) => setExhibitionDescription(e.target.value)}
             className="large-textarea" 

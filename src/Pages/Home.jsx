@@ -186,7 +186,6 @@ export default function Home() {
             <h3>Редактировать описание музея</h3>
             <textarea
               name="museumDescription"
-              placeholder="Описание музея"
               value={museumDescription}
               onChange={(e) => setMuseumDescription(e.target.value)}
               className="large-textarea" 
