@@ -24,7 +24,7 @@ export default function ExhibitInfo() {
     const [item, setCatalog] = useState({
         id: '0',
         title: 'Моя кошка',
-        description: 'Имя: Тася. \n Порода: шотландская вислоухая. \n Возраст: 3,5 года. \n Характер: скверный.',
+        description: 'Имя: Тася. \nПорода: шотландская вислоухая. \nВозраст: 3,5 года. \nХарактер: скверный.',
         file: ExhibitImage 
     });
 
