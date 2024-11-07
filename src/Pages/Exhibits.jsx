@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
 import Header from '../Components/Header';
+
 export default function Exhibits() {
-  const userRights = 'admin'; // Права пользователя
+
+  const userRights = 'admin';
+
   const [catalog, setCatalog] = useState({
       title: 'Экспонаты',
       description: 'Тут описание конкретно этой полки',
@@ -18,7 +21,9 @@ export default function Exhibits() {
   const exhibits = [{ id: '3' }, { id: '4' }, { id: '5' }, { id: '6' }, { id: '7' }, { id: '8' }];
 
   const [modalVisible, setModalVisible] = useState(false);
+
   const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
+
   const [newExhibits, setNewExhibits] = useState({
       id: '',
       exhibitsName: '',
@@ -27,9 +32,13 @@ export default function Exhibits() {
   });
 
   const [shelvesDescription, setShelvesDescription] = useState(catalog.description);
+
   const [editingExhibitsId, setEditingExhibitsId] = useState(null);
+  
   const [inputValue, setInputValue] = useState('');
+
   const [filteredExhibits, setFilteredExhibits] = useState([]);
+
   const handleInputChange = (e) => {
       const { name, value } = e.target;
       setNewExhibits({
@@ -37,6 +46,7 @@ export default function Exhibits() {
           [name]: value
       });
   };
+
   const handleAddExhibits = () => {
       if (editingExhibitsId !== null) {
           setCatalog(prevCatalog => ({
@@ -53,15 +63,18 @@ export default function Exhibits() {
       }
       resetForm();
   };
+
   const handleEditExhibits = (exhibit) => {
       setNewExhibits(exhibit);
       setEditingExhibitsId(exhibit.id);
       setModalVisible(true);
   };
+
   const handleEditShelvesDescription = () => {
       setShelvesDescription(catalog.description);
       setDescriptionModalVisible(true);
   };
+
   const handleSaveDescription = () => {
       setCatalog(prevCatalog => ({
           ...prevCatalog,
@@ -69,12 +82,15 @@ export default function Exhibits() {
       }));
       setDescriptionModalVisible(false);
   };
+
   const handleCancelDescription = () => {
       setDescriptionModalVisible(false);
   };
+
   const handleCancel = () => {
       resetForm();
   };
+
   const handleDeleteExhibits = () => {
       if (window.confirm('Вы действительно хотите удалить экспонат?')) {
           setCatalog(prevCatalog => ({
@@ -84,26 +100,30 @@ export default function Exhibits() {
           resetForm();
       }
   };
+
   const resetForm = () => {
       setNewExhibits({ id: '', exhibitsName: '', description: '', file: '' });
       setEditingExhibitsId(null);
       setModalVisible(false);
-      setFilteredExhibits([]); // Сбросить фильтрацию
+      setFilteredExhibits([]);
   };
+
   const handleInputChangeId = (event) => {
       const value = event.target.value;
       setInputValue(value);
-      setNewExhibits(prev => ({ ...prev, id: value })); // Обновляем id в newExhibits
+      setNewExhibits(prev => ({ ...prev, id: value }));
       const filtered = exhibits.filter(exhibit =>
         exhibit.id.includes(value)
     );
     setFilteredExhibits(filtered);
 };
+
 const handleSelectExhibit = (exhibit) => {
     setInputValue(exhibit.id);
-    setNewExhibits(prev => ({ ...prev, id: exhibit.id })); // Устанавливаем id в newExhibits
+    setNewExhibits(prev => ({ ...prev, id: exhibit.id })); 
     setFilteredExhibits([]);
 };
+
 const formatText = (text) => {
     return text.split('\n').map((line, index) => (
         <span key={index}>
@@ -112,6 +132,7 @@ const formatText = (text) => {
         </span>
     ));
 };
+
 return (
     <div>
         <Header 
@@ -154,9 +175,9 @@ return (
                             type="text"
                             name="id"
                             placeholder="номер по книге поступления"
-                            value={newExhibits.id} // Здесь отображаем id из newExhibits
+                            value={newExhibits.id}
                             onChange={handleInputChangeId}
-                            onFocus={() => setFilteredExhibits(exhibits)} // Показываем выпадающий список при фокусе
+                            onFocus={() => setFilteredExhibits(exhibits)}
                         />
                         {filteredExhibits.length > 0 && (
                             <ul>
