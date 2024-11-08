@@ -12,7 +12,7 @@ export default function Home() {
     title: 'Выставки',
     description: 'Музей истории детского движения ведёт историю с 1962 года. В 1985 г. был получен статус школьного и звание народного музея. Музей является структурным подразделением ГБПОУ «Воробьевы горы».\n\nМузейная коллекция включает документы, фотографии, предметы, печатные издания и др., связанные с развитием детских движений на территории Москвы, Российской Федерации и СССР; документы организаторов, руководителей, исследователей детского движения. Отдельная коллекция включает фонды по истории Московского Дворца пионеров. Также в коллекции Музея представлены материалы о внешкольных организациях и материалах, связанных с историей детства. На данный момент фонды Музея насчитывают более 400 тысяч единиц хранения.',
     exhibition: [
-      { id: 0, exhibitionName: 'выставка 1' },
+      { id: 0, exhibitionName: 'выставка 1', description: 'gfhjkl;', startData: '2024-01-01', finishData: '2024-12-31' },
       { id: 1, exhibitionName: 'выставка 2' },
       { id: 2, exhibitionName: 'выставка 3' },
     ]
@@ -24,7 +24,9 @@ export default function Home() {
 
   const [newExhibition, setNewExhibition] = useState({
       exhibitionName: '',
-      description: ''
+      description: '',
+      startData: '',
+      finishData: ''
   });
 
   const [museumDescription, setMuseumDescription] = useState(catalog.description);
@@ -32,12 +34,13 @@ export default function Home() {
   const [editingExhibitionId, setEditingExhibitionId] = useState(null);
 
   const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setNewExhibition ({
-          ...newExhibition,
-          [name]: value
-      });
+    const { name, value } = e.target;
+        setNewExhibition ({
+        ...newExhibition,
+        [name]: value
+    });
   };
+
 
   const handleAddExhibition  = () => {
     if (editingExhibitionId !== null) {
@@ -55,13 +58,20 @@ export default function Home() {
       });
     }
     resetForm();
+
   };
 
   const handleEditExhibition  = (exhibition) => {
-      setNewExhibition (exhibition);
-      setEditingExhibitionId(exhibition.id);
-      setModalVisible(true);
-  };
+    setNewExhibition({
+        exhibitionName: exhibition.exhibitionName || '',
+        description: exhibition.description || '',
+        startData: exhibition.startData || '',
+        finishData: exhibition.finishData || ''
+    });
+    setEditingExhibitionId(exhibition.id);
+    setModalVisible(true);
+};
+
 
   const handleEditMuseumDescription = () => {
     setMuseumDescription(catalog.description);
@@ -171,6 +181,19 @@ export default function Home() {
                       onChange={handleInputChange}
                       className="large-textarea" 
                     />
+                    <label>Дата начала:</label>
+                    <input
+                      type="date"
+                      name="startData"
+                      value={newExhibition.startData}
+                      onChange={handleInputChange}
+                    />
+                    <label>Дата окончания:</label>
+                    <input
+                      type="date"
+                      name="finishData"
+                      value={newExhibition.finishData}
+                      onChange={handleInputChange}/>
                     <div className="modal-buttons">
                         {editingExhibitionId !== null && (
                                 <button className="delete-button" onClick={handleDeleteExhibition}>
