@@ -130,18 +130,22 @@ export default function Home() {
       <div className='classList'>{formatText(catalog.description)}</div>
       <div className='classList'>
         <ul>
-          {catalog.exhibition.map((item) => (
-            <li key={item.id} className="list-item">
-              <Link to={`/exhibition/${item.id}`}>
-                {item.exhibitionName}
-              </Link>
-              { userRights != 'user' && (
-                <button className="setting-button" onClick={() => handleEditExhibition(item)} >
-                  Изменить
-                </button>
-              )}
-            </li>
-          ))}
+        {catalog.exhibition.length > 0 ? (
+            catalog.exhibition.map((item) => (
+              <li key={item.id} className="list-item">
+                <Link to={`/exhibition/${item.id}`}>
+                  {item.exhibitionName}
+                </Link>
+                { userRights !== 'user' && (
+                  <button className="setting-button" onClick={() => handleEditExhibition(item)} >
+                    Изменить
+                  </button>
+                )}
+              </li>
+            ))
+          ) : (
+            <li className="list-item"> Тут пока ничего нет 🙁</li>
+          )}
         </ul>
       </div>
       

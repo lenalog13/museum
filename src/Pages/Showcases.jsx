@@ -129,18 +129,22 @@ export default function Showcases() {
       <div className='classList'>{formatText(catalog.description)}</div>
       <div className='classList'>
         <ul>
-          {catalog.showcases.map((item) => (
-            <li key={item.id} className="list-item">
+        {catalog.showcases.length > 0 ? (
+            catalog.showcases.map((item) => (
+              <li key={item.id} className="list-item">
                 <Link to={`/exhibition/showcase/${item.id}`}>
-                {item.showcasesName}
-              </Link>
-              { userRights != 'user' && (
-                <button className="setting-button" onClick={() => handleEditShowcases(item)} >
-                  Изменить
-                </button>
-              )}
-            </li>
-          ))}
+                  {item.showcasesName}
+                </Link>
+                { userRights !== 'user' && (
+                  <button className="setting-button" onClick={() => handleEditShowcases(item)} >
+                    Изменить
+                  </button>
+                )}
+              </li>
+            ))
+          ) : (
+            <li className="list-item"> Тут пока ничего нет 🙁</li>
+          )}
         </ul>
       </div>
 

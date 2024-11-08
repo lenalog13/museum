@@ -165,20 +165,24 @@ return (
         )}
         <div className='classList'>{formatText(catalog.description)}</div>
         <div className='classList'>
-            <ul>
-                {catalog.exhibits.map((item) => (
-                    <li key={item.id} className="list-item">
-                        <Link to={`/exhibition/showcase/shelf/exhibit/${item.id}`}>
-                            {item.exhibitsName}
-                        </Link>
-                        {userRights !== 'user' && (
-                            <button className="setting-button" onClick={() => handleEditExhibits(item)}>
-                                Изменить
-                            </button>
-                        )}
-                    </li>
-                ))}
-            </ul>
+          <ul>
+            {catalog.exhibits.length > 0 ? (
+            catalog.exhibits.map((item) => (
+              <li key={item.id} className="list-item">
+                <Link to={`/exhibition/showcase/shelf/exhibit/${item.id}`}>
+                  {item.exhibitsName}
+                </Link>
+                { userRights !== 'user' && (
+                  <button className="setting-button" onClick={() => handleEditExhibits(item)} >
+                    Изменить
+                  </button>
+                )}
+              </li>
+            ))
+          ) : (
+            <li className="list-item"> Тут пока ничего нет 🙁</li>
+          )}
+          </ul>
         </div>
         {modalVisible && (
             <div className="modal-overlay">

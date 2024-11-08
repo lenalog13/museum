@@ -129,18 +129,22 @@ export default function Shelves() {
     <div className='classList'>{formatText(catalog.description)}</div>
     <div className='classList'>
       <ul>
-        {catalog.shelves.map((item) => (
-          <li key={item.id} className="list-item">
-            <Link to={`/exhibition/showcase/shelf/${item.id}`}>
-              {item.shelvesName}
-            </Link>
-            { userRights != 'user' && (
-                <button className="setting-button" onClick={() => handleEditShelves(item)} >
-                  Изменить
-                </button>
-            )}
-          </li>
-        ))}
+        {catalog.shelves.length > 0 ? (
+            catalog.shelves.map((item) => (
+              <li key={item.id} className="list-item">
+                <Link to={`/exhibition/showcase/shelf/${item.id}`}>
+                  {item.shelvesName}
+                </Link>
+                { userRights !== 'user' && (
+                  <button className="setting-button" onClick={() => handleEditShelves(item)} >
+                    Изменить
+                  </button>
+                )}
+              </li>
+            ))
+          ) : (
+            <li className="list-item"> Тут пока ничего нет 🙁</li>
+          )}
       </ul>
     </div>
 
