@@ -28,7 +28,14 @@ export default function ExhibitInfo() {
         file: ExhibitImage 
     });
 
-    const exhibits = [{ id: '3' }, { id: '4' }, { id: '5' }, { id: '6' }, { id: '7' }, { id: '8' }];
+    const exhibits = [
+        { id: '3', title: 'экспонат 4', description: 'fghjk' }, 
+        { id: '4', title: 'экспонат 5' }, 
+        { id: '5', title: 'экспонат 6' }, 
+        { id: '6', title: 'экспонат 7' }, 
+        { id: '7', title: 'экспонат 8' }, 
+        { id: '8', title: 'экспонат 9' }
+    ];
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -71,9 +78,14 @@ export default function ExhibitInfo() {
 
     const handleSelectExhibit = (exhibit) => {
         setInputValue(exhibit.id);
-        setNewExhibits(prev => ({ ...prev, id: exhibit.id }));
+        setNewExhibits({
+            id: exhibit.id,
+            title: exhibit.title || '',
+            description: exhibit.description || '',
+            file: ''
+        });
         setFilteredExhibits([]);
-    };
+      };
 
     const formatText = (text) => {
         return text.split('\n').map((line, index) => (
@@ -137,7 +149,6 @@ export default function ExhibitInfo() {
                             )}
                         </div>
                         <input
-                            type="text"
                             name="title"
                             placeholder="Название"
                             value={newExhibits.title}
