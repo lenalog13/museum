@@ -35,7 +35,7 @@ export default function Exhibits() {
       id: '',
       exhibitsName: '',
       description: '',
-      file: ''
+      file: null
   });
 
   const [shelvesDescription, setShelvesDescription] = useState(catalog.description);
@@ -52,6 +52,11 @@ export default function Exhibits() {
           ...newExhibits,
           [name]: value
       });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setNewExhibits(prev => ({ ...prev, file }));
   };
 
   const handleAddExhibits = () => {
@@ -109,7 +114,7 @@ export default function Exhibits() {
   };
 
   const resetForm = () => {
-      setNewExhibits({ id: '', exhibitsName: '', description: '', file: '' });
+      setNewExhibits({ id: '', exhibitsName: '', description: '', file: null });
       setEditingExhibitsId(null);
       setModalVisible(false);
       setFilteredExhibits([]);
@@ -131,7 +136,7 @@ const handleSelectExhibit = (exhibit) => {
       id: exhibit.id,
       exhibitsName: exhibit.title || '', 
       description: exhibit.description || '', 
-      file: ''
+      file: exhibit.file || null
   });
   setFilteredExhibits([]);
 };
@@ -215,13 +220,19 @@ return (
                         onChange={handleInputChange}
                     />
                     <label>Описание:</label>                  
-                     <textarea
+                    <textarea
                           name="description"
                           placeholder="Описание"
                           value={newExhibits.description}
                           onChange={handleInputChange}
                           className="large-textarea" 
-                      />
+                    />
+                    {newExhibits.file && <label className='file-label'>Файл: {newExhibits.file.name}</label>} 
+                    {newExhibits.file ? <label>Прикрепить другой файл:</label> : <label>Прикрепить файл:</label>} 
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                    />
                       <div className="modal-buttons">
                           {editingExhibitsId !== null && (
                               <button className="delete-button" onClick={handleDeleteExhibits}>
