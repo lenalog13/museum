@@ -102,13 +102,17 @@ export default function ExhibitInfo() {
                 count={null}
             />
             {userRights !== 'user' && (
+            <div>
             <div className="pages-buttons">
                 <button className="adding-button" onClick={() => setModalVisible(true)}>
                     Редактировать экспонат
                 </button> 
+            </div>
+            <div className="pages-buttons">
                 <button className="adding-button">
-                    Сформировать qr-код
+                     Сформировать qr-код
                 </button> 
+            </div>
             </div>
              )}
             <div className='exhibit-container'>
