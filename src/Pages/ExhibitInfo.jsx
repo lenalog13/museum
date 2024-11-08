@@ -76,13 +76,19 @@ export default function ExhibitInfo() {
         setFilteredExhibits(filtered);
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setNewExhibits(prev => ({ ...prev, file }));
+      };
+    
+
     const handleSelectExhibit = (exhibit) => {
         setInputValue(exhibit.id);
         setNewExhibits({
             id: exhibit.id,
             title: exhibit.title || '',
             description: exhibit.description || '',
-            file: ''
+            file: exhibit.file || null
         });
         setFilteredExhibits([]);
       };
@@ -165,6 +171,12 @@ export default function ExhibitInfo() {
                             value={newExhibits.description}
                             onChange={handleInputChange}
                             className="large-textarea" 
+                        />
+                        {newExhibits.file && <label className='file-label'>Файл: {newExhibits.file.name}</label>} 
+                        {newExhibits.file ? <label>Прикрепить другой файл:</label> : <label>Прикрепить файл:</label>} 
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
                         />
                         <div className="modal-buttons">
                             <button className="cancel-button" onClick={handleCancel}>Отменить</button>
