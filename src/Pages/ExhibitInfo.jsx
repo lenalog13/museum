@@ -113,8 +113,6 @@ export default function ExhibitInfo() {
                 <button className="adding-button" onClick={() => setModalVisible(true)}>
                     Редактировать экспонат
                 </button> 
-            </div>
-            <div className="pages-buttons">
                 <button className="adding-button">
                      Сформировать qr-код
                 </button> 
