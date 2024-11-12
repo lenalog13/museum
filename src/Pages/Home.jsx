@@ -12,7 +12,7 @@ export default function Home() {
     title: 'Выставки',
     description: 'Музей истории детского движения ведёт историю с 1962 года. В 1985 г. был получен статус школьного и звание народного музея. Музей является структурным подразделением ГБПОУ «Воробьевы горы».\n\nМузейная коллекция включает документы, фотографии, предметы, печатные издания и др., связанные с развитием детских движений на территории Москвы, Российской Федерации и СССР; документы организаторов, руководителей, исследователей детского движения. Отдельная коллекция включает фонды по истории Московского Дворца пионеров. Также в коллекции Музея представлены материалы о внешкольных организациях и материалах, связанных с историей детства. На данный момент фонды Музея насчитывают более 400 тысяч единиц хранения.',
     exhibition: [
-      { id: 0, exhibitionName: 'выставка 1', description: 'gfhjkl;', startData: '2024-01-01', finishData: '2024-12-31' },
+      { id: 0, exhibitionName: 'выставка 1', description: 'Описание выставки 1', startData: '2024-01-01', finishData: '2024-12-31' },
       { id: 1, exhibitionName: 'выставка 2' },
       { id: 2, exhibitionName: 'выставка 3' },
     ]
@@ -164,7 +164,7 @@ export default function Home() {
             <div className="modal-overlay">
                 <div className="modal">
                     <h3>{editingExhibitionId !== null ?
-                     'Редактировать выставку' : 'Добавить выставку'}
+                     'Редактировать выставку' : 'Создать выставку'}
                     </h3>
                     <input
                         type="text"
@@ -176,7 +176,6 @@ export default function Home() {
                     <label>Описание:</label>
                     <textarea
                       name="description"
-                      placeholder="Описание"
                       value={newExhibition.description}
                       onChange={handleInputChange}
                       className="large-textarea" 
@@ -201,7 +200,10 @@ export default function Home() {
                                 </button>
                         )}
                         <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-                        <button className="save-button" onClick={handleAddExhibition}>Сохранить</button>
+                        <button className="save-button" onClick={handleAddExhibition}>
+                        {editingExhibitionId !== null ?
+                        'Сохранить' : 'Создать'}
+                        </button>
                     </div>
                 </div>
             </div>

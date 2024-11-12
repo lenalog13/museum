@@ -222,7 +222,6 @@ return (
                     <label>Описание:</label>                  
                     <textarea
                           name="description"
-                          placeholder="Описание"
                           value={newExhibits.description}
                           onChange={handleInputChange}
                           className="large-textarea" 
@@ -240,7 +239,9 @@ return (
                               </button>
                           )}
                           <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-                          <button className="save-button" onClick={handleAddExhibits}>Сохранить</button>
+                          <button className="save-button" onClick={handleAddExhibits}>
+                            {editingExhibitsId !== null ? 'Сохранить' : 'Добавить'}
+                          </button>
                       </div>
                   </div>
               </div>

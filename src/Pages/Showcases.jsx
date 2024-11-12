@@ -165,7 +165,6 @@ export default function Showcases() {
           <label>Описание:</label>
           <textarea
             name="description"
-            placeholder="Описание"
             value={newShowcases.description}
             onChange={handleInputChange}
             className="large-textarea" 
@@ -177,7 +176,10 @@ export default function Showcases() {
                     </button>
             )}
             <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-            <button className="save-button" onClick={handleAddShowcases}>Сохранить</button>
+            <button className="save-button" onClick={handleAddShowcases}>
+              {editingShowcasesId !== null ?
+              'Сохранить' : 'Добавить'}
+            </button>
           </div>
          </div>
          </div>

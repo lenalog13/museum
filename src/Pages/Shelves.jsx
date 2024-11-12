@@ -165,7 +165,6 @@ export default function Shelves() {
       <label>Описание:</label>
       <textarea
         name="description"
-        placeholder="Описание"
         value={newShelves.description}
         onChange={handleInputChange}
         className="large-textarea" 
@@ -177,7 +176,10 @@ export default function Shelves() {
           </button>
         )}
         <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-        <button className="save-button" onClick={handleAddShelves}>Сохранить</button>
+        <button className="save-button" onClick={handleAddShelves}>
+          {editingShelvesId !== null ?
+          'Схранить' : 'Добавить'}
+        </button>
      </div>
     </div>
     </div>

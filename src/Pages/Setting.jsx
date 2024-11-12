@@ -145,7 +145,9 @@ export default function Setting() {
                                 </button>
                         )}
                         <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-                        <button className="save-button" onClick={handleAddUser}>Сохранить</button>
+                        <button className="save-button" onClick={handleAddUser}>
+                            {editingUserId !== null ? 'Сохранить' : 'Добавить'}
+                        </button>
                     </div>
                 </div>
             </div>
