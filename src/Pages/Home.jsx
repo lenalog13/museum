@@ -33,16 +33,33 @@ export default function Home() {
 
   const [editingExhibitionId, setEditingExhibitionId] = useState(null);
 
+  const [dateError, setDateError] = useState('');
+
+  const [datesEntered, setDatesEntered] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
         setNewExhibition ({
         ...newExhibition,
         [name]: value
     });
+    if (name === 'startData' || name === 'finishData') {
+      setDatesEntered(true);
+    }
   };
 
+  const validateDates = () => {
+    const { startData, finishData } = newExhibition;
+    if (new Date(startData) > new Date(finishData)) {
+      setDateError('Дата окончания должна быть позже даты начала.');
+      return false;
+    }
+    setDateError('');
+    return true;
+  };
 
   const handleAddExhibition  = () => {
+    if (!validateDates()) return;
     if (editingExhibitionId !== null) {
       setCatalog(prevCatalog => ({
         ...prevCatalog,
@@ -106,9 +123,11 @@ export default function Home() {
 
 
   const resetForm = () => {
-      setNewExhibition ({ exhibitionName: '', description: '' });
-      setEditingExhibitionId(null);
-      setModalVisible(false);
+    setNewExhibition({ exhibitionName: '', description: '', startData: '', finishData: '' });
+    setEditingExhibitionId(null);
+    setModalVisible(false);
+    setDateError('');
+    setDatesEntered(false);
   };
 
   const formatText = (text) => {
@@ -186,13 +205,17 @@ export default function Home() {
                       name="startData"
                       value={newExhibition.startData}
                       onChange={handleInputChange}
+                      className={datesEntered && dateError ? 'input-error' : ''}
                     />
                     <label>Дата окончания:</label>
                     <input
                       type="date"
                       name="finishData"
                       value={newExhibition.finishData}
-                      onChange={handleInputChange}/>
+                      onChange={handleInputChange}
+                      className={datesEntered && dateError ? 'input-error' : ''}
+                    />
+                    {dateError && <div className="error-message">{dateError}</div>}
                     <div className="modal-buttons">
                         {editingExhibitionId !== null && (
                                 <button className="delete-button" onClick={handleDeleteExhibition}>
