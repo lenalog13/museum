@@ -5,14 +5,14 @@ import './ExhibitInfo.css';
 import Header from '../Components/Header'; 
 import ExhibitImage from '../Images/Tasy.jpeg';
 
-export default function ExhibitInfo() {
+export default function WarehouseExhibitInfo() {
 
     const userRights = 'admin';
 
     const [item, setCatalog] = useState({
         id: '0',
         title: 'Моя кошка',
-        description: 'Имя: Тася.\nПорода: шотландская вислоухая.\nВозраст: 3,5 года.\nХарактер: скверный.',
+        description: 'Имя: Тася. \nПорода: шотландская вислоухая. \nВозраст: 3,5 года. \nХарактер: скверный.',
         file: ExhibitImage 
     });
 
@@ -114,6 +114,9 @@ export default function ExhibitInfo() {
                 <div className='exhibit-description'>
                     <div className='classList'>
                         {formatText(item.description)}
+                    </div>
+                    <div className="classList">
+                        Местоположение: на окне
                     </div>
                 </div>
             </div>

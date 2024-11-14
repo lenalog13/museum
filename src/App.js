@@ -8,6 +8,7 @@ import Rooms from './Pages/Rooms';
 import Racks from './Pages/Racks';
 import WarehouseShelves from './Pages/WarehouseShelves';
 import WarehouseExhibits from './Pages/WarehouseExhibits';
+import WarehouseExhibitInfo from "./Pages/WarehouseExhibitInfo";
 import Showcases from "./Pages/Showcases";
 import Shelves from "./Pages/Shelves";
 import Exhibits from "./Pages/Exhibits";
@@ -30,7 +31,7 @@ function App() {
         <Route path="/warehouse/room/:id" element={<Racks />} />
         <Route path="/warehouse/room/rack/:id" element={<WarehouseShelves />} />
         <Route path="/warehouse/room/rack/shelf/:id" element={<WarehouseExhibits />} />
-        <Route path="/warehouse/room/rack/shelf/exhibit/:id" element={<ExhibitInfo />} />
+        <Route path="/warehouse/room/rack/shelf/exhibit/:id" element={<WarehouseExhibitInfo />} />
         <Route path="/" element={<Home />} />
         <Route path="/exhibition/:id" element={<Showcases />} />
         <Route path="/exhibition/showcase/:id" element={<Shelves />} />
