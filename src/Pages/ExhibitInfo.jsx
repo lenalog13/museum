@@ -67,8 +67,11 @@ export default function ExhibitInfo() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setNewExhibits(prev => ({ ...prev, file }));
-      };
-    
+    };
+
+    const handleRemoveFile = () => {
+        setNewExhibits(prev => ({ ...prev, file: null }));
+    };
 
     const handleSelectExhibit = (exhibit) => {
         setInputValue(exhibit.id);
@@ -155,7 +158,12 @@ export default function ExhibitInfo() {
                             onChange={handleInputChange}
                             className="large-textarea" 
                         />
-                        {newExhibits.file && <label className='file-label'>Файл: {newExhibits.file.name}</label>} 
+                        {newExhibits.file && (
+                            <div className='file-info'>
+                                <label>Файл: {newExhibits.file.name}</label>
+                                <button className='remove-file-button' onClick={handleRemoveFile}>✖️</button>
+                            </div>
+                        )}
                         {newExhibits.file ? <label>Прикрепить другой файл:</label> : <label>Прикрепить файл:</label>} 
                         <input
                             type="file"
