@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './List.css';
 import './Setting.css';
 import './ExhibitInfo.css';
@@ -17,12 +17,13 @@ export default function ExhibitInfo() {
     });
 
     const exhibits = [
+        { id: '0', title: 'Моя кошка', description: 'Имя: Тася.\nПорода: шотландская вислоухая.\nВозраст: 3,5 года.\nХарактер: скверный.', file: ExhibitImage },
+        { id: '1', title: 'экспонат 2', description: 'описание экспоната 2' },
+        { id: '2', title: 'экспонат 3', description: 'описание экспоната 3' },
         { id: '3', title: 'экспонат 4', description: 'описание экспоната 4' }, 
         { id: '4', title: 'экспонат 5' }, 
         { id: '5', title: 'экспонат 6' }, 
         { id: '6', title: 'экспонат 7' }, 
-        { id: '7', title: 'экспонат 8' }, 
-        { id: '8', title: 'экспонат 9' }
     ];
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +33,10 @@ export default function ExhibitInfo() {
     const [inputValue, setInputValue] = useState('');
 
     const [filteredExhibits, setFilteredExhibits] = useState([]);
+
+    const [error, setError] = useState(false);
+
+    const dropdownRef = useRef(null);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -54,15 +59,26 @@ export default function ExhibitInfo() {
         setNewExhibits(item); 
         setModalVisible(false);
         setFilteredExhibits([]);
+        setInputValue('');
+        setError(false);
     };
 
     const handleInputChangeId = (event) => {
         const value = event.target.value;
         setInputValue(value);
         setNewExhibits(prev => ({ ...prev, id: value }));
+
+        const exhibitExists = exhibits.some(exhibit => exhibit.id === value);
+        if (!exhibitExists && value !== '') {
+            setError(true);
+        } else {
+            setError(false);
+        }
+        
         const filtered = exhibits.filter(exhibit => exhibit.id.includes(value));
         setFilteredExhibits(filtered);
     };
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -82,6 +98,7 @@ export default function ExhibitInfo() {
             file: exhibit.file || null
         });
         setFilteredExhibits([]);
+        setError(false);
       };
 
     const formatText = (text) => {
@@ -92,6 +109,19 @@ export default function ExhibitInfo() {
             </span>
         ));
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setFilteredExhibits([]);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
 
     return (
         <div>
@@ -125,7 +155,8 @@ export default function ExhibitInfo() {
                 <div className="modal-overlay">
                     <div className="modal">
                         <h3>Редактировать экспонат</h3>
-                        <div className="dropdown">
+
+                        <div className="dropdown" ref={dropdownRef}>
                             <input
                                 type="text"
                                 name="id"
@@ -133,7 +164,9 @@ export default function ExhibitInfo() {
                                 value={newExhibits.id}
                                 onChange={handleInputChangeId}
                                 onFocus={() => setFilteredExhibits(exhibits)}
+                                className={error ? 'input-error' : ''}
                             />
+                            {error && <div className="error-message">Нет экспоната с таким номером по книге поступления</div>}
                             {filteredExhibits.length > 0 && (
                                 <ul>
                                     {filteredExhibits.map(exhibit => (
@@ -144,6 +177,7 @@ export default function ExhibitInfo() {
                                 </ul>
                             )}
                         </div>
+
                         <input
                             name="title"
                             placeholder="Название"

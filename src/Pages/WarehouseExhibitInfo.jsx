@@ -17,12 +17,13 @@ export default function WarehouseExhibitInfo() {
     });
 
     const exhibits = [
+        { id: '0', title: 'Моя кошка', description: 'Имя: Тася.\nПорода: шотландская вислоухая.\nВозраст: 3,5 года.\nХарактер: скверный.', file: ExhibitImage },
+        { id: '1', title: 'экспонат 2', description: 'описание экспоната 2' },
+        { id: '2', title: 'экспонат 3', description: 'описание экспоната 3' },
         { id: '3', title: 'экспонат 4', description: 'описание экспоната 4' }, 
         { id: '4', title: 'экспонат 5' }, 
         { id: '5', title: 'экспонат 6' }, 
         { id: '6', title: 'экспонат 7' }, 
-        { id: '7', title: 'экспонат 8' }, 
-        { id: '8', title: 'экспонат 9' }
     ];
 
     const [modalVisible, setModalVisible] = useState(false);
