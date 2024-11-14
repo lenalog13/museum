@@ -47,6 +47,9 @@ export default function ExhibitInfo() {
     };
 
     const handleSaveExhibits = () => {
+        if (error) {
+            return;
+        }    
         setCatalog(newExhibits);
         resetForm();
     };
@@ -56,7 +59,6 @@ export default function ExhibitInfo() {
     };
 
     const resetForm = () => {
-        setNewExhibits(item); 
         setModalVisible(false);
         setFilteredExhibits([]);
         setInputValue('');
@@ -166,7 +168,7 @@ export default function ExhibitInfo() {
                                 onFocus={() => setFilteredExhibits(exhibits)}
                                 className={error ? 'input-error' : ''}
                             />
-                            {error && <div className="error-message">Нет экспоната с таким номером по книге поступления</div>}
+                            {error && <div className="error-message-id">Нет экспоната с таким номером по книге поступления</div>}
                             {filteredExhibits.length > 0 && (
                                 <ul>
                                     {filteredExhibits.map(exhibit => (

@@ -215,7 +215,7 @@ export default function Home() {
                       onChange={handleInputChange}
                       className={datesEntered && dateError ? 'input-error' : ''}
                     />
-                    {dateError && <div className="error-message">{dateError}</div>}
+                    {dateError && <div className="error-message-data">{dateError}</div>}
                     <div className="modal-buttons">
                         {editingExhibitionId !== null && (
                                 <button className="delete-button" onClick={handleDeleteExhibition}>

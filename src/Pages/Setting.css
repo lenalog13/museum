@@ -111,16 +111,28 @@
     left: 10px;
 }
 
-.error-message {
+.error-message-data {
     color: #ff0000;
     background-color: #ffeded; 
     border: 1px solid #ff0000;
     padding: 8px;
-    border-radius: 5px; 
+    border-radius: 5px;
     margin-bottom: 15px;
     font-size: 15px; 
     font-weight: bold; 
-  }
+}
+
+.error-message-id {
+    color: #ff0000;
+    background-color: #ffeded; 
+    border: 1px solid #ff0000;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 15px; 
+    margin-bottom: 15px;
+    font-size: 15px; 
+    font-weight: bold; 
+}
 
 .modal-buttons {
     display: flex;
