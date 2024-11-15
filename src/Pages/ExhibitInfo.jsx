@@ -137,7 +137,10 @@ export default function ExhibitInfo() {
                     Редактировать экспонат
                 </button> 
                 <button className="adding-button">
-                     Сформировать qr-код
+                    Переместить
+                </button> 
+                <button className="adding-button">
+                    Сформировать qr-код
                 </button> 
             </div>
             </div>
@@ -181,6 +184,7 @@ export default function ExhibitInfo() {
                         </div>
 
                         <input
+                            type="text"
                             name="title"
                             placeholder="Название"
                             value={newExhibits.title}
@@ -189,7 +193,6 @@ export default function ExhibitInfo() {
                         <label>Описание:</label>                  
                         <textarea
                             name="description"
-                            placeholder="Описание"
                             value={newExhibits.description}
                             onChange={handleInputChange}
                             className="large-textarea" 

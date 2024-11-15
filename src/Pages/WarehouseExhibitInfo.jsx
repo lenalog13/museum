@@ -106,10 +106,10 @@ export default function WarehouseExhibitInfo() {
                     Редактировать экспонат
                 </button> 
                 <button className="adding-button">
-                     Изменить местоположение
+                    Переместить
                 </button> 
                 <button className="adding-button">
-                     Сформировать qr-код
+                    Сформировать qr-код
                 </button> 
             </div>
             </div>
