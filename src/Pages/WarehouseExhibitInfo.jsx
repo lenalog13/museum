@@ -179,3 +179,10 @@ export default function WarehouseExhibitInfo() {
                         <div className="modal-buttons">
                             <button className="cancel-button" onClick={handleCancel}>Отменить</button>
                             <button className="save-button" onClick={handleSaveExhibits}>Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}

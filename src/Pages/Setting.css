@@ -241,4 +241,17 @@
     background-color: white;
     color: black;
     border: 1px solid #ccc;
-    cursor: po
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s
+}
+
+.remove-file-button:hover {
+    background-color: #ece8e8;
+    color: black;
+    border: 1px solid rgb(132, 131, 131);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+  
+  
