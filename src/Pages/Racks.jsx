@@ -7,18 +7,97 @@ import Header from '../Components/Header';
 
 export default function Racks() {
 
-  const items = [
-    { id: 0, title: 'Стеллажи', racks: [{ id: 0, racksName: 'стеллаж 1' }, { id: 1, racksName: 'стеллаж 2' }, { id: 2, racksName: 'стеллаж 3' }] },
-    { id: 1, title: 'Шкафы', racks: [{ id: 0, racksName: 'шкаф 1' }, { id: 1, racksName: 'шкаф 2' }, { id: 2, racksName: 'шкаф 3' }] },
-    { id: 2, title: 'Сейфы', racks: [{ id: 0, racksName: 'сейф 1' }, { id: 1, racksName: 'сейф 2' }] }
-  ];
+  const userRights = 'admin';
 
-  const [selectedItem, setSelectedItem] = useState(items[0]);
+  const [catalog, setCatalog] = useState(
+    [
+      { id: 0, title: 'Стеллажи', racks: [{ id: 0, racksName: 'стеллаж 1' }, { id: 1, racksName: 'стеллаж 2' }, { id: 2, racksName: 'стеллаж 3' }] },
+      { id: 1, title: 'Шкафы', racks: [{ id: 0, racksName: 'шкаф 1' }, { id: 1, racksName: 'шкаф 2' }, { id: 2, racksName: 'шкаф 3' }] },
+      { id: 2, title: 'Сейфы', racks: [{ id: 0, racksName: 'сейф 1' }, { id: 1, racksName: 'сейф 2' }] }
+    ]
+  );
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [newRacks, setNewRacks] = useState({
+    racksName: '',
+  });
+
+  const [editingRacksId, setEditingRacksId] = useState(null);
+
+  const [selectedItem, setSelectedItem] = useState(catalog[0]);
 
   const handleSelect = (item) => {
     setSelectedItem(item);
   };
 
+  const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setNewRacks ({
+          ...newRacks,
+          [name]: value
+      });
+  };
+
+  const handleAddRacks  = () => {
+    if (editingRacksId !== null) {
+      setCatalog(prevCatalog => ({
+        ...prevCatalog,
+          racks: prevCatalog.racks.map(racks =>
+          racks.id === editingRacksId ? { ...racks, ...newRacks } : racks
+        )
+      }));
+    } else {
+      const newId = catalog.rooms.length;
+      setCatalog({
+        ...catalog,
+        racks: [...catalog.racks, { id: newId, ...newRacks }]
+      });
+    }
+    resetForm();
+  };
+
+  const handleEditRacks  = (racks) => {
+      setNewRacks (racks);
+      setEditingRacksId(racks.id);
+      setModalVisible(true);
+  };
+
+  const handleCancel = () => {
+      resetForm();
+  };
+
+  const handleDeleteRacks = () => {
+    let confirmationMessage;
+
+    switch (selectedItem) {
+        case 0:
+            confirmationMessage = 'Вы действительно хотите удалить стеллаж?';
+            break;
+        case 1:
+            confirmationMessage = 'Вы действительно хотите удалить витрину?';
+            break;
+        case 2:
+            confirmationMessage = 'Вы действительно хотите удалить сейф?';
+            break;
+        default:
+            confirmationMessage = 'Вы действительно хотите удалить этот элемент?';
+    }
+
+    if (window.confirm(confirmationMessage)) {
+        setCatalog(prevCatalog => ({
+            ...prevCatalog,
+            racks: prevCatalog.racks.filter(rack => rack.id !== editingRacksId)
+        }));
+        resetForm();
+    }
+  };
+
+  const resetForm = () => {
+      setNewRacks ({ racksName: '' });
+      setEditingRacksId(null);
+      setModalVisible(false);
+  };
 
   return (
     <div>
@@ -28,7 +107,7 @@ export default function Racks() {
           <div className="layout">
             <div className="sidebar">
               <div className="buttons">
-                {items.map(item => (
+                {catalog.map(item => (
                   <button
                     key={item.id}
                     onClick={() => handleSelect(item)}

@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 
 export default function Home() {
 
-  const userRights = 'admin';
+  const userRights = 'user';
 
   const [catalog, setCatalog] = useState({
     title: 'Выставки',
