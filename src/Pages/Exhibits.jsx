@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
@@ -19,12 +19,10 @@ export default function Exhibits() {
   });
 
   const exhibits = [
-    { id: '3', title: 'экспонат 4', description: 'dfghjkl;' }, 
+    { id: '3', title: 'экспонат 4', description: 'описание экспоната 4' }, 
     { id: '4', title: 'экспонат 5' }, 
     { id: '5', title: 'экспонат 6' }, 
     { id: '6', title: 'экспонат 7' }, 
-    { id: '7', title: 'экспонат 8' }, 
-    { id: '8', title: 'экспонат 9' }
 ];
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,6 +44,10 @@ export default function Exhibits() {
 
   const [filteredExhibits, setFilteredExhibits] = useState([]);
 
+  const [error, setError] = useState(false);
+
+  const dropdownRef = useRef(null);
+
   const handleInputChange = (e) => {
       const { name, value } = e.target;
       setNewExhibits({
@@ -59,7 +61,14 @@ export default function Exhibits() {
     setNewExhibits(prev => ({ ...prev, file }));
   };
 
+  const handleRemoveFile = () => {
+    setNewExhibits(prev => ({ ...prev, file: null }));
+  };
+
   const handleAddExhibits = () => {
+      if (error) {
+            return;
+      }  
       if (editingExhibitsId !== null) {
           setCatalog(prevCatalog => ({
               ...prevCatalog,
@@ -118,15 +127,22 @@ export default function Exhibits() {
       setEditingExhibitsId(null);
       setModalVisible(false);
       setFilteredExhibits([]);
+      setError(false);
   };
 
   const handleInputChangeId = (event) => {
-      const value = event.target.value;
-      setInputValue(value);
-      setNewExhibits(prev => ({ ...prev, id: value }));
-      const filtered = exhibits.filter(exhibit =>
-        exhibit.id.includes(value)
-    );
+    const value = event.target.value;
+    setInputValue(value);
+    setNewExhibits(prev => ({ ...prev, id: value }));
+
+    const exhibitExists = exhibits.some(exhibit => exhibit.id === value);
+    if (!exhibitExists && value !== '') {
+        setError(true);
+    } else {
+        setError(false);
+    }
+    
+    const filtered = exhibits.filter(exhibit => exhibit.id.includes(value));
     setFilteredExhibits(filtered);
 };
 
@@ -139,6 +155,7 @@ const handleSelectExhibit = (exhibit) => {
       file: exhibit.file || null
   });
   setFilteredExhibits([]);
+  setError(false);
 };
 
 
@@ -151,6 +168,19 @@ const formatText = (text) => {
         </span>
     ));
 };
+
+useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setFilteredExhibits([]);
+        }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
+}, [dropdownRef]);
 
 return (
     <div>
@@ -193,7 +223,7 @@ return (
             <div className="modal-overlay">
                 <div className="modal">
                     <h3>{editingExhibitsId !== null ? 'Редактировать экспонат' : 'Добавить экспонат'}</h3>
-                    <div className="dropdown">
+                    <div className="dropdown" ref={dropdownRef}>
                         <input
                             type="text"
                             name="id"
@@ -201,7 +231,9 @@ return (
                             value={newExhibits.id}
                             onChange={handleInputChangeId}
                             onFocus={() => setFilteredExhibits(exhibits)}
+                            className={error ? 'input-error' : ''}
                         />
+                        {error && <div className="error-message-id">Нет экспоната с таким номером по книге поступления</div>}
                         {filteredExhibits.length > 0 && (
                             <ul>
                                 {filteredExhibits.map(exhibit => (
@@ -226,7 +258,12 @@ return (
                           onChange={handleInputChange}
                           className="large-textarea" 
                     />
-                    {newExhibits.file && <label className='file-label'>Файл: {newExhibits.file.name}</label>} 
+                    {newExhibits.file && (
+                            <div className='file-info'>
+                                <label>Файл: {newExhibits.file.name}</label>
+                                <button className='remove-file-button' onClick={handleRemoveFile}>✖️</button>
+                            </div>
+                    )}
                     {newExhibits.file ? <label>Прикрепить другой файл:</label> : <label>Прикрепить файл:</label>} 
                     <input
                       type="file"
