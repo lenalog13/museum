@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { Context } from '..';
 
 export default function Navbar() {
 
+  const { store } = useContext(Context);
   const[userRights, setUserRights] = useState('admin');
 
   return (
@@ -33,7 +35,7 @@ export default function Navbar() {
           </li>
         {userRights === 'user' ? (
             <li>
-              <Link to="/authorization">Войти</Link>
+              <Link to="/authorization">{store.isAuth? 'Выйти' : 'Войти'}</Link>
             </li>
           ) : (
             <li>
