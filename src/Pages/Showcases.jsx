@@ -132,7 +132,7 @@ export default function Showcases() {
         {catalog.showcases.length > 0 ? (
             catalog.showcases.map((item) => (
               <li key={item.id} className="list-item">
-                <Link to={`/exhibition/showcase/${item.id}`}>
+                <Link to={`/exhibition/room/showcase/${item.id}`}>
                   {item.showcasesName}
                 </Link>
                 { userRights !== 'user' && (

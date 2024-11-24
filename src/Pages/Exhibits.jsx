@@ -204,7 +204,7 @@ return (
             {catalog.exhibits.length > 0 ? (
             catalog.exhibits.map((item) => (
               <li key={item.id} className="list-item">
-                <Link to={`/exhibition/showcase/shelf/exhibit/${item.id}`}>
+                <Link to={`/exhibition/room/showcase/shelf/exhibit/${item.id}`}>
                   {item.exhibitsName}
                 </Link>
                 { userRights !== 'user' && (

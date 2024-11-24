@@ -25,10 +25,11 @@ function App() {
         <Route path="/setting" element={<Setting />} />
 
         <Route path="/" element={<Home />} />
-        <Route path="/exhibition/:id" element={<Showcases />} />
-        <Route path="/exhibition/showcase/:id" element={<Shelves />} />
-        <Route path="/exhibition/showcase/shelf/:id" element={<Exhibits />} />
-        <Route path="/exhibition/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
+        <Route path="/exhibition/:id" element={<Rooms />} />
+        <Route path="/exhibition/room/:id" element={<Showcases />} />
+        <Route path="/exhibition/room/showcase/:id" element={<Shelves />} />
+        <Route path="/exhibition/room/showcase/shelf/:id" element={<Exhibits />} />
+        <Route path="/exhibition/room/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
       </Routes>
     </>
   );

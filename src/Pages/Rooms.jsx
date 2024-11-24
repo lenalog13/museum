@@ -93,7 +93,7 @@ export default function Rooms() {
         <ul>
           {catalog.rooms.map((item) => (
             <li key={item.id} className="list-item">
-              <Link to={`/warehouse/room/${item.id}`}>
+              <Link to={`/exhibition/room/${item.id}`}>
                 {item.roomsName}
               </Link>
               { userRights !== 'user' && (

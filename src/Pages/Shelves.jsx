@@ -132,7 +132,7 @@ export default function Shelves() {
         {catalog.shelves.length > 0 ? (
             catalog.shelves.map((item) => (
               <li key={item.id} className="list-item">
-                <Link to={`/exhibition/showcase/shelf/${item.id}`}>
+                <Link to={`/exhibition/room/showcase/shelf/${item.id}`}>
                   {item.shelvesName}
                 </Link>
                 { userRights !== 'user' && (
