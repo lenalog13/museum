@@ -19,6 +19,8 @@
 }
 
 .navbar-links {
+  display: flex;
+  align-items: center;
   list-style: none;
   display: flex;
   gap: 9%;
@@ -27,6 +29,7 @@
 
 .navbar-links li {
   display: inline;
+  text-align: center;
 }
 
 .navbar-links a {
@@ -41,19 +44,11 @@
 
 .navbar-right {
   margin-left: auto;
-  margin-right: 10px;
 }
 
 
-.logout-button {
-  width: 100%;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 0px;
-  cursor: pointer;
-  font-size: 15px;
-  text-align: left;
+.logout-link {
+  margin-right: 10px;
 }
 
 .logout-button:hover {

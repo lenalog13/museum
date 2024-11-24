@@ -21,7 +21,7 @@ export default function Navbar() {
             <Link to="/">Выставки</Link>
           </li>
           <li> { userRights != 'user' && (
-            <Link to="/warehouse/room">Фонды</Link>
+            <Link to="/qr">Сформировать <br/> qr-коды</Link>
           )}
           </li>
         </ul>
@@ -39,9 +39,9 @@ export default function Navbar() {
             </li>
           ) : (
             <li>
-              <Link to="/">
-                <button class="logout-button" onClick={() => setUserRights('user')}>Выйти</button>
-              </Link>
+              <Link to="/" onClick={() => setUserRights('user')} className="logout-link">
+                Выйти
+              </Link>       
             </li>
           )}
         </ul>
