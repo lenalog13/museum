@@ -6,13 +6,12 @@ import Header from '../Components/Header';
 
 export default function Home() {
 
-  const userRights = 'user';
+  const userRights = 'admin';
 
   const [catalog, setCatalog] = useState({
     title: 'Выставки',
-    description: 'Музей истории детского движения ведёт историю с 1962 года. В 1985 г. был получен статус школьного и звание народного музея. Музей является структурным подразделением ГБПОУ «Воробьевы горы».\n\nМузейная коллекция включает документы, фотографии, предметы, печатные издания и др., связанные с развитием детских движений на территории Москвы, Российской Федерации и СССР; документы организаторов, руководителей, исследователей детского движения. Отдельная коллекция включает фонды по истории Московского Дворца пионеров. Также в коллекции Музея представлены материалы о внешкольных организациях и материалах, связанных с историей детства. На данный момент фонды Музея насчитывают более 400 тысяч единиц хранения.',
     exhibition: [
-      { id: 0, exhibitionName: 'выставка 1', description: 'Описание выставки 1', startData: '2024-01-01', finishData: '2024-12-31' },
+      { id: 0, exhibitionName: 'выставка 1', description: [], startData: '2024-01-01', finishData: '2024-12-31' },
       { id: 1, exhibitionName: 'выставка 2' },
       { id: 2, exhibitionName: 'выставка 3' },
     ]
@@ -20,16 +19,12 @@ export default function Home() {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
-
   const [newExhibition, setNewExhibition] = useState({
       exhibitionName: '',
-      description: '',
+      description: [],
       startData: '',
       finishData: ''
   });
-
-  const [museumDescription, setMuseumDescription] = useState(catalog.description);
 
   const [editingExhibitionId, setEditingExhibitionId] = useState(null);
 
@@ -81,30 +76,13 @@ export default function Home() {
   const handleEditExhibition  = (exhibition) => {
     setNewExhibition({
         exhibitionName: exhibition.exhibitionName || '',
-        description: exhibition.description || '',
+        description: exhibition.description || [],
         startData: exhibition.startData || '',
         finishData: exhibition.finishData || ''
     });
     setEditingExhibitionId(exhibition.id);
     setModalVisible(true);
 };
-
-
-  const handleEditMuseumDescription = () => {
-    setMuseumDescription(catalog.description);
-    setDescriptionModalVisible(true);
-  };
-
-  const handleSaveDescription = () => {
-    setCatalog(prevCatalog => ({
-      ...prevCatalog,
-      description: museumDescription
-    }));
-    setDescriptionModalVisible(false);
-  };
-  const handleCancelDescription = () => {
-    setDescriptionModalVisible(false);
-  };
 
 
   const handleCancel = () => {
@@ -123,7 +101,7 @@ export default function Home() {
 
 
   const resetForm = () => {
-    setNewExhibition({ exhibitionName: '', description: '', startData: '', finishData: '' });
+    setNewExhibition({ exhibitionName: '', description: [], startData: '', finishData: '' });
     setEditingExhibitionId(null);
     setModalVisible(false);
     setDateError('');
@@ -150,13 +128,9 @@ export default function Home() {
           <button className="adding-button" onClick={() => setModalVisible(true)}>
             Добавить выставку
           </button> 
-          <button className="adding-button" onClick={handleEditMuseumDescription}>
-            Редактировать описание музея
-          </button> 
         </div>
       )}
 
-      <div className='classList'>{formatText(catalog.description)}</div>
       <div className='classList'>
         <ul>
         {catalog.exhibition.length > 0 ? (
@@ -192,13 +166,6 @@ export default function Home() {
                         value={newExhibition.exhibitionName}
                         onChange={handleInputChange}
                     />
-                    <label>Описание:</label>
-                    <textarea
-                      name="description"
-                      value={newExhibition.description}
-                      onChange={handleInputChange}
-                      className="large-textarea" 
-                    />
                     <label>Дата начала:</label>
                     <input
                       type="date"
@@ -231,24 +198,6 @@ export default function Home() {
                 </div>
             </div>
         )}
-
-        {descriptionModalVisible && ( 
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Редактировать описание музея</h3>
-            <textarea
-              name="museumDescription"
-              value={museumDescription}
-              onChange={(e) => setMuseumDescription(e.target.value)}
-              className="large-textarea" 
-            />
-            <div className="modal-buttons">
-              <button className="cancel-button" onClick={handleCancelDescription}>Отменить</button>
-              <button className="save-button" onClick={handleSaveDescription}>Сохранить</button>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );
