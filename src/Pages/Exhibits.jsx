@@ -10,7 +10,6 @@ export default function Exhibits() {
 
   const [catalog, setCatalog] = useState({
       title: 'Экспонаты',
-      description: 'Тут описание конкретно этой полки',
       exhibits: [  
           { id: '0', exhibitsName: 'экспонат 1' },
           { id: '1', exhibitsName: 'экспонат 2' },
@@ -19,30 +18,25 @@ export default function Exhibits() {
   });
 
   const exhibits = [
-    { id: '3', title: 'экспонат 4', description: 'описание экспоната 4' }, 
-    { id: '4', title: 'экспонат 5' }, 
-    { id: '5', title: 'экспонат 6' }, 
-    { id: '6', title: 'экспонат 7' }, 
-];
+    { id: '3', title: 'экспонат 4', description: [] }, 
+    { id: '4', title: 'экспонат 5', description: [] }, 
+    { id: '5', title: 'экспонат 6', description: [] }, 
+    { id: '6', title: 'экспонат 7', description: [] }, 
+  ];
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
 
   const [newExhibits, setNewExhibits] = useState({
       id: '',
       exhibitsName: '',
-      description: '',
-      file: null
+      description: []
   });
 
-  const [shelvesDescription, setShelvesDescription] = useState(catalog.description);
-
   const [editingExhibitsId, setEditingExhibitsId] = useState(null);
-  
-  const [inputValue, setInputValue] = useState('');
 
   const [filteredExhibits, setFilteredExhibits] = useState([]);
+
+  const [inputValue, setInputValue] = useState(null);
 
   const [error, setError] = useState(false);
 
@@ -54,15 +48,6 @@ export default function Exhibits() {
           ...newExhibits,
           [name]: value
       });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setNewExhibits(prev => ({ ...prev, file }));
-  };
-
-  const handleRemoveFile = () => {
-    setNewExhibits(prev => ({ ...prev, file: null }));
   };
 
   const handleAddExhibits = () => {
@@ -91,23 +76,6 @@ export default function Exhibits() {
       setModalVisible(true);
   };
 
-  const handleEditShelvesDescription = () => {
-      setShelvesDescription(catalog.description);
-      setDescriptionModalVisible(true);
-  };
-
-  const handleSaveDescription = () => {
-      setCatalog(prevCatalog => ({
-          ...prevCatalog,
-          description: shelvesDescription
-      }));
-      setDescriptionModalVisible(false);
-  };
-
-  const handleCancelDescription = () => {
-      setDescriptionModalVisible(false);
-  };
-
   const handleCancel = () => {
       resetForm();
   };
@@ -123,10 +91,9 @@ export default function Exhibits() {
   };
 
   const resetForm = () => {
-      setNewExhibits({ id: '', exhibitsName: '', description: '', file: null });
+      setNewExhibits({ id: '', exhibitsName: '', description: []});
       setEditingExhibitsId(null);
       setModalVisible(false);
-      setFilteredExhibits([]);
       setError(false);
   };
 
@@ -144,32 +111,20 @@ export default function Exhibits() {
     
     const filtered = exhibits.filter(exhibit => exhibit.id.includes(value));
     setFilteredExhibits(filtered);
-};
+  };
 
-const handleSelectExhibit = (exhibit) => {
-  setInputValue(exhibit.id);
-  setNewExhibits({
+  const handleSelectExhibit = (exhibit) => {
+    setInputValue(exhibit.id);
+    setNewExhibits({
       id: exhibit.id,
       exhibitsName: exhibit.title || '', 
-      description: exhibit.description || '', 
-      file: exhibit.file || null
-  });
-  setFilteredExhibits([]);
-  setError(false);
-};
+      description: exhibit.description || [], 
+    });
+    setFilteredExhibits([]);
+    setError(false);
+  };
 
-
-
-const formatText = (text) => {
-    return text.split('\n').map((line, index) => (
-        <span key={index}>
-            {line.trim()}
-            <br />
-        </span>
-    ));
-};
-
-useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setFilteredExhibits([]);
@@ -180,7 +135,7 @@ useEffect(() => {
     return () => {
         document.removeEventListener('mousedown', handleClickOutside);
     };
-}, [dropdownRef]);
+  }, [dropdownRef]);
 
 return (
     <div>
@@ -190,12 +145,11 @@ return (
                 <button className="adding-button" onClick={() => setModalVisible(true)}>
                     Добавить экспонат
                 </button> 
-                <button className="adding-button" onClick={handleEditShelvesDescription}>
+                <button className="adding-button">
                     Редактировать описание полки
                 </button> 
             </div>
         )}
-        <div className='classList'>{formatText(catalog.description)}</div>
         <div className='classList'>
           <ul>
             {catalog.exhibits.length > 0 ? (
@@ -248,24 +202,6 @@ return (
                         value={newExhibits.exhibitsName}
                         onChange={handleInputChange}
                     />
-                    <label>Описание:</label>                  
-                    <textarea
-                          name="description"
-                          value={newExhibits.description}
-                          onChange={handleInputChange}
-                          className="large-textarea" 
-                    />
-                    {newExhibits.file && (
-                            <div className='file-info'>
-                                <label>Файл: {newExhibits.file.name}</label>
-                                <button className='remove-file-button' onClick={handleRemoveFile}>✖️</button>
-                            </div>
-                    )}
-                    {newExhibits.file ? <label>Прикрепить другой файл:</label> : <label>Прикрепить файл:</label>} 
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                    />
                       <div className="modal-buttons">
                           {editingExhibitsId !== null && (
                               <button className="delete-button" onClick={handleDeleteExhibits}>
@@ -276,23 +212,6 @@ return (
                           <button className="save-button" onClick={handleAddExhibits}>
                             {editingExhibitsId !== null ? 'Сохранить' : 'Добавить'}
                           </button>
-                      </div>
-                  </div>
-              </div>
-          )}
-          {descriptionModalVisible && ( 
-              <div className="modal-overlay">
-                  <div className="modal">
-                      <h3>Редактировать описание полки</h3>
-                      <textarea
-                          name="exhibitionDescription"
-                          value={shelvesDescription}
-                          onChange={(e) => setShelvesDescription(e.target.value)}
-                          className="large-textarea" 
-                      />
-                      <div className="modal-buttons">
-                          <button className="cancel-button" onClick={handleCancelDescription}>Отменить</button>
-                          <button className="save-button" onClick={handleSaveDescription}>Сохранить</button>
                       </div>
                   </div>
               </div>
