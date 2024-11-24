@@ -218,7 +218,7 @@ useEffect(() => {
             Добавить экспонат
           </button>
           <button className="adding-button">
-            Редактировать описание выставки
+            Редактировать описание помещения
           </button> 
         </div>
       )}
