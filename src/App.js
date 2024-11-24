@@ -27,6 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/exhibition/:id" element={<Rooms />} />
         <Route path="/exhibition/room/:id" element={<Showcases />} />
+        <Route path="/exhibition/room/exhibit/:id" element={<ExhibitInfo />} />
         <Route path="/exhibition/room/showcase/:id" element={<Shelves />} />
         <Route path="/exhibition/room/showcase/shelf/:id" element={<Exhibits />} />
         <Route path="/exhibition/room/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
