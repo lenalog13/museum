@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from "./Components/Navbar";
 import Authorization from "./Pages/Authorization";
 import Setting from "./Pages/Setting";
+import Qr from "./Pages/Qr";
 import Home from "./Pages/Home";
 import Rooms from './Pages/Rooms';
 import Showcases from "./Pages/Showcases";
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/authorization" element={<Authorization />} />
         <Route path="/setting" element={<Setting />} />
+        <Route path="/qr" element={<Qr />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/exhibition/:id" element={<Rooms />} />
