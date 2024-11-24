@@ -19,14 +19,10 @@ export default function Shelves() {
   
     const [modalVisible, setModalVisible] = useState(false);
   
-    const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
-  
     const [newShelves, setNewShelves] = useState({
         shelvesName: '',
         description: ''
     });
-  
-    const [showcasesDescription, setShowcasesDescription] = useState(catalog.description);
   
     const [editingShelvesId, setEditingShelvesId] = useState(null);
   
@@ -48,9 +44,10 @@ export default function Shelves() {
         }));
       } else {
         const newId = catalog.shelves.length;
+        const shelvName = newShelves.shelvesName.trim() === '' ? `полка ${newId + 1}` : newShelves.shelvesName
         setCatalog({
           ...catalog,
-          shelves: [...catalog.shelves, { id: newId, ...newShelves }]
+          shelves: [...catalog.shelves, { id: newId, shelvesName: shelvName, description: [] }]
         });
       }
       resetForm();
@@ -60,23 +57,6 @@ export default function Shelves() {
         setNewShelves (shelves);
         setEditingShelvesId(shelves.id);
         setModalVisible(true);
-    };
-  
-    const handleEditShowcasesDescription = () => {
-      setShowcasesDescription(catalog.description);
-      setDescriptionModalVisible(true);
-    };
-  
-    const handleSaveDescription = () => {
-      setCatalog(prevCatalog => ({
-        ...prevCatalog,
-        description: showcasesDescription
-      }));
-      setDescriptionModalVisible(false);
-    };
-  
-    const handleCancelDescription = () => {
-      setDescriptionModalVisible(false);
     };
   
     const handleCancel = () => {
@@ -93,21 +73,11 @@ export default function Shelves() {
       }
     };
   
-  
     const resetForm = () => {
-        setNewShelves ({ shelvesName: '', description: '' });
+        setNewShelves ({ shelvesName: '', description: [] });
         setEditingShelvesId(null);
         setModalVisible(false);
     };
-
-      const formatText = (text) => {
-        return text.split('\n').map((line, index) => (
-          <span key={index}>
-              {line.trim()}
-              <br />
-          </span>
-        ));
-      };
 
   return (
     <div>
@@ -118,13 +88,11 @@ export default function Shelves() {
           <button className="adding-button" onClick={() => setModalVisible(true)}>
             Добавить полку
           </button> 
-          <button className="adding-button" onClick={handleEditShowcasesDescription}>
+          <button className="adding-button">
             Редактировать описание витрины
           </button> 
         </div>
       )}
-
-    <div className='classList'>{formatText(catalog.description)}</div>
     <div className='classList'>
       <ul>
         {catalog.shelves.length > 0 ? (
@@ -157,16 +125,9 @@ export default function Shelves() {
         type="text"
         name="shelvesName"
         placeholder="Название"
-        value={newShelves.shelvesName}
+        value={newShelves.shelvesName === '' ? `полка ${catalog.shelves.length + 1}` : newShelves.shelvesName}
         onChange={handleInputChange}
        />
-      <label>Описание:</label>
-      <textarea
-        name="description"
-        value={newShelves.description}
-        onChange={handleInputChange}
-        className="large-textarea" 
-      />
       <div className="modal-buttons">
         {editingShelvesId !== null && (
           <button className="delete-button" onClick={handleDeleteShelves}>
@@ -183,23 +144,6 @@ export default function Shelves() {
     </div>
     )}
 
-    {descriptionModalVisible && ( 
-    <div className="modal-overlay">
-      <div className="modal">
-        <h3>Редактировать описание витрины</h3>
-        <textarea
-         name="exhibitionDescription"
-         value={showcasesDescription}
-         onChange={(e) => setShowcasesDescription(e.target.value)}
-         className="large-textarea" 
-        />
-       <div className="modal-buttons">
-         <button className="cancel-button" onClick={handleCancelDescription}>Отменить</button>
-         <button className="save-button" onClick={handleSaveDescription}>Сохранить</button>
-       </div>
-     </div>
-    </div>
-    )}
   </div>
   );
 }
