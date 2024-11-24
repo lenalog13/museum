@@ -10,11 +10,11 @@ export default function Rooms() {
 
   const [catalog, setCatalog] = useState({
     title: 'Помещения',
+    description: [],
     rooms: [
-      { id: 0, roomsName: 'адрес 1 помещение 1' },
-      { id: 1, roomsName: 'адрес 1 помещение  2' },
-      { id: 2, roomsName: 'адрес 1 помещение  3' },
-      { id: 3, roomsName: 'адрес 2 помещение 1' }
+      { id: 0, roomsName: 'помещение 1', description: [], },
+      { id: 1, roomsName: 'помещение  2', description: [], },
+      { id: 2, roomsName: 'помещение  3', description: [], },
     ]
   });
 
@@ -22,6 +22,7 @@ export default function Rooms() {
 
   const [newRooms, setNewRooms] = useState({
     roomsName: '',
+    description: [],
   });
 
   const [editingRoomsId, setEditingRoomsId] = useState(null);
@@ -44,9 +45,11 @@ export default function Rooms() {
       }));
     } else {
       const newId = catalog.rooms.length;
+      const roomName = newRooms.roomsName.trim() === '' ? `помещение ${newId + 1}` : newRooms.roomsName;
+
       setCatalog({
         ...catalog,
-        rooms: [...catalog.rooms, { id: newId, ...newRooms }]
+        rooms: [...catalog.rooms, { id: newId, roomsName: roomName, description: [] }]
       });
     }
     resetForm();
@@ -87,6 +90,9 @@ export default function Rooms() {
           <button className="adding-button" onClick={() => setModalVisible(true)}>
             Добавить помещение
           </button> 
+          <button className="adding-button">
+            Редактировать описание выставки
+          </button> 
         </div>
       )}
       <div className='classList'>
@@ -117,7 +123,7 @@ export default function Rooms() {
             type="text"
             name="roomsName"
             placeholder="Название"
-            value={newRooms.roomsName}
+            value={newRooms.roomsName === '' ? `помещение ${catalog.rooms.length + 1}` : newRooms.roomsName}
             onChange={handleInputChange}
           />
           <div className="modal-buttons">
