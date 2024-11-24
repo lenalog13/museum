@@ -224,7 +224,7 @@ useEffect(() => {
       )}
 
     <div className='classList'>
-        <h2>Витрины</h2>
+        <h3>Витрины:</h3>
         <ul>
           {catalog.showcases.length > 0 ? (
             catalog.showcases.map((item) => (
@@ -245,7 +245,7 @@ useEffect(() => {
         </ul>
       </div>
       <div className='classList'>
-        <h2>Экспонаты</h2>
+        <h3>Экспонаты:</h3>
         <ul>
           {catalog.exhibits.length > 0 ? (
             catalog.exhibits.map((exhibit) => (
