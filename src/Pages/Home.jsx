@@ -107,21 +107,10 @@ export default function Home() {
     setDateError('');
     setDatesEntered(false);
   };
-
-  const formatText = (text) => {
-    return text.split('\n').map((line, index) => (
-      <span key={index}>
-        {line.trim()}
-        <br />
-      </span>
-    ));
-  };
   
-
   return (
     <div>
-      <Header title={catalog.title} 
-        count={catalog.exhibition.length} />
+      <Header title={catalog.title}/>
 
       { userRights != 'user' && (
         <div className="pages-buttons">

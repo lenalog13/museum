@@ -111,9 +111,7 @@ export default function Shelves() {
 
   return (
     <div>
-      { <Header 
-        title={catalog.title} 
-        count = {catalog.shelves.length} /> }
+      { <Header title={catalog.title} /> }
 
       { userRights != 'user' && (
         <div className="pages-buttons">

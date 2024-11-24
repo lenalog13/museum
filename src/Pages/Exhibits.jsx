@@ -184,10 +184,7 @@ useEffect(() => {
 
 return (
     <div>
-        <Header 
-            title={catalog.title} 
-            count={catalog.exhibits.length} 
-        />
+        <Header title={catalog.title} />
         {userRights !== 'user' && (
             <div className="pages-buttons">
                 <button className="adding-button" onClick={() => setModalVisible(true)}>

@@ -83,8 +83,7 @@ export default function Rooms() {
   
   return (
     <div>
-      <Header title={catalog.title} 
-        count={catalog.rooms.length} />
+      <Header title={catalog.title}/>
       { userRights != 'user' && (
         <div className="pages-buttons">
           <button className="adding-button" onClick={() => setModalVisible(true)}>

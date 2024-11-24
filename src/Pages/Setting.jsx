@@ -81,8 +81,7 @@ export default function Setting() {
 
   return (
     <div>
-      <Header title={catalog.title} 
-        count={null} />
+      <Header title={catalog.title} />
 
       <div className="pages-buttons">
         <button className="adding-button" onClick={() => setModalVisible(true)}>

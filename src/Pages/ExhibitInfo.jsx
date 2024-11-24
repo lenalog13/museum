@@ -127,9 +127,7 @@ export default function ExhibitInfo() {
 
     return (
         <div>
-            <Header title={item.title} 
-                count={null}
-            />
+            <Header title={item.title} />
             {userRights !== 'user' && (
             <div>
             <div className="pages-buttons">

@@ -112,8 +112,7 @@ export default function Showcases() {
 
   return (
     <div>
-      <Header title={catalog.title} 
-        count={catalog.showcases.length} />
+      <Header title={catalog.title} />
 
       { userRights != 'user' && (
         <div className="pages-buttons">
