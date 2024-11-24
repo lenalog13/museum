@@ -10,24 +10,25 @@ export default function Showcases() {
 
   const [catalog, setCatalog] = useState({
     title: 'Витрины',
-    description: ' Тут описание конкретно этой выставки ',
+    description: [],
     showcases: [
-      { id: 0, showcasesName: 'витрина 1' },
-      { id: 1, showcasesName: 'витрина 2' },
-      { id: 2, showcasesName: 'витрина 3' }
+      { id: 0, showcasesName: 'витрина 1', description: [] },
+      { id: 1, showcasesName: 'витрина 2', description: [] },
+      { id: 2, showcasesName: 'витрина 3', description: [] }
+    ],
+    exhibits: [
+      { id: 0, exhibitsName: 'экспонат 1', description: [] },
+      { id: 1, exhibitsName: 'экспонат 2', description: [] },
+      { id: 2, exhibitsName: 'экспонат 3', description: [] }
     ]
   });
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
-
   const [newShowcases, setNewShowcases] = useState({
       showcasesName: '',
-      description: ''
+      description: []
   });
-
-  const [exhibitionDescription, setExhibitionDescription] = useState(catalog.description);
 
   const [editingShowcasesId, setEditingShowcasesId] = useState(null);
 
@@ -49,9 +50,10 @@ export default function Showcases() {
       }));
     } else {
       const newId = catalog.showcases.length;
+      const showcasName = newShowcases.showcasesName.trim() === '' ? `витрина ${newId + 1}` : newShowcases.showcasesName
       setCatalog({
         ...catalog,
-        showcases: [...catalog.showcases, { id: newId, ...newShowcases }]
+        showcases: [...catalog.showcases, { id: newId, showcasesName: showcasName, description: [] }]
       });
     }
     resetForm();
@@ -61,23 +63,6 @@ export default function Showcases() {
       setNewShowcases (showcases);
       setEditingShowcasesId(showcases.id);
       setModalVisible(true);
-  };
-
-  const handleEditExhibitionDescription = () => {
-    setExhibitionDescription(catalog.description);
-    setDescriptionModalVisible(true);
-  };
-
-  const handleSaveDescription = () => {
-    setCatalog(prevCatalog => ({
-      ...prevCatalog,
-      description: exhibitionDescription
-    }));
-    setDescriptionModalVisible(false);
-  };
-
-  const handleCancelDescription = () => {
-    setDescriptionModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -94,21 +79,11 @@ export default function Showcases() {
     }
   };
 
-
   const resetForm = () => {
-      setNewShowcases ({ showcasesName: '', description: '' });
+      setNewShowcases ({ showcasesName: '', description: [] });
       setEditingShowcasesId(null);
       setModalVisible(false);
   };
-
-    const formatText = (text) => {
-      return text.split('\n').map((line, index) => (
-        <span key={index}>
-          {line.trim()}
-          <br />
-        </span>
-      ));
-    };
 
   return (
     <div>
@@ -119,13 +94,15 @@ export default function Showcases() {
           <button className="adding-button" onClick={() => setModalVisible(true)}>
             Добавить витрину
           </button> 
-          <button className="adding-button" onClick={handleEditExhibitionDescription}>
+          <button className="adding-button">
+            Добавить экспонат
+          </button>
+          <button className="adding-button">
             Редактировать описание выставки
           </button> 
         </div>
       )}
 
-      <div className='classList'>{formatText(catalog.description)}</div>
       <div className='classList'>
         <ul>
         {catalog.showcases.length > 0 ? (
@@ -158,15 +135,8 @@ export default function Showcases() {
             type="text"
             name="showcasesName"
             placeholder="Название"
-            value={newShowcases.showcasesName}
+            value={newShowcases.showcasesName === '' ? `витрина ${catalog.showcases.length + 1}` : newShowcases.showcasesName}
             onChange={handleInputChange}
-          />
-          <label>Описание:</label>
-          <textarea
-            name="description"
-            value={newShowcases.description}
-            onChange={handleInputChange}
-            className="large-textarea" 
           />
           <div className="modal-buttons">
             {editingShowcasesId !== null && (
@@ -182,24 +152,6 @@ export default function Showcases() {
           </div>
          </div>
          </div>
-      )}
-
-      {descriptionModalVisible && ( 
-      <div className="modal-overlay">
-        <div className="modal">
-          <h3>Редактировать описание выставки</h3>
-          <textarea
-            name="exhibitionDescription"
-            value={exhibitionDescription}
-            onChange={(e) => setExhibitionDescription(e.target.value)}
-            className="large-textarea" 
-          />
-          <div className="modal-buttons">
-            <button className="cancel-button" onClick={handleCancelDescription}>Отменить</button>
-            <button className="save-button" onClick={handleSaveDescription}>Сохранить</button>
-          </div>
-        </div>
-      </div>
       )}
     </div>
   );
