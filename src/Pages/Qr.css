@@ -1,0 +1,15 @@
+.toggle {
+    cursor: pointer;
+    padding: 7px 0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .toggle:last-child {
+    border-bottom: none;
+  }
+  
+  
+  
+  
