@@ -12,6 +12,16 @@
   
   input[type="checkbox"] {
     cursor: pointer;
+    vertical-align: middle;
+    margin: 5px 3px 3px 15px;
+    width: 15px;
+    right: 0;
+  }
+
+  .line {
+    display: flex;
+    vertical-align: middle;
+    text-align: left;
   }
   
   

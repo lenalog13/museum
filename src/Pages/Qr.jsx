@@ -6,7 +6,7 @@ export default function Qr() {
 
   const userRights = 'admin';
 
-  const catalog = {
+  const initialCatalog = {
     exhibition: [
       { id: 0, exhibitionName: 'выставка 1', select: false },
       { id: 1, exhibitionName: 'выставка 2', select: false  },
@@ -36,6 +36,8 @@ export default function Qr() {
     ]
   };
 
+  const [catalog, setCatalog] = useState(initialCatalog);
+
   const [expanded, setExpanded] = useState({});
 
   const toggle = (id) => {
@@ -44,6 +46,17 @@ export default function Qr() {
       [id]: !prev[id]
     }));
   };
+
+
+  const handleSelectChange = (item) => {
+    const updatedCatalog = { ...catalog };
+    const exhibition = updatedCatalog.exhibition.find(exh => exh.id === item.id);
+    if (exhibition) {
+        exhibition.select = !exhibition.select;
+    }
+    setCatalog(updatedCatalog);
+  };
+  
 
   const renderExhibitsInRooms = (exhibits) => {
     return exhibits.map(exhibit => (
@@ -113,6 +126,7 @@ export default function Qr() {
             {room.showcases || room.exhibits ? 
               (expanded[`room-${room.id}`] ? '➖' : '➕') : ''}
           </span>
+
           <span style={{ paddingLeft: room.showcases || room.exhibits ? '0' : '20px' }}>
             {room.roomsName}
           </span>
@@ -129,14 +143,21 @@ export default function Qr() {
       <div className='classList'>
         {catalog.exhibition.map(exhibition => (
           <div className="toggle" key={exhibition.id}>
-            <div className="toggle" style={{ paddingLeft: '20px' }}>
-              <span onClick={() => toggle(`exhibition-${exhibition.id}`)} style={{ paddingRight: '10px' }}>
+            <div className='toggle' style={{ paddingLeft: '20px' }}>
+            <div className='line'>
+              <span onClick={() => toggle(`exhibition-${exhibition.id}`)} style={{ paddingRight: exhibition.rooms ? '0px' : '20px' }}>
                 {exhibition.rooms  ? 
                   (expanded[`exhibition-${exhibition.id}`] ? '➖' : '➕') : ''}
               </span>
-              <span style={{ paddingLeft: exhibition.rooms ? '0' : '20px' }}>
+              <input
+                type="checkbox"
+                checked={exhibition.select}
+                onChange={() => handleSelectChange(exhibition)}
+              />
+              <div>
                 {exhibition.exhibitionName}
-              </span>
+              </div>
+            </div>
             </div>
             {expanded[`exhibition-${exhibition.id}`] && exhibition.rooms && renderRooms(exhibition.rooms)}
           </div>
