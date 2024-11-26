@@ -53,16 +53,16 @@ export default function Qr() {
           newSelectedItems.push({ ...item });
         }
         if (item.rooms) {
-          item.rooms.forEach(findSelectedItems);
+          findSelectedItems(item.rooms);
         }
         if (item.showcases) {
-          item.showcases.forEach(findSelectedItems);
+          findSelectedItems(item.showcases);
         }
         if (item.shelves) {
-          item.shelves.forEach(findSelectedItems);
+          findSelectedItems(item.shelves);
         }
         if (item.exhibits) {
-          item.exhibits.forEach(findSelectedItems);
+          findSelectedItems(item.exhibits);
         }
       });
     };
@@ -70,6 +70,7 @@ export default function Qr() {
     findSelectedItems(catalog.exhibition);
     setSelectedItems(newSelectedItems);
   }, [catalog]);
+
 
   const handleInputChange = (id, value) => {
     setSelectedItems(prevItems => 
@@ -89,7 +90,7 @@ export default function Qr() {
 
   const handleSelectChange = (item, parentType) => {
     const updatedCatalog = { ...catalog };
-  
+
     if (parentType === 'exhibition') {
       const exhibition = updatedCatalog.exhibition.find(exh => exh.id === item.id);
       if (exhibition) {
@@ -124,7 +125,7 @@ export default function Qr() {
       });
     } else if (parentType === 'exhibit') {
       let exhibitFound = false;
-  
+
       updatedCatalog.exhibition.forEach(exhibition => {
         exhibition.rooms && exhibition.rooms.forEach(room => {
           const exhibit = room.exhibits && room.exhibits.find(e => e.id === item.id);
@@ -134,7 +135,7 @@ export default function Qr() {
           }
         });
       });
-  
+
       if (!exhibitFound) {
         updatedCatalog.exhibition.forEach(exhibition => {
           exhibition.rooms && exhibition.rooms.forEach(room => {
@@ -146,12 +147,13 @@ export default function Qr() {
                 }
               });
             });
-          });
         });
-      }
+      });
     }
-    setCatalog(updatedCatalog);
-  };
+  }
+  setCatalog(updatedCatalog);
+};
+
 
   const renderExhibitsInRooms = (exhibits) => {
     return exhibits.map(exhibit => (
