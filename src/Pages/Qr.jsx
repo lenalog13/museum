@@ -131,10 +131,10 @@ export default function Qr() {
           <div className="toggle" key={exhibition.id}>
             <div onClick={() => toggle(`exhibition-${exhibition.id}`)} className="toggle" style={{ paddingLeft: '20px' }}>
               <span style={{ paddingRight: '10px' }}>
-                {exhibition.rooms && exhibition.rooms.length > 0 ? 
+                {exhibition.rooms  ? 
                   (expanded[`exhibition-${exhibition.id}`] ? '➖' : '➕') : ''}
               </span>
-              <span style={{ paddingLeft: exhibition.rooms && exhibition.rooms.length > 0 ? '0' : '20px' }}>
+              <span style={{ paddingLeft: exhibition.rooms ? '0' : '20px' }}>
                 {exhibition.exhibitionName}
               </span>
             </div>
