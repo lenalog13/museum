@@ -47,7 +47,6 @@ export default function Qr() {
     }));
   };
 
-
   const handleSelectChange = (item) => {
     const updatedCatalog = { ...catalog };
     const exhibition = updatedCatalog.exhibition.find(exh => exh.id === item.id);
@@ -56,30 +55,44 @@ export default function Qr() {
     }
     setCatalog(updatedCatalog);
   };
-  
 
   const renderExhibitsInRooms = (exhibits) => {
     return exhibits.map(exhibit => (
-      <div className="toggle" key={exhibit.id} style={{ paddingLeft: '60px' }}>
-        <span style={{ paddingRight: '10px' }}>
+      <div className="toggle" key={exhibit.id} style={{ paddingLeft: '100px' }}>
+        <div className='line'>
+        <span style={{ paddingRight: '20px' }}>
            {''}
          </span>
-         <span style={{ paddingLeft: '20px' }}>
+         <input
+          type="checkbox"
+          checked={exhibit.select}
+          onChange={() => handleSelectChange(exhibit)}
+        />
+         <div>
          {exhibit.exhibitsName}
-         </span>
+         </div>
+         </div>
       </div>
     ));
   };
 
   const renderExhibitsInShelves = (exhibits) => {
     return exhibits.map(exhibit => (
-      <div className="toggle" key={exhibit.id} style={{ paddingLeft: '100px' }}>
-        <span style={{ paddingRight: '10px' }}>
+      <div className="toggle" key={exhibit.id} style={{ paddingLeft: '180px' }}>
+        <div className='line'>
+        <span style={{ paddingRight: '20px' }}>
            {''}
          </span>
-         <span style={{ paddingLeft: '20px' }}>
+         <input
+          type="checkbox"
+          checked={exhibit.select}
+          onChange={() => handleSelectChange(exhibit)}
+          style={{ marginRight: '10px' }}
+         />
+         <div>
          {exhibit.exhibitsName}
-         </span>
+         </div>
+         </div>
       </div>
     ));
   };
@@ -87,14 +100,21 @@ export default function Qr() {
   const renderShelves = (shelves) => {
     return shelves.map(shelf => (
       <div className="toggle" key={shelf.id}>
-        <div className="toggle" style={{ paddingLeft: '80px' }}>
-         <span onClick={() => toggle(`shelf-${shelf.id}`)} style={{ paddingRight: '10px' }}>
+        <div className="toggle" style={{ paddingLeft: '140px' }}>
+        <div className='line'>
+         <span onClick={() => toggle(`shelf-${shelf.id}`)} style={{ paddingRight: shelf.exhibits ? '0' : '20px' }}>
             {shelf.exhibits ? 
              (expanded[`shelf-${shelf.id}`] ? '➖' : '➕') : ''}
          </span>
-         <span style={{ paddingLeft: shelf.exhibits ? '0' : '20px' }}>
+         <input
+            type="checkbox"
+            checked={shelf.select}
+            onChange={() => handleSelectChange(shelf)}
+          />
+         <div>
             {shelf.shelvesName}
-         </span>
+         </div>
+         </div>
         </div>
         {expanded[`shelf-${shelf.id}`] && shelf.exhibits && renderExhibitsInShelves(shelf.exhibits)}
        </div>
@@ -104,14 +124,21 @@ export default function Qr() {
   const renderShowcases = (showcases) => {
     return showcases.map(showcase => (
       <div className="toggle" key={showcase.id}>
-        <div className="toggle" style={{ paddingLeft: '60px' }}>
-         <span onClick={() => toggle(`showcase-${showcase.id}`)} style={{ paddingRight: '10px' }}>
+        <div className="toggle" style={{ paddingLeft: '100px' }}>
+        <div className='line'>
+         <span onClick={() => toggle(`showcase-${showcase.id}`)} style={{ paddingRight: showcase.shelves ? '0' : '20px' }}>
            {showcase.shelves ? 
              (expanded[`showcase-${showcase.id}`] ? '➖' : '➕') : ''}
          </span>
-         <span style={{ paddingLeft: showcase.shelves ? '0' : '20px' }}>
+         <input
+            type="checkbox"
+            checked={showcase.select}
+            onChange={() => handleSelectChange(showcase)}
+          />
+         <div>
           {showcase.showcasesName}
-         </span>
+         </div>
+         </div>
         </div>
         {expanded[`showcase-${showcase.id}`] && showcase.shelves && renderShelves(showcase.shelves)}
       </div>
@@ -121,15 +148,21 @@ export default function Qr() {
   const renderRooms = (rooms) => {
     return rooms.map(room => (
       <div className="toggle" key={room.id}>
-        <div className="toggle" style={{ paddingLeft: '40px' }}>
-          <span onClick={() => toggle(`room-${room.id}`)} style={{ paddingRight: '10px' }}>
+        <div className="toggle" style={{ paddingLeft: '60px' }}>
+        <div className='line'>
+          <span onClick={() => toggle(`room-${room.id}`)} style={{ paddingRight: room.showcases || room.exhibits ? '0' : '20px' }}>
             {room.showcases || room.exhibits ? 
               (expanded[`room-${room.id}`] ? '➖' : '➕') : ''}
           </span>
-
-          <span style={{ paddingLeft: room.showcases || room.exhibits ? '0' : '20px' }}>
+          <input
+            type="checkbox"
+            checked={room.select}
+            onChange={() => handleSelectChange(room)}
+          />
+          <div>
             {room.roomsName}
-          </span>
+          </div>
+        </div>
         </div>
         {expanded[`room-${room.id}`] && room.exhibits && renderExhibitsInRooms(room.exhibits)}
         {expanded[`room-${room.id}`] && room.showcases && renderShowcases(room.showcases)}
