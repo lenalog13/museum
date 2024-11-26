@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Qr.css';
 import Header from '../Components/Header'; 
 
@@ -39,6 +39,46 @@ export default function Qr() {
   const [catalog, setCatalog] = useState(initialCatalog);
 
   const [expanded, setExpanded] = useState({});
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    const newSelectedItems = [];
+    const findSelectedItems = (items) => {
+      if (!Array.isArray(items)) return; 
+      items.forEach(item => {
+        if (item.select) {
+          newSelectedItems.push({ ...item });
+        }
+        if (item.rooms) {
+          item.rooms.forEach(findSelectedItems);
+        }
+        if (item.showcases) {
+          item.showcases.forEach(findSelectedItems);
+        }
+        if (item.shelves) {
+          item.shelves.forEach(findSelectedItems);
+        }
+        if (item.exhibits) {
+          item.exhibits.forEach(findSelectedItems);
+        }
+      });
+    };
+
+    findSelectedItems(catalog.exhibition);
+    setSelectedItems(newSelectedItems);
+  }, [catalog]);
+
+  const handleInputChange = (id, value) => {
+    setSelectedItems(prevItems => 
+      prevItems.map(item => 
+        item.id === id ? { ...item, title: value } : item
+      )
+    );
+  };
+
 
   const toggle = (id) => {
     setExpanded(prev => ({
@@ -85,7 +125,6 @@ export default function Qr() {
     } else if (parentType === 'exhibit') {
       let exhibitFound = false;
   
-      // Check in rooms
       updatedCatalog.exhibition.forEach(exhibition => {
         exhibition.rooms && exhibition.rooms.forEach(room => {
           const exhibit = room.exhibits && room.exhibits.find(e => e.id === item.id);
@@ -96,7 +135,6 @@ export default function Qr() {
         });
       });
   
-      // Check in shelves
       if (!exhibitFound) {
         updatedCatalog.exhibition.forEach(exhibition => {
           exhibition.rooms && exhibition.rooms.forEach(room => {
@@ -255,6 +293,47 @@ export default function Qr() {
           </div>
         ))}
       </div>
+      { userRights != 'user' && (
+        <button className="select-button" onClick={() => setModalVisible(true)}>
+            Выбрать
+        </button> 
+      )}
+
+    {modalVisible && (
+        <div className="modal-overlay">
+            <div className="modal">
+                <h2>Сформировать qr-код для:</h2>
+                <div>
+              {selectedItems.map(item => (
+                <div key={item.id}>
+                  <input
+                    type="text"
+                    value={
+                      item.title || 
+                      item.exhibitsName || 
+                      item.roomsName || 
+                      item.showcasesName || 
+                      item.shelvesName || 
+                      item.exhibitionName
+                    }
+                    onChange={(e) => handleInputChange(item.id, e.target.value)}
+                  />
+                </div>
+
+                ))}
+                </div>
+
+                <h4>Формат qr-кодов:</h4>
+
+                <div className="modal-buttons">
+                    <button className="cancel-button" onClick={() => setModalVisible(false)}>Отменить</button>
+                    <button className="save-button">
+                        Сформировать
+                    </button>
+                </div>
+            </div>
+        </div>
+    )}
     </div>
   );
 }
