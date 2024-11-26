@@ -27,9 +27,9 @@ export default function Qr() {
             ]}
           ],
           exhibits: [
-            { id: 0, exhibitsName: 'экспонат 1', select: false  },
-            { id: 1, exhibitsName: 'экспонат 2', select: false  },
-            { id: 2, exhibitsName: 'экспонат 3', select: false  }
+            { id: 3, exhibitsName: 'экспонат 4', select: false  },
+            { id: 4, exhibitsName: 'экспонат 5', select: false  },
+            { id: 5, exhibitsName: 'экспонат 6', select: false  }
           ]
          }
       ]},
@@ -47,11 +47,70 @@ export default function Qr() {
     }));
   };
 
-  const handleSelectChange = (item) => {
+  const handleSelectChange = (item, parentType) => {
     const updatedCatalog = { ...catalog };
-    const exhibition = updatedCatalog.exhibition.find(exh => exh.id === item.id);
-    if (exhibition) {
+  
+    if (parentType === 'exhibition') {
+      const exhibition = updatedCatalog.exhibition.find(exh => exh.id === item.id);
+      if (exhibition) {
         exhibition.select = !exhibition.select;
+      }
+    } else if (parentType === 'room') {
+      updatedCatalog.exhibition.forEach(exhibition => {
+        const room = exhibition.rooms && exhibition.rooms.find(r => r.id === item.id);
+        if (room) {
+          room.select = !room.select;
+        }
+      });
+    } else if (parentType === 'showcase') {
+      updatedCatalog.exhibition.forEach(exhibition => {
+        exhibition.rooms && exhibition.rooms.forEach(room => {
+          const showcase = room.showcases && room.showcases.find(s => s.id === item.id);
+          if (showcase) {
+            showcase.select = !showcase.select;
+          }
+        });
+      });
+    } else if (parentType === 'shelf') {
+      updatedCatalog.exhibition.forEach(exhibition => {
+        exhibition.rooms && exhibition.rooms.forEach(room => {
+          room.showcases && room.showcases.forEach(showcase => {
+            const shelf = showcase.shelves && showcase.shelves.find(s => s.id === item.id);
+            if (shelf) {
+              shelf.select = !shelf.select;
+            }
+          });
+        });
+      });
+    } else if (parentType === 'exhibit') {
+      let exhibitFound = false;
+  
+      // Check in rooms
+      updatedCatalog.exhibition.forEach(exhibition => {
+        exhibition.rooms && exhibition.rooms.forEach(room => {
+          const exhibit = room.exhibits && room.exhibits.find(e => e.id === item.id);
+          if (exhibit) {
+            exhibit.select = !exhibit.select;
+            exhibitFound = true;
+          }
+        });
+      });
+  
+      // Check in shelves
+      if (!exhibitFound) {
+        updatedCatalog.exhibition.forEach(exhibition => {
+          exhibition.rooms && exhibition.rooms.forEach(room => {
+            room.showcases && room.showcases.forEach(showcase => {
+              showcase.shelves && showcase.shelves.forEach(shelf => {
+                const exhibit = shelf.exhibits && shelf.exhibits.find(e => e.id === item.id);
+                if (exhibit) {
+                  exhibit.select = !exhibit.select;
+                }
+              });
+            });
+          });
+        });
+      }
     }
     setCatalog(updatedCatalog);
   };
@@ -66,7 +125,7 @@ export default function Qr() {
          <input
           type="checkbox"
           checked={exhibit.select}
-          onChange={() => handleSelectChange(exhibit)}
+          onChange={() => handleSelectChange(exhibit, 'exhibit')}
         />
          <div>
          {exhibit.exhibitsName}
@@ -86,7 +145,7 @@ export default function Qr() {
          <input
           type="checkbox"
           checked={exhibit.select}
-          onChange={() => handleSelectChange(exhibit)}
+          onChange={() => handleSelectChange(exhibit, 'exhibit')}
           style={{ marginRight: '10px' }}
          />
          <div>
@@ -109,7 +168,7 @@ export default function Qr() {
          <input
             type="checkbox"
             checked={shelf.select}
-            onChange={() => handleSelectChange(shelf)}
+            onChange={() => handleSelectChange(shelf, 'shelf')}
           />
          <div>
             {shelf.shelvesName}
@@ -133,7 +192,7 @@ export default function Qr() {
          <input
             type="checkbox"
             checked={showcase.select}
-            onChange={() => handleSelectChange(showcase)}
+            onChange={() => handleSelectChange(showcase, 'showcase')}
           />
          <div>
           {showcase.showcasesName}
@@ -157,7 +216,7 @@ export default function Qr() {
           <input
             type="checkbox"
             checked={room.select}
-            onChange={() => handleSelectChange(room)}
+            onChange={() => handleSelectChange(room, 'room')}
           />
           <div>
             {room.roomsName}
@@ -185,7 +244,7 @@ export default function Qr() {
               <input
                 type="checkbox"
                 checked={exhibition.select}
-                onChange={() => handleSelectChange(exhibition)}
+                onChange={() => handleSelectChange(exhibition, 'exhibition')}
               />
               <div>
                 {exhibition.exhibitionName}
