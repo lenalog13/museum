@@ -74,8 +74,8 @@ export default function Qr() {
   const renderShelves = (shelves) => {
     return shelves.map(shelf => (
       <div className="toggle" key={shelf.id}>
-        <div onClick={() => toggle(`shelf-${shelf.id}`)} className="toggle" style={{ paddingLeft: '80px' }}>
-         <span style={{ paddingRight: '10px' }}>
+        <div className="toggle" style={{ paddingLeft: '80px' }}>
+         <span onClick={() => toggle(`shelf-${shelf.id}`)} style={{ paddingRight: '10px' }}>
             {shelf.exhibits ? 
              (expanded[`shelf-${shelf.id}`] ? '➖' : '➕') : ''}
          </span>
@@ -91,8 +91,8 @@ export default function Qr() {
   const renderShowcases = (showcases) => {
     return showcases.map(showcase => (
       <div className="toggle" key={showcase.id}>
-        <div onClick={() => toggle(`showcase-${showcase.id}`)} className="toggle" style={{ paddingLeft: '60px' }}>
-         <span style={{ paddingRight: '10px' }}>
+        <div className="toggle" style={{ paddingLeft: '60px' }}>
+         <span onClick={() => toggle(`showcase-${showcase.id}`)} style={{ paddingRight: '10px' }}>
            {showcase.shelves ? 
              (expanded[`showcase-${showcase.id}`] ? '➖' : '➕') : ''}
          </span>
@@ -108,8 +108,8 @@ export default function Qr() {
   const renderRooms = (rooms) => {
     return rooms.map(room => (
       <div className="toggle" key={room.id}>
-        <div onClick={() => toggle(`room-${room.id}`)} className="toggle" style={{ paddingLeft: '40px' }}>
-          <span style={{ paddingRight: '10px' }}>
+        <div className="toggle" style={{ paddingLeft: '40px' }}>
+          <span onClick={() => toggle(`room-${room.id}`)} style={{ paddingRight: '10px' }}>
             {room.showcases || room.exhibits ? 
               (expanded[`room-${room.id}`] ? '➖' : '➕') : ''}
           </span>
@@ -129,8 +129,8 @@ export default function Qr() {
       <div className='classList'>
         {catalog.exhibition.map(exhibition => (
           <div className="toggle" key={exhibition.id}>
-            <div onClick={() => toggle(`exhibition-${exhibition.id}`)} className="toggle" style={{ paddingLeft: '20px' }}>
-              <span style={{ paddingRight: '10px' }}>
+            <div className="toggle" style={{ paddingLeft: '20px' }}>
+              <span onClick={() => toggle(`exhibition-${exhibition.id}`)} style={{ paddingRight: '10px' }}>
                 {exhibition.rooms  ? 
                   (expanded[`exhibition-${exhibition.id}`] ? '➖' : '➕') : ''}
               </span>
