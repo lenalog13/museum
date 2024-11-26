@@ -44,6 +44,8 @@ export default function Qr() {
 
   const [selectedItems, setSelectedItems] = useState([]);
 
+  const [qrFormat, setQrFormat] = useState('small');
+
   useEffect(() => {
     const newSelectedItems = [];
     const findSelectedItems = (items) => {
@@ -86,6 +88,10 @@ export default function Qr() {
       ...prev,
       [id]: !prev[id]
     }));
+  };
+
+  const handleQrFormatChange = (e) => {
+    setQrFormat(e.target.value);
   };
 
   const handleSelectChange = (item, parentType) => {
@@ -325,8 +331,14 @@ export default function Qr() {
                 ))}
                 </div>
 
-                <h4>Формат qr-кодов:</h4>
-
+                <label>Формат qr-кодов:</label>
+                <div className="rights-container">
+                  <select value={qrFormat} onChange={handleQrFormatChange}>
+                    <option value="small">Маленький</option>
+                    <option value="medium">Средний</option>
+                    <option value="large">Большой</option>
+                  </select>
+                </div>
                 <div className="modal-buttons">
                     <button className="cancel-button" onClick={() => setModalVisible(false)}>Отменить</button>
                     <button className="save-button">
