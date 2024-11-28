@@ -18,10 +18,16 @@
     right: 0;
   }
 
-  .line {
-    display: flex;
-    vertical-align: middle;
-    text-align: left;
+  .classList1 {
+    background-color: #f9f9f9;
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    align-self: flex-start;
+    flex: 1;
+    overflow-y: auto;
+    margin: 0px 20px 20px 20px;
   }
 
   .select-button {
@@ -35,6 +41,40 @@
     margin: 0px 20px 20px 20px;
   }
 
+  .tabs {
+    display: flex; /* Используем flexbox для выравнивания кнопок в строку */
+    justify-content: left; /* Равномерно распределяем пространство между кнопками */
+    margin: 20px 20px 0 20px; /* Отступ сверху и снизу */
+  }
+  
+  .tabs button {
+    padding: 10px;
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tabs button:hover {
+    background-color: #f9f9f9;
+    color: black;
+    border: 1px solid rgb(132, 131, 131);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tabs button.selected {
+    background-color: #ece8e8;
+    color: black;
+
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
   
   
   
