@@ -118,12 +118,6 @@ export default function Showcases() {
       setModalVisible(true);
   };
 
-  const handleEditExhibits = (exhibit) => {
-    setNewExhibits(exhibit);
-    setEditingExhibitsId(exhibit.id);
-    setModalVisibleExhibit(true);
-};
-
 const handleCancelExhibit = () => {
     resetFormExhibit();
 };
@@ -142,15 +136,14 @@ const handleCancelExhibit = () => {
     }
   };
 
-  const handleDeleteExhibits = () => {
-    if (window.confirm('Вы действительно хотите удалить экспонат?')) {
-        setCatalog(prevCatalog => ({
-            ...prevCatalog,
-            exhibits: prevCatalog.exhibits.filter(exhibit => exhibit.id !== editingExhibitsId)
-        }));
-        resetFormExhibit();
-    }
-};
+  const handleDeleteExhibits = (id) => {
+    setCatalog(prevCatalog => ({
+      ...prevCatalog,
+      exhibits: prevCatalog.exhibits.filter(exhibit => exhibit.id !== id)
+    }));
+    resetFormExhibit();
+  };
+  
 
   const resetForm = () => {
       setNewShowcases ({ showcasesName: '', description: [] });
@@ -254,9 +247,18 @@ useEffect(() => {
                   {exhibit.exhibitsName}
                 </Link>
                 { userRights !== 'user' && (
-                  <button className="setting-button" onClick={() => handleEditExhibits(exhibit)} >
-                    Изменить
+                  <div className='exhibition-buttons'>
+                  <button className="setting-button">
+                    Переместить
                   </button>
+                  <button className="setting-button" onClick={() => {
+                    if (window.confirm('Вы действительно хотите удалить экспонат?')) {
+                      handleDeleteExhibits(exhibit.id);
+                    }
+                  }}>
+                    Удалить
+                  </button>
+                  </div>
                 )}
               </li>
             ))
@@ -301,7 +303,7 @@ useEffect(() => {
       {modalVisibleExhibit && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>{editingExhibitsId !== null ? 'Редактировать экспонат' : 'Добавить экспонат'}</h3>
+            <h3>Добавить экспонат</h3>
               <div className="dropdown" ref={dropdownRef}>
                 <input
                   type="text"
@@ -331,14 +333,9 @@ useEffect(() => {
                       onChange={handleInputChangeExhibit}
                   />
                   <div className="modal-buttons">
-                    {editingExhibitsId !== null && (
-                      <button className="delete-button" onClick={handleDeleteExhibits}>
-                        Удалить
-                      </button>
-                    )}
                     <button className="cancel-button" onClick={handleCancelExhibit}>Отменить</button>
                     <button className="save-button" onClick={handleAddExhibits}>
-                      {editingExhibitsId !== null ? 'Сохранить' : 'Добавить'}
+                      Добавить
                     </button>
                   </div>
                 </div>

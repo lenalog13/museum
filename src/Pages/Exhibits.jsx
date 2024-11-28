@@ -80,14 +80,12 @@ export default function Exhibits() {
       resetForm();
   };
 
-  const handleDeleteExhibits = () => {
-      if (window.confirm('Вы действительно хотите удалить экспонат?')) {
-          setCatalog(prevCatalog => ({
-              ...prevCatalog,
-              exhibits: prevCatalog.exhibits.filter(exhibit => exhibit.id !== editingExhibitsId)
-          }));
-          resetForm();
-      }
+  const handleDeleteExhibits = (id) => {
+    setCatalog(prevCatalog => ({
+      ...prevCatalog,
+      exhibits: prevCatalog.exhibits.filter(exhibit => exhibit.id !== id)
+    }));
+    resetForm();
   };
 
   const resetForm = () => {
@@ -159,9 +157,18 @@ return (
                   {item.exhibitsName}
                 </Link>
                 { userRights !== 'user' && (
-                  <button className="setting-button" onClick={() => handleEditExhibits(item)} >
-                    Изменить
+                  <div className='exhibition-buttons'>
+                  <button className="setting-button">
+                    Переместить
                   </button>
+                  <button className="setting-button" onClick={() => {
+                    if (window.confirm('Вы действительно хотите удалить экспонат?')) {
+                      handleDeleteExhibits(item.id);
+                    }
+                  }}>
+                    Удалить
+                  </button>
+                  </div>
                 )}
               </li>
             ))
