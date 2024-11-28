@@ -33,9 +33,18 @@ export default function Qr() {
     ]
   };
 
+  const formatQr = {
+    exhibitions: ['1 формат qr-кода для выставки', '2 формат qr-кода для выставки'],
+    rooms: ['1 формат qr-кода для помещения', '2 формат qr-кода для помещения'],
+    showcases: ['1 формат qr-кода для витрины', '2 формат qr-кода для витрины'],
+    shelves: ['1 формат qr-кода для полки', '2 формат qr-кода для полки'],
+    exhibits: ['1 формат qr-кода для экспоната', '2 формат qr-кода для экспоната']
+  };
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTab, setSelectedTab] = useState('exhibitions');
   const [data, setData] = useState(initialData);
+  const [selectedFormat, setSelectedFormat] = useState(null);
   
   const handleSelect = (id) => {
     setData(prevData => {
@@ -79,6 +88,11 @@ export default function Qr() {
     return data[selectedTab].filter(item => item.select);
   };
 
+  const getAllFormatsForCurrentTab = () => {
+    return formatQr[selectedTab]; 
+  };
+
+
   return (
     <div>
       <Header title='Выберите элементы для формирования QR-кодов:'/>
@@ -119,13 +133,30 @@ export default function Qr() {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Сформировать qr-код для:</h2>
-            <ul>
-              {getSelectedItems().map(item => (
-                <li key={item.id}>{item[selectedTab + 'Name'] || item[selectedTab + 'sName']}</li>
-              ))}
+            <ul className='selectedDescriptions'>
+            {getSelectedItems().length === 0 ? (
+              <label>Вы не выбрали ни одного объекта 🙁</label>
+              ) : (
+              getSelectedItems().map(item => (
+              <li key={item.id}>{item[selectedTab + 'Name'] || item[selectedTab + 'sName']}</li>
+              ))
+            )}
             </ul>
             <label>Выберите формат:</label>
-
+            <ul className='formatQr'>
+              {getAllFormatsForCurrentTab().map((format, index) => (
+                <li key={index}>
+                  <input
+                    type="radio"
+                    name="qrFormat"
+                    value={format}
+                    checked={selectedFormat === format}
+                    onChange={() => setSelectedFormat(format)}
+                  />
+                  {format}
+                </li>
+              ))}
+            </ul>
             <div className="modal-buttons">
               <button className="cancel-button" onClick={() => setModalVisible(false)}>Отменить</button>
               <button className="save-button">
