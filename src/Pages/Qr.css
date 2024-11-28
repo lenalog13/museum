@@ -42,9 +42,9 @@
   }
 
   .tabs {
-    display: flex; /* Используем flexbox для выравнивания кнопок в строку */
-    justify-content: left; /* Равномерно распределяем пространство между кнопками */
-    margin: 20px 20px 0 20px; /* Отступ сверху и снизу */
+    display: flex; 
+    justify-content: left; 
+    margin: 20px 20px 0 20px;
   }
   
   .tabs button {
@@ -57,7 +57,7 @@
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
   }
   
   .tabs button:hover {
@@ -71,7 +71,6 @@
   .tabs button.selected {
     background-color: #ece8e8;
     color: black;
-
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }

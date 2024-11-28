@@ -6,10 +6,10 @@ export default function Qr() {
   const userRights = 'admin';
 
   const initialData = {
-    exhibition: [
-      { id: 0, exhibitionName: 'выставка 1', select: false },
-      { id: 1, exhibitionName: 'выставка 2', select: false },
-      { id: 2, exhibitionName: 'выставка 3', select: false }
+    exhibitions: [
+      { id: 0, exhibitionsName: 'выставка 1', select: false },
+      { id: 1, exhibitionsName: 'выставка 2', select: false },
+      { id: 2, exhibitionsName: 'выставка 3', select: false }
     ],
     rooms: [
       { id: 0, roomsName: 'помещение 1', select: false },
@@ -34,19 +34,22 @@ export default function Qr() {
   };
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTab, setSelectedTab] = useState('exhibition');
+  const [selectedTab, setSelectedTab] = useState('exhibitions');
   const [data, setData] = useState(initialData);
+  
   const handleSelect = (id) => {
     setData(prevData => {
       const updatedData = { ...prevData };
-      const currentItems = updatedData[selectedTab];
-      const itemIndex = currentItems.findIndex(item => item.id === id);
-      if (itemIndex !== -1) {
-        currentItems[itemIndex].select = !currentItems[itemIndex].select; 
-      }
+      const currentItems = updatedData[selectedTab].map(item => {
+        if (item.id === id) {
+          return { ...item, select: !item.select };
+        }
+        return item;
+      });
+      updatedData[selectedTab] = currentItems;
       return updatedData;
     });
-  };  
+  };    
 
   const renderItems = () => {
     const items = data[selectedTab];
@@ -57,14 +60,13 @@ export default function Qr() {
           checked={item.select}
           onChange={() => handleSelect(item.id)}
         />
-        {item[selectedTab + 'Name'] || item[selectedTab + 'sName']}
+        {item[selectedTab + 'Name']}
       </div>
     ));
   };  
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);    
-    // Сброс состояния select для всех элементов в новой вкладке
     setData(prevData => {
       const updatedData = { ...prevData };
       const newItems = updatedData[tab];
@@ -81,8 +83,8 @@ export default function Qr() {
     <div>
       <Header title='Выберите элементы для формирования QR-кодов:'/>
       <div className='tabs'>
-        <button className={selectedTab === 'exhibition' ? 'selected' : ''}  
-          onClick={() => handleTabChange('exhibition')}>
+        <button className={selectedTab === 'exhibitions' ? 'selected' : ''}  
+          onClick={() => handleTabChange('exhibitions')}>
           Выставки
         </button>
         <button className={selectedTab === 'rooms' ? 'selected' : ''} 
@@ -117,12 +119,13 @@ export default function Qr() {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Сформировать qr-код для:</h2>
-            <label>Выберите формат:</label>
             <ul>
               {getSelectedItems().map(item => (
                 <li key={item.id}>{item[selectedTab + 'Name'] || item[selectedTab + 'sName']}</li>
               ))}
             </ul>
+            <label>Выберите формат:</label>
+
             <div className="modal-buttons">
               <button className="cancel-button" onClick={() => setModalVisible(false)}>Отменить</button>
               <button className="save-button">
