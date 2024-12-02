@@ -29,21 +29,15 @@ export default function Navbar() {
 
       <div className="navbar-right">
         <ul className="navbar-links">
-        <li> { userRights == 'admin' && (
+          <li> { userRights == 'admin' && (
             <Link to="/setting">Настройка</Link>
           )}
           </li>
-        {userRights === 'user' ? (
+       
             <li>
-              <Link to="/authorization">{store.isAuth? 'Выйти' : 'Войти'}</Link>
+              <Link className="logout-link" to="/authorization">Выйти</Link>
             </li>
-          ) : (
-            <li>
-              <Link to="/" onClick={() => setUserRights('user')} className="logout-link">
-                Выйти
-              </Link>       
-            </li>
-          )}
+          
         </ul>
       </div>
     </nav>
