@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
-import Header from '../Components/Header'; 
+import Header from '../Components/Header';
+import Exhibition from '../services/Exhibition'; 
 
 export default function Home() {
 
@@ -10,11 +11,7 @@ export default function Home() {
 
   const [catalog, setCatalog] = useState({
     title: 'Выставки',
-    exhibition: [
-      { id: 0, exhibitionName: 'выставка 1', description: [], startData: '2024-01-01', finishData: '2024-12-31' },
-      { id: 1, exhibitionName: 'выставка 2' },
-      { id: 2, exhibitionName: 'выставка 3' },
-    ]
+    exhibition: []
   });
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,6 +28,9 @@ export default function Home() {
   const [dateError, setDateError] = useState('');
 
   const [datesEntered, setDatesEntered] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -89,14 +89,19 @@ export default function Home() {
       resetForm();
   };
 
-  const handleDeleteExhibition  = () => {
-    if (window.confirm('Вы действительно хотите удалить выставку?')) {
-        setCatalog(prevCatalog => ({
-            ...prevCatalog,
-            exhibition: prevCatalog.exhibition.filter(exhibition => exhibition.id !== editingExhibitionId)
-        }));
-        resetForm();
-    }
+  const handleDeleteExhibition  = async (id) => {
+        try {
+            await Exhibition.deleteExhibition(id);
+            setCatalog(prevCatalog => ({
+                ...prevCatalog,
+                exhibition: prevCatalog.exhibition.filter(exhibition => exhibition.id !== id)
+            }));
+            resetForm();
+        } catch (error) {
+            console.error('Error deleting exhibition:', error);
+            setError(error);
+        }
+    
   };
 
 
@@ -107,6 +112,32 @@ export default function Home() {
     setDateError('');
     setDatesEntered(false);
   };
+
+  const fetchExhibition = async () => {
+    try {
+      const response = await Exhibition.getExhibition();
+      const exhibitions = response.data.map(exhibition => ({
+        id: exhibition.id,
+        exhibitionName: exhibition.name,
+        description: exhibition.description || [],
+        startData: exhibition.dateFrom,
+        finishData: exhibition.dateTo
+      }));
+      setCatalog({
+        ...catalog,
+        exhibition: exhibitions
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchExhibition();
+  }, []);
   
   return (
     <div>
@@ -174,7 +205,7 @@ export default function Home() {
                     {dateError && <div className="error-message-data">{dateError}</div>}
                     <div className="modal-buttons">
                         {editingExhibitionId !== null && (
-                                <button className="delete-button" onClick={handleDeleteExhibition}>
+                                <button className="delete-button" onClick={() => handleDeleteExhibition(editingExhibitionId)}>
                                     Удалить
                                 </button>
                         )}
@@ -191,5 +222,3 @@ export default function Home() {
     </div>
   );
 }
-
-
