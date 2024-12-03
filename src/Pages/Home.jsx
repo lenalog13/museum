@@ -39,14 +39,13 @@ export default function Home() {
     const handleEditExhibition = async (exhibition) => {
         try {
             const response = await Exhibition.getExhibitionById(exhibition.id);
-            console.log(response);
             setNewExhibition({
-                exhibitionName: exhibition.exhibitionName || '',
-                description: exhibition.description || '',
-                startData: exhibition.startData || '',
-                finishData: exhibition.finishData || ''
+                exhibitionName: response.data.name || '',
+                description: response.data.description || '',
+                startData: response.data.dateFrom || '',
+                finishData: response.data.dateTo || ''
             });
-            setEditingExhibitionId(exhibition.id);
+            setEditingExhibitionId(response.data.id);
             setModalVisible(true);
         } catch (error) {
             console.error('Error fetching exhibition details:', error);
