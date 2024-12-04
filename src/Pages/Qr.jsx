@@ -1,21 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Qr.css';
-import Header from '../Components/Header'; 
+import Header from '../Components/Header';
+import Exhibition from '../services/Exhibition'; // Импортируем сервис для работы с выставками
 
 export default function Qr() {
   const userRights = 'admin';
 
   const initialData = {
-    exhibitions: [
-      { id: 0, exhibitionsName: 'выставка 1', select: false },
-      { id: 1, exhibitionsName: 'выставка 2', select: false },
-      { id: 2, exhibitionsName: 'выставка 3', select: false }
-    ],
-    rooms: [
-      { id: 0, roomsName: 'помещение 1', select: false },
-      { id: 1, roomsName: 'помещение 2', select: false },
-      { id: 2, roomsName: 'помещение 3', select: false }
-    ],
+    exhibitions: [],
     showcases: [
       { id: 0, showcasesName: 'витрина 1', select: false },
       { id: 1, showcasesName: 'витрина 2', select: false },
@@ -35,7 +27,6 @@ export default function Qr() {
 
   const formatQr = {
     exhibitions: ['1 формат qr-кода для выставки', '2 формат qr-кода для выставки'],
-    rooms: ['1 формат qr-кода для помещения', '2 формат qr-кода для помещения'],
     showcases: ['1 формат qr-кода для витрины', '2 формат qr-кода для витрины'],
     shelves: ['1 формат qr-кода для полки', '2 формат qr-кода для полки'],
     exhibits: ['1 формат qr-кода для экспоната', '2 формат qr-кода для экспоната']
@@ -45,7 +36,24 @@ export default function Qr() {
   const [selectedTab, setSelectedTab] = useState('exhibitions');
   const [data, setData] = useState(initialData);
   const [selectedFormat, setSelectedFormat] = useState(null);
-  
+
+  useEffect(() => {
+    // Загружаем данные с бэкенда при монтировании компонента
+    Exhibition.getExhibition().then(response => {
+      const exhibitions = response.data.map((exhibition, index) => ({
+        id: exhibition.id,
+        exhibitionsName: exhibition.name,
+        select: false
+      }));
+      setData(prevData => ({
+        ...prevData,
+        exhibitions
+      }));
+    }).catch(error => {
+      console.error('Ошибка при загрузке данных:', error);
+    });
+  }, []);
+
   const handleSelect = (id) => {
     setData(prevData => {
       const updatedData = { ...prevData };
@@ -58,7 +66,7 @@ export default function Qr() {
       updatedData[selectedTab] = currentItems;
       return updatedData;
     });
-  };    
+  };
 
   const renderItems = () => {
     const items = data[selectedTab];
@@ -72,10 +80,10 @@ export default function Qr() {
         {item[selectedTab + 'Name']}
       </div>
     ));
-  };  
+  };
 
   const handleTabChange = (tab) => {
-    setSelectedTab(tab);    
+    setSelectedTab(tab);
     setData(prevData => {
       const updatedData = { ...prevData };
       const newItems = updatedData[tab];
@@ -89,31 +97,26 @@ export default function Qr() {
   };
 
   const getAllFormatsForCurrentTab = () => {
-    return formatQr[selectedTab]; 
+    return formatQr[selectedTab];
   };
-
 
   return (
     <div>
-      <Header title='Выберите элементы для формирования QR-кодов:'/>
+      <Header title='Выберите элементы для формирования QR-кодов:' />
       <div className='tabs'>
-        <button className={selectedTab === 'exhibitions' ? 'selected' : ''}  
+        <button className={selectedTab === 'exhibitions' ? 'selected' : ''}
           onClick={() => handleTabChange('exhibitions')}>
           Выставки
         </button>
-        <button className={selectedTab === 'rooms' ? 'selected' : ''} 
-          onClick={() => handleTabChange('rooms')}>
-          Помещения
-        </button>
-        <button className={selectedTab === 'showcases' ? 'selected' : ''} 
+        <button className={selectedTab === 'showcases' ? 'selected' : ''}
           onClick={() => handleTabChange('showcases')}>
           Витрины
         </button>
-        <button className={selectedTab === 'shelves' ? 'selected' : ''} 
+        <button className={selectedTab === 'shelves' ? 'selected' : ''}
           onClick={() => handleTabChange('shelves')}>
           Полки
         </button>
-        <button className={selectedTab === 'exhibits' ? 'selected' : ''} 
+        <button className={selectedTab === 'exhibits' ? 'selected' : ''}
           onClick={() => handleTabChange('exhibits')}>
           Экспонаты
         </button>
@@ -126,7 +129,7 @@ export default function Qr() {
       {userRights !== 'user' && (
         <button className="select-button" onClick={() => setModalVisible(true)}>
           Выбрать
-        </button> 
+        </button>
       )}
 
       {modalVisible && (
@@ -134,13 +137,13 @@ export default function Qr() {
           <div className="modal">
             <h2>Сформировать qr-код для:</h2>
             <ul className='selectedDescriptions'>
-            {getSelectedItems().length === 0 ? (
-              <label>Вы не выбрали ни одного объекта 🙁</label>
+              {getSelectedItems().length === 0 ? (
+                <label>Вы не выбрали ни одного объекта 🙁</label>
               ) : (
-              getSelectedItems().map(item => (
-              <li key={item.id}>{item[selectedTab + 'Name'] || item[selectedTab + 'sName']}</li>
-              ))
-            )}
+                getSelectedItems().map(item => (
+                  <li key={item.id}>{item[selectedTab + 'Name'] || item[selectedTab + 'sName']}</li>
+                ))
+              )}
             </ul>
             <label>Выберите формат:</label>
             <ul className='formatQr'>

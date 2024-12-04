@@ -1,226 +1,219 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
 import Header from '../Components/Header';
 import Room from '../services/Room';
 
 export default function Rooms() {
-  const userRights = 'admin';
-
-  const [catalog, setCatalog] = useState({
-    title: 'Помещения',
-    description: [],
-    rooms: [],
-  });
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const [newRoom, setNewRoom] = useState({ roomsName: '', description: [] });
-  const [editingRoomId, setEditingRoomId] = useState(null);
-  const [creating, setCreating] = useState(false);
-
-  useEffect(() => {
-    const handlePopState = (event) => {
-      if (modalVisible && creating) {
-        setCreating(false);
-        window.history.replaceState({}, '');
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [modalVisible, creating]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewRoom({
-      ...newRoom,
-      [name]: value,
+    const { id } = useParams();
+    const userRights = 'admin';
+    const [catalog, setCatalog] = useState({
+        title: 'Помещения',
+        description: [],
+        rooms: [],
     });
-  };
+    const [modalVisible, setModalVisible] = useState(false);
+    const [newRoom, setNewRoom] = useState({ roomsName: '', description: [] });
+    const [editingRoomId, setEditingRoomId] = useState(null);
+    const [creating, setCreating] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+    const [roomsData, setRoomsData] = useState([]);
+    const [selectedRoomId, setSelectedRoomId] = useState('');
 
-  
-  const handleCrRoom = () => {
-    setCreating(false);
-    window.history.replaceState({}, '');
-    handleShowModal();
-  };
+    const fetchRooms = async () => {
+        try {
+            const roomsResponse = await Room.getRooms();
+            console.log(roomsResponse)
+            setRoomsData(roomsResponse.data);
+        } catch (error) {
+            console.error('Error fetching rooms:', error);
+        }
+    };
 
+    const fetchExhibitionRooms = async () => {
+        try {
+            const roomsData = await Room.getRoomsByExhibitionId(id);
+            setCatalog(prevCatalog => ({
+                ...prevCatalog,
+                rooms: roomsData.data,
+            }));
+        } catch (error) {
+            console.error('Error fetching rooms by exhibition ID:', error);
+        }
+    };
 
-  const handleAddRoom = () => {
-    if (editingRoomId !== null) {
-      setCatalog(prevCatalog => ({
-        ...prevCatalog,
-        rooms: prevCatalog.rooms.map(room =>
-          room.id === editingRoomId ? { ...room, ...newRoom } : room
-        ),
-      }));
-    } else {
-      const newId = catalog.rooms.length;
-      const roomName = newRoom.roomsName.trim() !== '' ? newRoom.roomsName : `помещение ${newId + 1}`;
-      setCatalog({
-        ...catalog,
-        rooms: [...catalog.rooms, { id: newId, roomsName: roomName, description: [] }],
-      });
-    }
-    resetForm();
-  };
+    useEffect(() => {
+        fetchRooms();
+        if (id) {
+            fetchExhibitionRooms();
+        }
+    }, [id]);
 
-  const handleEditRoom = (room) => {
-    setNewRoom(room);
-    setEditingRoomId(room.id);
-    setModalVisible(true);
-    window.history.replaceState({}, '');
-  };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewRoom({ ...newRoom, [name]: value });
+    };
 
-  const handleCancel = () => {
-    resetForm();
-    window.history.replaceState({}, '');
-  };
+    const handleAddRoom = () => {
+        if (selectedRoomId !== null && selectedRoomId !== '' && id) {
+            Room.addRoomToExhibition(selectedRoomId, id)
+                .then(() => {
+                    fetchExhibitionRooms();
+                    resetForm();
+                    setModalVisible(false);
+                })
+                .catch(error => {
+                    console.error('Error adding room to exhibition:', error);
+                    alert('Failed to add room to exhibition. Please try again.');
+                });
+        } else {
+            alert('Пожалуйста, выберите номер комнаты.');
+        }
+    };
 
-  const handleCancelCreate = () => {
-    setCreating(false);
-    window.history.replaceState({}, '');
-    handleShowModal();
-  };
+    const handleEditRoom = (room) => {
+        setNewRoom(room);
+        setEditingRoomId(room.id);
+        setModalVisible(true);
+    };
 
-  const handleDeleteRoom = () => {
-    if (window.confirm('Вы действительно хотите удалить помещение?')) {
-      setCatalog(prevCatalog => ({
-        ...prevCatalog,
-        rooms: prevCatalog.rooms.filter(room => room.id !== editingRoomId),
-      }));
-      resetForm();
-    }
-  };
+    const handleDeleteRoom = () => {
+        if (window.confirm('Вы действительно хотите удалить помещение?')) {
+            setCatalog(prevCatalog => ({
+                ...prevCatalog,
+                rooms: prevCatalog.rooms.filter(room => room.id !== editingRoomId),
+            }));
+            resetForm();
+        }
+    };
 
-  const resetForm = () => {
-    setNewRoom({ roomsName: '' });
-    setEditingRoomId(null);
-    setModalVisible(false);
-    setCreating(false);
-    window.history.replaceState({}, '');
-  };
+    const resetForm = () => {
+        setNewRoom({ roomsName: '' });
+        setEditingRoomId(null);
+        setCreating(false);
+        setInputValue('');
+        setSelectedRoomId('');
+    };
 
-  const handleShowModal = async () => {
-    try {
-      const roomsData = await Room.getRooms();
-      console.log(roomsData);
-    } catch (error) {
-      console.error('Error fetching rooms:', error);
-    }
-    setModalVisible(true);
-    setCreating(false);
-    window.history.replaceState({}, '');
-  };
+    const handleCreateRoom = () => {
+        setCreating(true);
+    };
 
-  const handleCreateRoom = () => {
-    setCreating(true);
-    window.history.replaceState({ creating: true }, '');
-  };
+    const handleShowModal = () => {
+        setModalVisible(true);
+        setCreating(false);
+    };
 
-  return (
-    <div>
-      <Header title={catalog.title} />
-      {userRights !== 'user' && (
-        <div className="pages-buttons">
-          <button className="adding-button" onClick={handleShowModal}>
-            Добавить помещение
-          </button>
-          <button className="adding-button">
-            Редактировать описание выставки
-          </button>
-        </div>
-      )}
-      <div className="classList">
-        <ul>
-          {catalog.rooms.map(item => (
-            <li key={item.id} className="list-item">
-              <Link to={`/exhibition/room/${item.id}`}>
-                {item.roomsName}
-              </Link>
-              {userRights !== 'user' && (
-                <button className="setting-button" onClick={() => handleEditRoom(item)}>
-                  Изменить
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {modalVisible && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>
-              {editingRoomId !== null
-                ? 'Редактирование помещения'
-                : creating
-                  ? 'Создание помещения'
-                  : 'Добавление помещения'}
-            </h3>
-            {editingRoomId !== null ? (
-              <input
-                type="text"
-                name="roomsName"
-                placeholder="Название"
-                value={newRoom.roomsName || `помещение ${catalog.rooms.length + 1}`}
-                onChange={handleInputChange}
-              />
-            ) : (creating ? (
-              <input
-                type="text"
-                name="roomsName"
-                placeholder="Номер комнаты"
-                onChange={handleInputChange}
-              />
-            ) : (
-              <div>
-                <div className="rights-container">
-                  <select
-                    name="rights"
-                    onChange={handleInputChange}
-                    id="rights"
-                  >
-                    <option value="moderator">Помещение 1</option>
-                    <option value="admin">Помещение 2</option>
-                  </select>
+    const handleCancelCreate = () => {
+        setCreating(false);
+        handleShowModal();
+    };
+
+    const handleCancel = () => {
+        resetForm();
+        setModalVisible(false);
+    };
+
+    const handleCrRoom = () => {
+        const roomNumber = inputValue;
+        if (!roomNumber) {
+            alert('Please provide a room number.');
+            return;
+        }
+        Room.createRoom(roomNumber)
+            .then(() => {
+                fetchRooms();
+                if (id) {
+                    fetchExhibitionRooms();
+                }
+                resetForm();
+                handleShowModal();
+            })
+            .catch(error => {
+                console.error('Error creating room:', error);
+                alert('Failed to create room. Please try again.');
+            });
+    };
+
+    const handleSelectRoom = (e) => {
+        setSelectedRoomId(e.target.value);
+    };
+
+    return (
+        <div>
+            <Header title={catalog.title} />
+            {userRights !== 'user' && (
+                <div className="pages-buttons">
+                    <button className="adding-button" onClick={handleShowModal}> Добавить помещение </button>
+                    <button className="adding-button"> Редактировать описание выставки </button>
                 </div>
-                <button className="cancel-button" onClick={handleCreateRoom} style={{ marginBottom: '10px' }}>
-                  Создать помещение
-                </button>
-              </div>
-            ))}
-            <div className="modal-buttons">
-              {editingRoomId !== null && (
-                <button className="delete-button" onClick={handleDeleteRoom}>
-                  Удалить
-                </button>
-              )}
-              {creating ? (
-                <button className="cancel-button" onClick={handleCancelCreate}>
-                Отменить
-              </button>
-              ) : (
-                <button className="cancel-button" onClick={handleCancel}>
-                Отменить
-              </button>
-              )}
-              {creating ? (
-                <button className="save-button" onClick={handleCrRoom}>
-                  Создать
-                </button>
-              ) : (
-                <button className="save-button" onClick={handleAddRoom}>
-                  {editingRoomId !== null ? 'Сохранить' : 'Добавить'}
-                </button>
-              )}
+            )}
+            <div className="classList">
+                <ul>
+                    {catalog.rooms.length > 0 ? (
+                        catalog.rooms.map(item => (
+                            <li key={item.id} className="list-item">
+                                <Link to={`/exhibition/${id}/room/${item.id}`}>
+                                    Помещение {item.number}
+                                </Link>
+                                {userRights !== 'user' && (
+                                    <button className="setting-button"> Удалить </button>
+                                )}
+                            </li>
+                        ))
+                    ) : (
+                        <li className="list-item">Тут пока ничего нет 🙁</li>
+                    )}
+                </ul>
             </div>
-          </div>
+            {modalVisible && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h3>{editingRoomId !== null ? 'Редактирование помещения' : creating ? 'Создание помещения' : 'Добавление помещения'}</h3>
+                        {editingRoomId !== null ? (
+                            <input type="text" name="roomsName" placeholder="Название" value={newRoom.roomsName || `помещение ${catalog.rooms.length + 1}`} onChange={handleInputChange} />
+                        ) : (creating ? (
+                            <input type="text" name="roomsName" placeholder="Номер комнаты" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                        ) : (
+                            <div>
+                                <div className="rights-container">
+                                    <select name="selectedRoom" onChange={handleSelectRoom} value={selectedRoomId} id="selectedRoom">
+                                        <option value="" disabled selected>Выберите помещение</option>
+                                        {roomsData.length > 0 ? (
+                                            roomsData.map(room => (
+                                                <option key={room.id} value={room.id}>
+                                                    {room.number}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="">Тут пока нет комнат</option>
+                                        )}
+                                    </select>
+                                </div>
+                                <button className="cancel-button" onClick={handleCreateRoom} style={{ marginBottom: '10px' }}> Создать помещение </button>
+                            </div>
+                        ))}
+                        <div className="modal-buttons">
+                            {editingRoomId !== null && (
+                                <button className="delete-button" onClick={handleDeleteRoom}> Удалить </button>
+                            )}
+                            {creating ? (
+                                <button className="cancel-button" onClick={handleCancelCreate}> Отменить </button>
+                            ) : (
+                                <button className="cancel-button" onClick={handleCancel}> Отменить </button>
+                            )}
+                            {creating ? (
+                                <button className="save-button" onClick={handleCrRoom}> Создать </button>
+                            ) : (editingRoomId !== null ?(
+                              <button className="save-button" > Сохранить </button>
+                            ):(
+                              <button className="save-button" onClick={handleAddRoom}> Добавить </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }

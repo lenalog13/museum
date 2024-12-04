@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link  } from 'react-router-dom';
+import React, { useState, useEffect, useRef} from 'react';
+import { Link, useParams  } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
 import Header from '../Components/Header'; 
+import Shelving from '../services/Shelving';
 
 export default function Showcases() {
 
+  const { id } = useParams();
+  const roomId = id;
   const userRights = 'admin';
 
   const [catalog, setCatalog] = useState({
     title: 'Витрины и экспонаты',
     description: [],
     showcases: [
-      { id: 0, showcasesName: 'витрина 1', description: [] },
-      { id: 1, showcasesName: 'витрина 2', description: [] },
-      { id: 2, showcasesName: 'витрина 3', description: [] }
     ],
     exhibits: [
       { id: 0, exhibitsName: 'экспонат 1', description: [] },
@@ -57,6 +57,23 @@ export default function Showcases() {
 
   const dropdownRef = useRef(null);
 
+  const fetchShelvings = async () => {
+      try {
+          const response = await Shelving.getShelvings(roomId);
+          console.log(response)
+          setCatalog(prevCatalog => ({
+              ...prevCatalog,
+              showcases: response.data
+          }));
+      } catch (error) {
+          console.error('Error fetching shelvings:', error);
+      }
+  };
+  useEffect(() => {
+
+    fetchShelvings();
+}, [roomId]);
+
   const handleInputChangeExhibit = (e) => {
       const { name, value } = e.target;
       setNewExhibits({
@@ -73,24 +90,39 @@ export default function Showcases() {
       });
   };
 
-  const handleAddShowcases  = () => {
-    if (editingShowcasesId !== null) {
-      setCatalog(prevCatalog => ({
-        ...prevCatalog,
-          showcases: prevCatalog.showcases.map(showcases =>
-          showcases.id === editingShowcasesId ? { ...showcases, ...newShowcases } : showcases
-        )
-      }));
-    } else {
-      const newId = catalog.showcases.length;
-      const showcasName = newShowcases.showcasesName.trim() === '' ? `витрина ${newId + 1}` : newShowcases.showcasesName
-      setCatalog({
-        ...catalog,
-        showcases: [...catalog.showcases, { id: newId, showcasesName: showcasName, description: [] }]
-      });
+  const handleAddShowcases = async () => {
+    const shelvingNumber = newShowcases.showcasesName;
+    const exhibitionId = window.location.pathname.split('/')[2]; 
+
+    if (isNaN(shelvingNumber)) {
+        alert("Пожалуйста, введите корректный номер витрины.");
+        return;
     }
+
+    if (editingShowcasesId !== null) {
+       
+        setCatalog(prevCatalog => ({
+            ...prevCatalog,
+            showcases: prevCatalog.showcases.map(showcase =>
+                showcase.id === editingShowcasesId ? { ...showcase, ...newShowcases } : showcase
+            )
+        }));
+    } else {
+        
+        try {
+          console.log(shelvingNumber, roomId, exhibitionId)
+            await Shelving.createShelving(shelvingNumber, roomId, exhibitionId, "");
+            setCatalog(prevCatalog => ({
+                ...prevCatalog,
+                showcases: [...prevCatalog.showcases, { id: shelvingNumber, showcasesName: newShowcases.showcasesName, description: [] }]
+            }));
+        } catch (error) {
+            console.error('Error creating shelving:', error);
+        }
+    }
+
     resetForm();
-  };
+};
 
   const handleAddExhibits = () => {
     if (error) {
@@ -185,6 +217,17 @@ const handleSelectExhibit = (exhibit) => {
   setError(false);
 };
 
+const handleDeleteShowcase = async (shelvingId) => {
+  if (window.confirm('Вы действительно хотите удалить витрину?')) {
+      try {
+          await Shelving.deleteShelving(shelvingId);
+          fetchShelvings();
+      } catch (error) {
+          console.error('Error deleting shelving:', error);
+      }
+  }
+};
+
 useEffect(() => {
   const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -223,11 +266,11 @@ useEffect(() => {
             catalog.showcases.map((item) => (
               <li key={item.id} className="list-item">
                 <Link to={`/exhibition/room/showcase/${item.id}`}>
-                  {item.showcasesName}
+                  {item.number}
                 </Link>
                 { userRights !== 'user' && (
-                  <button className="setting-button" onClick={() => handleEditShowcases(item)} >
-                    Изменить
+                  <button className="setting-button" onClick={() => handleDeleteShowcase(item.id)}>
+                  Удалить
                   </button>
                 )}
               </li>
@@ -281,7 +324,6 @@ useEffect(() => {
             type="text"
             name="showcasesName"
             placeholder="Название"
-            value={newShowcases.showcasesName === '' ? `витрина ${catalog.showcases.length + 1}` : newShowcases.showcasesName}
             onChange={handleInputChange}
           />
           <div className="modal-buttons">

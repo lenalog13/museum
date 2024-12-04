@@ -6,7 +6,6 @@ import { Context } from '..';
 export default function Navbar() {
 
   const { store } = useContext(Context);
-  const[userRights, setUserRights] = useState('admin');
 
   return (
     <nav className="navbar">
@@ -20,23 +19,28 @@ export default function Navbar() {
           <li>
             <Link to="/">Выставки</Link>
           </li>
-          <li> { userRights != 'user' && (
+          <li> { store.isAuth? (
             <Link to="/qr">Сформировать <br/> qr-коды</Link>
-          )}
+          ):("")}
           </li>
         </ul>
       </div>
 
       <div className="navbar-right">
         <ul className="navbar-links">
-          <li> { userRights == 'admin' && (
+
+          <li> { store.isRole == 'ADMIN' && (
             <Link to="/setting">Настройка</Link>
           )}
           </li>
-       
-            <li>
-              <Link className="logout-link" to="/authorization">Выйти</Link>
-            </li>
+
+          <li> { store.isAuth ? (
+            <Link className="logout-link" to="/authorization">Выйти</Link>
+          ):(
+            <Link className="logout-link" to="/authorization">Войти</Link>
+          )}
+          </li>
+
           
         </ul>
       </div>
