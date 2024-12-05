@@ -18,6 +18,6 @@ export default class Shelving {
     }
 
     static deleteShelving(shelvingId) {
-        return $api.delete(`/api/v1/storage_unit/delete_shelving/${shelvingId}`);
+        return $api.delete(`/storage_unit/delete_shelving/${shelvingId}`);
     }
 }

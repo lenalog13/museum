@@ -29,10 +29,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/exhibition/:id" element={<Rooms />} />
         <Route path="/exhibition/:id/room/:id" element={<Showcases />} />
-        <Route path="/exhibition/room/exhibit/:id" element={<ExhibitInfo />} />
-        <Route path="/exhibition/room/showcase/:id" element={<Shelves />} />
-        <Route path="/exhibition/room/showcase/shelf/:id" element={<Exhibits />} />
-        <Route path="/exhibition/room/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
+        <Route path="/exhibition/:id/room/exhibit/:id" element={<ExhibitInfo />} />
+        <Route path="/exhibition/:id/room/showcase/:id" element={<Shelves />} />
+        <Route path="/exhibition/:id/room/showcase/shelf/:id" element={<Exhibits />} />
+        <Route path="/exhibition/:id/room/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
       </Routes>
     </>
   );

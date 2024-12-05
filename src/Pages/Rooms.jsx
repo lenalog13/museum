@@ -140,6 +140,17 @@ export default function Rooms() {
         setSelectedRoomId(e.target.value);
     };
 
+    const handleDelete = (id) => {
+        Room.deleteRoom(id)
+            .then(response => {
+                fetchRooms();
+                console.log('Room deleted successfully:', response);
+            })
+            .catch(error => {
+                console.error('Error deleting room:', error);
+            });
+    };
+
     return (
         <div>
             <Header title={catalog.title} />
@@ -157,9 +168,7 @@ export default function Rooms() {
                                 <Link to={`/exhibition/${id}/room/${item.id}`}>
                                     Помещение {item.number}
                                 </Link>
-                                {userRights !== 'user' && (
-                                    <button className="setting-button"> Удалить </button>
-                                )}
+                               
                             </li>
                         ))
                     ) : (

@@ -12,32 +12,24 @@ export default function Setting() {
     const [loading, setLoading] = useState(true);
 
     const fetchUsers = async () => {
-      try {
-          const response = await User.getUsers();
-          console.log(response);
-  
-          const users = response.data.map(user => {
-              const roleMatch = user.role.match(/=(.*?)\)/);
-              const role = roleMatch && roleMatch[1] ? roleMatch[1].trim() : '';
-  
-              return {
-                  id: user.id,
-                  lastName: user.last_name,
-                  firstName: user.name,
-                  patronymic: user.middle_name,
-                  rights: role,
-                  login: '',
-                  password: ''
-              };
-          });
-  
-          setCatalog(prevCatalog => ({ ...prevCatalog, users }));
-      } catch (error) {
-          console.error('Failed to fetch users:', error);
-      } finally {
-          setLoading(false);
-      }
-  };
+        try {
+            const response = await User.getUsers();
+            const users = response.data.map(user => ({
+                id: user.id,
+                lastName: user.lastName,
+                firstName: user.name,
+                patronymic: user.middleName,
+                login: '',
+                password: '',
+                role: extractRole(user.role) // Извлекаем роль
+            }));
+            setCatalog(prevCatalog => ({ ...prevCatalog, users }));
+        } catch (error) {
+            console.error('Failed to fetch users:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         fetchUsers();
@@ -67,37 +59,67 @@ export default function Setting() {
         resetForm();
     };
 
-    const handleEditUser = (user) => {
-        setNewUser({
-            lastName: user.lastName,
-            firstName: user.firstName,
-            patronymic: user.patronymic,
-            rights: user.rights,
-            login: user.login || '',
-            password: user.password || ''
-        });
-        setEditingUserId(user.id);
-        setModalVisible(true);
+    const handleUpdateUser = async () => {
+        const userData = {
+            userId: editingUserId,
+            name: newUser.firstName,
+            middleName: newUser.patronymic,
+            lastName: newUser.lastName,
+            role: newUser.rights.toUpperCase()
+        };
+
+        try {
+            await User.updateUser(userData);
+            fetchUsers();
+        } catch (error) {
+            console.error('Failed to update user:', error);
+        }
+        resetForm();
+    };
+
+    const handleEditUser = async (user) => {
+        try {
+            const response = await User.getUserById(user.id);
+            const fetchedUser = response.data;
+            //console.log(extractRole(fetchedUser.role))
+            setNewUser({
+                lastName: fetchedUser.lastName,
+                firstName: fetchedUser.name,
+                patronymic: fetchedUser.middleName,
+                rights: extractRole(fetchedUser.role)
+            });
+            setEditingUserId(user.id);
+            setModalVisible(true);
+        } catch (error) {
+            console.error('Failed to fetch user by ID:', error);
+        }
+    };
+
+    const handleDeleteUser = async (userId) => {
+        if (window.confirm('Вы действительно хотите удалить пользователя?')) {
+            try {
+                await User.deleteUser(userId); 
+                fetchUsers();
+            } catch (error) {
+                console.error('Failed to delete user:', error);
+            }
+        }
     };
 
     const handleCancel = () => {
         resetForm();
     };
 
-    const handleDeleteUser = () => {
-        if (window.confirm('Вы действительно хотите удалить пользователя?')) {
-            setCatalog(prevCatalog => ({
-                ...prevCatalog,
-                users: prevCatalog.users.filter(user => user.id !== editingUserId)
-            }));
-            resetForm();
-        }
-    };
-
     const resetForm = () => {
-        setNewUser({ lastName: '', firstName: '', patronymic: '', rights: 'moderator', login: '', password: '' });
+        setNewUser({ lastName: '', firstName: '', patronymic: '', login: '', password: '', rights: 'moderator' });
         setEditingUserId(null);
         setModalVisible(false);
+    };
+
+    // Функция для извлечения роли из строки
+    const extractRole = (roleString) => {
+        const match = roleString.match(/role=([^)]+)/);
+        return match ? match[1] : '';
     };
 
     return (
@@ -112,11 +134,14 @@ export default function Setting() {
                 ) : (
                     <ul>
                         {catalog.users.map((item) => (
-                            <li key={item.id} className="list-item">
-                                <div>
-                                    {item.lastName} {item.firstName} {item.patronymic || ''} - {item.rights}
+                            <li key={item.id} className="list-item" style={{ display: 'flex' }}>
+                                <div className="text-container" style={{ flex: 1 }}>
+                                    {item.lastName} {item.firstName} {item.patronymic || ''}
                                 </div>
-                                <button className="setting-button" onClick={() => handleEditUser(item)}> Изменить </button>
+                                <div className="button-container" style={{ marginLeft: 'auto', display: 'flex', gap: '10px' }}>
+                                    <button className="setting-button" onClick={() => handleEditUser(item)}>Изменить</button>
+                                    <button className="setting-button" onClick={() => handleDeleteUser(item.id)}>Удалить</button>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -131,25 +156,26 @@ export default function Setting() {
                         <input type="text" name="patronymic" placeholder="Отчество" value={newUser.patronymic} onChange={handleInputChange} />
                         <div className="rights-container">
                             <select name="rights" value={newUser.rights} onChange={handleInputChange} id="rights">
-                                <option value="moderator">Модератор</option>
-                                <option value="admin">Админ</option>
+                                <option value="MODERATOR">Модератор</option>
+                                <option value="ADMIN">Админ</option>
                             </select>
                         </div>
                         {editingUserId == null ? (
-                          <>
-                            <input type="text" name="login" placeholder="Логин" value={newUser.login} onChange={handleInputChange} />
-                            <input type="password" name="password" placeholder="Пароль" value={newUser.password} onChange={handleInputChange} />
-                          </>
-                        ) : ("")}
-                        
+                            <>
+                                <input type="text" name="login" placeholder="Логин" value={newUser.login} onChange={handleInputChange} />
+                                <input type="password" name="password" placeholder="Пароль" value={newUser.password} onChange={handleInputChange} />
+                            </>
+                        ) : (
+                            ""
+                        )}
+
                         <div className="modal-buttons">
-                            {editingUserId !== null && (
-                                <button className="delete-button" onClick={handleDeleteUser}> Удалить </button>
-                            )}
                             <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-                            <button className="save-button" onClick={handleAddUser}>
-                                {editingUserId !== null ? 'Сохранить' : 'Добавить'}
-                            </button>
+                            {editingUserId !== null ? (
+                                <button className="save-button" onClick={handleUpdateUser}>Сохранить</button>
+                            ) : (
+                                <button className="save-button" onClick={handleAddUser}>Добавить</button>
+                            )}
                         </div>
                     </div>
                 </div>

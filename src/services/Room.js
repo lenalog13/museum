@@ -16,4 +16,8 @@ export default class Room {
     static addRoomToExhibition(roomId, exhibitionId) {
         return $api.post('/exhibition/add_room', { roomId, exhibitionId });
     }
+
+    static deleteRoom(roomId) {
+        return $api.delete(`/storage_unit/delete_room/${roomId}`);
+    }
 }

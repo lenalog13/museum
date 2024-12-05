@@ -6,6 +6,26 @@ import Header from '../Components/Header';
 
 export default function Exhibits() {
 
+  function getExhibitionId() {
+    const pathname = window.location.pathname;
+    const parts = pathname.split('/');
+    
+    if (parts.length < 3) {
+      return null; 
+    }
+    
+    const exhibitionIdStr = parts[2];
+    const exhibitionId = parseInt(exhibitionIdStr, 10);
+    
+    if (isNaN(exhibitionId)) {
+      return null; 
+    }
+    
+    return exhibitionId;
+  }
+
+  const exhibitionId = getExhibitionId();
+
   const userRights = 'admin';
 
   const [catalog, setCatalog] = useState({
@@ -153,7 +173,7 @@ return (
             {catalog.exhibits.length > 0 ? (
             catalog.exhibits.map((item) => (
               <li key={item.id} className="list-item">
-                <Link to={`/exhibition/room/showcase/shelf/exhibit/${item.id}`}>
+                <Link to={`/exhibition/${exhibitionId}/room/showcase/shelf/exhibit/${item.id}`}>
                   {item.exhibitsName}
                 </Link>
                 { userRights !== 'user' && (

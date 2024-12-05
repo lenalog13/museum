@@ -7,6 +7,27 @@ import Shelving from '../services/Shelving';
 
 export default function Showcases() {
 
+  
+  function getExhibitionId() {
+    const pathname = window.location.pathname;
+    const parts = pathname.split('/');
+    
+    if (parts.length < 3) {
+      return null; 
+    }
+    
+    const exhibitionIdStr = parts[2];
+    const exhibitionId = parseInt(exhibitionIdStr, 10);
+    
+    if (isNaN(exhibitionId)) {
+      return null; 
+    }
+    
+    return exhibitionId;
+  }
+
+  const exhibitionId = getExhibitionId();
+
   const { id } = useParams();
   const roomId = id;
   const userRights = 'admin';
@@ -98,27 +119,12 @@ export default function Showcases() {
         alert("Пожалуйста, введите корректный номер витрины.");
         return;
     }
-
-    if (editingShowcasesId !== null) {
-       
-        setCatalog(prevCatalog => ({
-            ...prevCatalog,
-            showcases: prevCatalog.showcases.map(showcase =>
-                showcase.id === editingShowcasesId ? { ...showcase, ...newShowcases } : showcase
-            )
-        }));
-    } else {
-        
-        try {
-          console.log(shelvingNumber, roomId, exhibitionId)
-            await Shelving.createShelving(shelvingNumber, roomId, exhibitionId, "");
-            setCatalog(prevCatalog => ({
-                ...prevCatalog,
-                showcases: [...prevCatalog.showcases, { id: shelvingNumber, showcasesName: newShowcases.showcasesName, description: [] }]
-            }));
-        } catch (error) {
-            console.error('Error creating shelving:', error);
-        }
+    try {
+      console.log(shelvingNumber, roomId, exhibitionId)
+        await Shelving.createShelving(shelvingNumber, roomId, exhibitionId, "");
+        fetchShelvings();
+    } catch (error) {
+        console.error('Error creating shelving:', error);
     }
 
     resetForm();
@@ -265,8 +271,8 @@ useEffect(() => {
           {catalog.showcases.length > 0 ? (
             catalog.showcases.map((item) => (
               <li key={item.id} className="list-item">
-                <Link to={`/exhibition/room/showcase/${item.id}`}>
-                  {item.number}
+                <Link to={`/exhibition/${exhibitionId}/room/showcase/${item.id}`}>
+                  витрина {item.number}
                 </Link>
                 { userRights !== 'user' && (
                   <button className="setting-button" onClick={() => handleDeleteShowcase(item.id)}>
@@ -286,7 +292,7 @@ useEffect(() => {
           {catalog.exhibits.length > 0 ? (
             catalog.exhibits.map((exhibit) => (
               <li key={exhibit.id} className="list-item">
-                <Link to={`/exhibition/room/exhibit/${exhibit.id}`}>
+                <Link to={`/exhibition/${exhibitionId}/room/exhibit/${exhibit.id}`}>
                   {exhibit.exhibitsName}
                 </Link>
                 { userRights !== 'user' && (
@@ -323,7 +329,7 @@ useEffect(() => {
           <input
             type="text"
             name="showcasesName"
-            placeholder="Название"
+            placeholder="Введите номер витрины"
             onChange={handleInputChange}
           />
           <div className="modal-buttons">
