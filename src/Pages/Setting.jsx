@@ -21,7 +21,7 @@ export default function Setting() {
                 patronymic: user.middleName,
                 login: '',
                 password: '',
-                role: extractRole(user.role) // Извлекаем роль
+                role: extractRole(user.role)
             }));
             setCatalog(prevCatalog => ({ ...prevCatalog, users }));
         } catch (error) {

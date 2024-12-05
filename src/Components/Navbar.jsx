@@ -34,6 +34,11 @@ export default function Navbar() {
           )}
           </li>
 
+          <li> { store.isRole == 'ADMIN' && (
+            <Link to="/backup">Резервная копия</Link>
+          )}
+          </li>
+
           <li> { store.isAuth ? (
             <Link className="logout-link" to="/authorization">Выйти</Link>
           ):(

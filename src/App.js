@@ -10,6 +10,7 @@ import Showcases from "./Pages/Showcases";
 import Shelves from "./Pages/Shelves";
 import Exhibits from "./Pages/Exhibits";
 import ExhibitInfo from "./Pages/ExhibitInfo";
+import Backup from "./Pages/Backup";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/exhibition/:id/room/showcase/:id" element={<Shelves />} />
         <Route path="/exhibition/:id/room/showcase/shelf/:id" element={<Exhibits />} />
         <Route path="/exhibition/:id/room/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
+        <Route path="/backup" element={<Backup />} />
       </Routes>
     </>
   );
