@@ -16,9 +16,8 @@ export default class Store {
 
     async login(username, password) {
         try {
-            localStorage.clear();
+            localStorage.removeItem('token');
             const response = await Auth.login(username, password);
-            console.log(response)
             localStorage.setItem('token', response.data.token);
             this.setAuth(true, response.data.role);
             return true;
