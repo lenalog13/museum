@@ -29,13 +29,7 @@ export default function ExhibitInfo() {
     return (
         <div>
             <Header title={item.title} />
-            {userRights !== 'user' && (
-            <div className="pages-buttons">
-                <button className="adding-button">
-                    Переместить
-                </button>
-            </div>
-             )}
+
             <div className='exhibit-container'>
                 <div className='exhibit-description'>
                     <div className='classList'>

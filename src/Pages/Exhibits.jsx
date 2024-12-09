@@ -163,9 +163,11 @@ return (
                 <button className="adding-button" onClick={() => setModalVisible(true)}>
                     Добавить экспонат
                 </button> 
+                <Link className="discription" to={`/exhibition/${exhibitionId}/room/showcase/shelf/description`}>
                 <button className="adding-button">
                     Редактировать описание полки
                 </button> 
+                </Link>
             </div>
         )}
         <div className='classList'>

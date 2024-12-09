@@ -109,7 +109,9 @@ export default function Shelves() {
       {userRights !== 'user' && (
         <div className="pages-buttons">
           <button className="adding-button" onClick={() => setModalVisible(true)}>Добавить полку</button>
-          <button className="adding-button">Редактировать описание витрины</button>
+          <Link className="discription" to={`/exhibition/${id}/room/showcase/description`}>
+            <button className="adding-button">Описание витрины</button>
+          </Link>
         </div>
       )}
       {loading ? (

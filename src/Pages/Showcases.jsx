@@ -259,9 +259,11 @@ useEffect(() => {
           <button className="adding-button" onClick={() => setModalVisibleExhibit(true)}>
             Добавить экспонат
           </button>
-          <button className="adding-button">
-            Редактировать описание помещения
-          </button> 
+          <Link className="discription" to={`/exhibition/${exhibitionId}/room/description`}>
+            <button className="adding-button">
+              Описание помещения
+            </button> 
+            </Link>
         </div>
       )}
 

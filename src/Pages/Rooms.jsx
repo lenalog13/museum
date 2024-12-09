@@ -160,7 +160,11 @@ export default function Rooms() {
             {userRights !== 'user' && (
                 <div className="pages-buttons">
                     <button className="adding-button" onClick={handleShowModal}> Добавить помещение </button>
-                    <button className="adding-button"> Редактировать описание выставки </button>
+                    <Link className="discription" to={`/exhibition/${id}/description`}>
+                    <button className="adding-button">
+                         Описание выставки 
+                    </button>
+                    </Link>
                 </div>
             )}
             <div className="classList">
