@@ -139,8 +139,12 @@ export default function Setting() {
                                     {item.lastName} {item.firstName} {item.patronymic || ''}
                                 </div>
                                 <div className="button-container" style={{ marginLeft: 'auto', display: 'flex', gap: '10px' }}>
+                                {item.id !== 1 ? (
+                                    <button className="setting-button" onClick={() => handleDeleteUser(item.id)}>
+                                        Удалить
+                                    </button>
+                                    ) : null}
                                     <button className="setting-button" onClick={() => handleEditUser(item)}>Изменить</button>
-                                    <button className="setting-button" onClick={() => handleDeleteUser(item.id)}>Удалить</button>
                                 </div>
                             </li>
                         ))}
