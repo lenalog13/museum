@@ -68,7 +68,7 @@ export default function Rooms() {
                     alert('Failed to add room to exhibition. Please try again.');
                 });
         } else {
-            alert('Пожалуйста, выберите номер комнаты.');
+            alert('Пожалуйста, выберите номер помещения.');
         }
     };
 
@@ -80,11 +80,14 @@ export default function Rooms() {
 
     const handleDeleteRoom = () => {
         if (window.confirm('Вы действительно хотите удалить помещение?')) {
-            setCatalog(prevCatalog => ({
-                ...prevCatalog,
-                rooms: prevCatalog.rooms.filter(room => room.id !== editingRoomId),
-            }));
-            resetForm();
+            Room.deleteRoom(id)
+            .then(() => {
+              fetchRooms();
+              resetForm();
+            })
+            .catch(error => {
+              console.error('Error deleting room:', error);
+            });
         }
     };
 
@@ -168,7 +171,11 @@ export default function Rooms() {
                                 <Link to={`/exhibition/${id}/room/${item.id}`}>
                                     Помещение {item.number}
                                 </Link>
-                               
+                                {userRights !== 'user' && (
+                                <button className="setting-button" onClick={()=>handleDeleteRoom(item.id)}>
+                                    Удалить
+                                </button>
+                  )}
                             </li>
                         ))
                     ) : (

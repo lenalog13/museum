@@ -178,9 +178,6 @@ return (
                 </Link>
                 { userRights !== 'user' && (
                   <div className='exhibition-buttons'>
-                  <button className="setting-button">
-                    Переместить
-                  </button>
                   <button className="setting-button" onClick={() => {
                     if (window.confirm('Вы действительно хотите удалить экспонат?')) {
                       handleDeleteExhibits(item.id);
