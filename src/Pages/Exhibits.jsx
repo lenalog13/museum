@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import Exhibit from '../services/Exhibit'
 import './List.css';
 import './Setting.css';
+import './Exhibits.css';
 import Header from '../Components/Header';
 
 export default function Exhibits() {
@@ -53,6 +55,8 @@ export default function Exhibits() {
   });
 
   const [editingExhibitsId, setEditingExhibitsId] = useState(null);
+  
+  const [selectedTab, setSelectedTab] = useState('id');
 
   const [filteredExhibits, setFilteredExhibits] = useState([]);
 
@@ -62,32 +66,29 @@ export default function Exhibits() {
 
   const dropdownRef = useRef(null);
 
+  const [searchResultsVisible, setSearchResultsVisible] = useState(false);
+
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearchExhibits = () => {
+    // Implement your search logic here
+    // For example, filter exhibits based on the input
+    const results = exhibits.filter(exhibit => 
+        selectedTab === 'id' 
+            ? exhibit.id.includes(newExhibits.exhibitsName) 
+            : exhibit.name.includes(newExhibits.exhibitsName)
+    );
+    
+    setSearchResults(results);
+    setSearchResultsVisible(true); // Show the search results modal
+};
+
   const handleInputChange = (e) => {
       const { name, value } = e.target;
       setNewExhibits({
           ...newExhibits,
           [name]: value
       });
-  };
-
-  const handleAddExhibits = () => {
-      if (error) {
-            return;
-      }  
-      if (editingExhibitsId !== null) {
-          setCatalog(prevCatalog => ({
-              ...prevCatalog,
-              exhibits: prevCatalog.exhibits.map(exhibit =>
-                  exhibit.id === editingExhibitsId ? { ...exhibit, ...newExhibits } : exhibit
-              )
-          }));
-      } else {
-          setCatalog(prevCatalog => ({
-              ...prevCatalog,
-              exhibits: [...prevCatalog.exhibits, { id: newExhibits.id, ...newExhibits }]
-          }));
-      }
-      resetForm();
   };
 
   const handleEditExhibits = (exhibit) => {
@@ -155,93 +156,145 @@ export default function Exhibits() {
     };
   }, [dropdownRef]);
 
+  const handleAddExhibits = async () => {
+    try {
+        // Create new exhibit using the Exhibit class
+        const createdExhibit = await Exhibit.createExhibit(newExhibits.exhibitsName);
+        console.log(createdExhibit);
+
+        // Reset the form and open the modal for adding a new exhibit
+        resetForm();
+        setModalVisible(true); // Open the modal again for adding another exhibit
+    } catch (error) {
+        console.error("Error adding exhibit:", error);
+        // Optionally, set an error state to show a message to the user
+    }
+};
+
 return (
-    <div>
-        <Header title={catalog.title} />
-        {userRights !== 'user' && (
-            <div className="pages-buttons">
-                <button className="adding-button" onClick={() => setModalVisible(true)}>
-                    Добавить экспонат
-                </button> 
-                <Link className="discription" to={`/exhibition/${exhibitionId}/room/showcase/shelf/description`}>
-                <button className="adding-button">
-                    Редактировать описание полки
-                </button> 
-                </Link>
-            </div>
-        )}
-        <div className='classList'>
-          <ul>
-            {catalog.exhibits.length > 0 ? (
-            catalog.exhibits.map((item) => (
-              <li key={item.id} className="list-item">
-                <Link to={`/exhibition/${exhibitionId}/room/showcase/shelf/exhibit/${item.id}`}>
-                  {item.exhibitsName}
-                </Link>
-                { userRights !== 'user' && (
-                  <div className='exhibition-buttons'>
-                  <button className="setting-button" onClick={() => {
-                    if (window.confirm('Вы действительно хотите удалить экспонат?')) {
-                      handleDeleteExhibits(item.id);
-                    }
-                  }}>
-                    Удалить
+  <div>
+      <Header title={catalog.title} />
+      {userRights !== 'user' && (
+          <div className="pages-buttons">
+              <button className="adding-button" onClick={() => setModalVisible(true)}>
+                  Добавить экспонат
+              </button>
+              <Link className="discription" to={`/exhibition/${exhibitionId}/room/showcase/shelf/description`}>
+                  <button className="adding-button">
+                      Редактировать описание полки
                   </button>
-                  </div>
-                )}
-              </li>
-            ))
-          ) : (
-            <li className="list-item"> Тут пока ничего нет 🙁</li>
-          )}
-          </ul>
-        </div>
-        {modalVisible && (
-            <div className="modal-overlay">
-                <div className="modal">
-                    <h3>{editingExhibitsId !== null ? 'Редактировать экспонат' : 'Добавить экспонат'}</h3>
-                    <div className="dropdown" ref={dropdownRef}>
-                        <input
-                            type="text"
-                            name="id"
-                            placeholder="номер по книге поступления"
-                            value={newExhibits.id}
-                            onChange={handleInputChangeId}
-                            onFocus={() => setFilteredExhibits(exhibits)}
-                            className={error ? 'input-error' : ''}
-                        />
-                        {error && <div className="error-message-id">Нет экспоната с таким номером по книге поступления</div>}
-                        {filteredExhibits.length > 0 && (
-                            <ul>
-                                {filteredExhibits.map(exhibit => (
-                                    <li key={exhibit.id} onClick={() => handleSelectExhibit(exhibit)}>
-                                        {exhibit.id}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                    <input
-                        type="text"
-                        name="exhibitsName"
-                        placeholder="Название"
-                        value={newExhibits.exhibitsName}
-                        onChange={handleInputChange}
-                    />
-                      <div className="modal-buttons">
-                          {editingExhibitsId !== null && (
-                              <button className="delete-button" onClick={handleDeleteExhibits}>
-                                  Удалить
-                              </button>
+              </Link>
+          </div>
+      )}
+      <div className='classList'>
+          <ul>
+              {catalog.exhibits.length > 0 ? (
+                  catalog.exhibits.map((item) => (
+                      <li key={item.id} className="list-item">
+                          <Link to={`/exhibition/${exhibitionId}/room/showcase/shelf/exhibit/${item.id}`}>
+                              {item.exhibitsName}
+                          </Link>
+                          {userRights !== 'user' && (
+                              <div className='exhibition-buttons'>
+                                  <button className="setting-button" onClick={() => {
+                                      if (window.confirm('Вы действительно хотите удалить экспонат?')) {
+                                          handleDeleteExhibits(item.id);
+                                      }
+                                  }}>
+                                      Удалить
+                                  </button>
+                              </div>
                           )}
-                          <button className="cancel-button" onClick={handleCancel}>Отменить</button>
-                          <button className="save-button" onClick={handleAddExhibits}>
-                            {editingExhibitsId !== null ? 'Сохранить' : 'Добавить'}
+                      </li>
+                  ))
+              ) : (
+                  <li className="list-item"> Тут пока ничего нет 🙁</li>
+              )}
+          </ul>
+      </div>
+
+      {modalVisible && (
+          <div className="modal-overlay">
+              <div className="modal">
+                  <h3>{editingExhibitsId !== null ? 'Редактировать экспонат' : 'Добавить новый экспонат'}</h3>
+                  {selectedTab === 'id' || selectedTab === 'name' ? (
+                      <>
+                          <div className="tabs">
+                              <button className={selectedTab === 'id' ? 'selected' : ''} onClick={() => setSelectedTab('id')}>
+                                  Поиск по номеру
+                              </button>
+                              <button className={selectedTab === 'name' ? 'selected' : ''} onClick={() => setSelectedTab('name')}>
+                                  Поиск по названию
+                              </button>
+                          </div>
+                          <input
+                              type="text"
+                              name="exhibitsName"
+                              placeholder={selectedTab === 'id' ? "Введите номер экспоната" : "Введите название экспоната"}
+                              value={newExhibits.exhibitsName}
+                              onChange={handleInputChange}
+                          />
+                          <div className="modal-buttons">
+                              <button className="cancel-button" onClick={() => setModalVisible(false)}>
+                                  Назад
+                              </button>
+                              <button className="save-button" onClick={handleSearchExhibits}>
+                                  Поиск
+                              </button>
+                          </div>
+                          <button className="cancel-button" onClick={() => setSelectedTab('create')}>
+                              Создать экспонат
                           </button>
+                      </>
+                  ) : (
+                      <>
+                          <input
+                              type="text"
+                              name="exhibitsName"
+                              placeholder="Введите название экспоната"
+                              value={newExhibits.exhibitsName}
+                              onChange={handleInputChange}
+                          />
+                          <div className="modal-buttons">
+                              <button className="cancel-button" onClick={() => setSelectedTab('id')}>
+                                  Назад
+                              </button>
+                              <button className="save-button" onClick={handleAddExhibits}>
+                                  Создать
+                              </button>
+                          </div>
+                      </>
+                  )}
+              </div>
+          </div>
+      )}
+
+      {searchResultsVisible && (
+          <div className="modal-overlay">
+              <div className="modal">
+                  <h3>Результаты поиска</h3>
+                  {searchResults.length > 0 ? (
+                      <div>
+                          {searchResults.map((exhibit, index) => (
+                              <div key={exhibit.id}>
+                                  <label htmlFor={`exhibit-${index}`}>{exhibit.name}</label>
+                              </div>
+                          ))}
                       </div>
+                  ) : (
+                      <p>Нет подходящих экспонатов.</p>
+                  )}
+                  <div className="modal-buttons">
+                      <button className="cancel-button" onClick={() => setSearchResultsVisible(false)}>
+                          Назад
+                      </button>
+                      <button className="save-button" onClick={() => console.log('Добавить выбранный экспонат')}>
+                          Добавить
+                      </button>
                   </div>
               </div>
-          )}
-      </div>
-  );
+          </div>
+      )}
+  </div>
+);
 }
