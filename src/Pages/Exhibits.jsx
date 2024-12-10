@@ -264,12 +264,21 @@ export default function Exhibits() {
                         <h3>Результаты поиска</h3>
                         {searchResults.length > 0 ? (
                             <div>
-                                {searchResults.map((exhibit, index) => (
-                                    <div key={exhibit.id}>
-                                        <label htmlFor={`exhibit-${index}`}>{exhibit.name}</label>
-                                    </div>
-                                ))}
+                              <ul className='format'>
+                              {searchResults.map((exhibit, index) => (
+                                <li key={exhibit.id}>
+                                  <input
+                                    type="radio"
+                                    id={`exhibit-${index}`}
+                                    name="exhibit"
+                                    value={exhibit.id}
+                                  />
+                                  {exhibit.name}
+                                </li>
+                              ))}
+                              </ul>
                             </div>
+                            
                         ) : (
                             <p>Нет подходящих экспонатов.</p>
                         )}

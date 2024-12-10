@@ -44,3 +44,15 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
+
+  input[type="radio"] {
+    cursor: pointer;
+    vertical-align: middle;
+    margin: 5px 5px 5px 5px;
+    width: 15px;
+    right: 0;
+  }
+
+  .format {
+    margin: 10px 5px 15px 3px;
+  }

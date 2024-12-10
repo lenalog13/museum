@@ -263,7 +263,7 @@ useEffect(() => {
             <button className="adding-button">
               Описание помещения
             </button> 
-            </Link>
+          </Link>
         </div>
       )}
 
