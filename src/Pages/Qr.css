@@ -53,14 +53,16 @@
     margin: 0px 20px 20px 20px;
   }
 
-  .tabs {
+  .tabsQr {
     display: flex; 
     justify-content: left; 
     margin: 20px 20px 0 20px;
+    align-items: center;
+    width: 100%;
   }
   
-  .tabs button {
-    padding: 10px;
+  .tabsQr button {
+    padding: 7px;
     font-size: 15px;
     background-color: white;
     color: black;
@@ -72,7 +74,7 @@
 
   }
   
-  .tabs button:hover {
+  .tabsQr button:hover {
     background-color: #f9f9f9;
     color: black;
     border: 1px solid rgb(132, 131, 131);
@@ -80,7 +82,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
   
-  .tabs button.selected {
+  .tabsQr button.selected {
     background-color: #ece8e8;
     color: black;
     border-radius: 8px;

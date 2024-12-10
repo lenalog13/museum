@@ -183,17 +183,6 @@ export default function Exhibits() {
                                 <Link to={`/exhibition/${exhibitionId}/room/showcase/shelf/exhibit/${item.id}`}>
                                     {item.exhibitsName}
                                 </Link>
-                                {userRights !== 'user' && (
-                                    <div className='exhibition-buttons'>
-                                        <button className="setting-button" onClick={() => {
-                                            if (window.confirm('Вы действительно хотите удалить экспонат?')) {
-                                                handleDeleteExhibits(item.id);
-                                            }
-                                        }}>
-                                            Удалить
-                                        </button>
-                                    </div>
-                                )}
                             </li>
                         ))
                     ) : (
@@ -296,7 +285,5 @@ export default function Exhibits() {
         </div>
     );
 }
-
-
 
 

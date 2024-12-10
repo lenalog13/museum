@@ -103,7 +103,7 @@ export default function Qr() {
   return (
     <div>
       <Header title='Выберите элементы для формирования QR-кодов:' />
-      <div className='tabs'>
+      <div className='tabsQr'>
         <button className={selectedTab === 'exhibitions' ? 'selected' : ''}
           onClick={() => handleTabChange('exhibitions')}>
           Выставки
