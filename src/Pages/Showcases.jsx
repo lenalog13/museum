@@ -297,20 +297,6 @@ useEffect(() => {
                 <Link to={`/exhibition/${exhibitionId}/room/exhibit/${exhibit.id}`}>
                   {exhibit.exhibitsName}
                 </Link>
-                { userRights !== 'user' && (
-                  <div className='exhibition-buttons'>
-                  <button className="setting-button">
-                    Переместить
-                  </button>
-                  <button className="setting-button" onClick={() => {
-                    if (window.confirm('Вы действительно хотите удалить экспонат?')) {
-                      handleDeleteExhibits(exhibit.id);
-                    }
-                  }}>
-                    Удалить
-                  </button>
-                  </div>
-                )}
               </li>
             ))
           ) : (
