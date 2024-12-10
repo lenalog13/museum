@@ -37,13 +37,6 @@ export default function Exhibits() {
         ]
     });
 
-    const exhibits = [
-        { id: '3', title: 'экспонат 4', description: [] },
-        { id: '4', title: 'экспонат 5', description: [] },
-        { id: '5', title: 'экспонат 6', description: [] },
-        { id: '6', title: 'экспонат 7', description: [] },
-    ];
-
     const [modalVisible, setModalVisible] = useState(false);
     const [newExhibits, setNewExhibits] = useState({
         id: '',
@@ -54,7 +47,6 @@ export default function Exhibits() {
     const [editingExhibitsId, setEditingExhibitsId] = useState(null);
     const [selectedTab, setSelectedTab] = useState('id');
     const [filteredExhibits, setFilteredExhibits] = useState([]);
-    const [inputValue, setInputValue] = useState(null);
     const [error, setError] = useState(false);
     const dropdownRef = useRef(null);
     const [searchResultsVisible, setSearchResultsVisible] = useState(false);
@@ -80,55 +72,10 @@ export default function Exhibits() {
         });
     };
 
-    const handleEditExhibits = (exhibit) => {
-        setNewExhibits(exhibit);
-        setEditingExhibitsId(exhibit.id);
-        setModalVisible(true);
-    };
-
-    const handleCancel = () => {
-        resetForm();
-    };
-
-    const handleDeleteExhibits = (id) => {
-        setCatalog(prevCatalog => ({
-            ...prevCatalog,
-            exhibits: prevCatalog.exhibits.filter(exhibit => exhibit.id !== id)
-        }));
-        resetForm();
-    };
-
     const resetForm = () => {
         setNewExhibits({ id: '', exhibitsName: '', description: [] });
         setEditingExhibitsId(null);
         setModalVisible(false);
-        setError(false);
-    };
-
-    const handleInputChangeId = (event) => {
-        const value = event.target.value;
-        setInputValue(value);
-        setNewExhibits(prev => ({ ...prev, id: value }));
-
-        const exhibitExists = exhibits.some(exhibit => exhibit.id === value);
-        if (!exhibitExists && value !== '') {
-            setError(true);
-        } else {
-            setError(false);
-        }
-
-        const filtered = exhibits.filter(exhibit => exhibit.id.includes(value));
-        setFilteredExhibits(filtered);
-    };
-
-    const handleSelectExhibit = (exhibit) => {
-        setInputValue(exhibit.id);
-        setNewExhibits({
-            id: exhibit.id,
-            exhibitsName: exhibit.title || '',
-            description: exhibit.description || [],
-        });
-        setFilteredExhibits([]);
         setError(false);
     };
 
@@ -183,6 +130,7 @@ export default function Exhibits() {
                                 <Link to={`/exhibition/${exhibitionId}/room/showcase/shelf/exhibit/${item.id}`}>
                                     {item.exhibitsName}
                                 </Link>
+
                             </li>
                         ))
                     ) : (
@@ -197,18 +145,10 @@ export default function Exhibits() {
                         <h3>{editingExhibitsId !== null ? 'Редактировать экспонат' : 'Добавить новый экспонат'}</h3>
                         {selectedTab === 'id' || selectedTab === 'name' ? (
                             <>
-                                <div className="tabs">
-                                    <button className={selectedTab === 'id' ? 'selected' : ''} onClick={() => setSelectedTab('id')}>
-                                        Поиск по номеру
-                                    </button>
-                                    <button className={selectedTab === 'name' ? 'selected' : ''} onClick={() => setSelectedTab('name')}>
-                                        Поиск по названию
-                                    </button>
-                                </div>
                                 <input
                                     type="text"
                                     name="exhibitsName"
-                                    placeholder={selectedTab === 'id' ? "Введите номер экспоната" : "Введите название экспоната"}
+                                    placeholder="Введите название экспоната"
                                     value={newExhibits.exhibitsName}
                                     onChange={handleInputChange}
                                 />

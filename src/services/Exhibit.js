@@ -17,6 +17,24 @@ export default class Exhibit {
             }
         });
     }
+
+    // Method to get exhibits by shelf ID
+    static async getExhibitsByShelfId(shelfId) {
+        const response = await $api.get(`/api/v1/exhibit/get_by_shelf_id/${shelfId}`);
+        return response.data; // Return the list of exhibits
+    }
+
+    // Method to add an exhibit to a shelf
+    static async addExhibitToShelf(exhibitId, descriptionId, shelfId, exhibitionId) {
+        const response = await $api.post('/api/v1/exhibition/add_exhibit', {
+            exhibitId: exhibitId,
+            descriptionId: descriptionId,
+            shelfId: shelfId,
+            roomId: null, // Set roomId to null
+            exhibitionId: exhibitionId
+        });
+        return response.data; // Return the response data
+    }
 }
 
 
