@@ -6,6 +6,7 @@ import { Context } from '..';
 export default function Navbar() {
 
   const { store } = useContext(Context);
+  console.log(store)
 
   return (
     <nav className="navbar">
