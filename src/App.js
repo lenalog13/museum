@@ -29,10 +29,14 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/exhibition/:id" element={<Rooms />} />
+        <Route path="/exhibition/:id/description" element={<ExhibitInfo />} />
         <Route path="/exhibition/:id/room/:id" element={<Showcases />} />
+        <Route path="/exhibition/:id/room/description" element={<ExhibitInfo />} />
         <Route path="/exhibition/:id/room/exhibit/:id" element={<ExhibitInfo />} />
         <Route path="/exhibition/:id/room/showcase/:id" element={<Shelves />} />
+        <Route path="/exhibition/:id/room/showcase/description" element={<ExhibitInfo />} />
         <Route path="/exhibition/:id/room/showcase/shelf/:id" element={<Exhibits />} />
+        <Route path="/exhibition/:id/room/showcase/shelf/description" element={<ExhibitInfo />} />
         <Route path="/exhibition/:id/room/showcase/shelf/exhibit/:id" element={<ExhibitInfo />} />
         <Route path="/backup" element={<Backup />} />
       </Routes>

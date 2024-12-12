@@ -259,9 +259,11 @@ useEffect(() => {
           <button className="adding-button" onClick={() => setModalVisibleExhibit(true)}>
             Добавить экспонат
           </button>
-          <button className="adding-button">
-            Редактировать описание помещения
-          </button> 
+          <Link className="discription" to={`/exhibition/${exhibitionId}/room/description`}>
+            <button className="adding-button">
+              Описание помещения
+            </button> 
+          </Link>
         </div>
       )}
 
@@ -295,20 +297,6 @@ useEffect(() => {
                 <Link to={`/exhibition/${exhibitionId}/room/exhibit/${exhibit.id}`}>
                   {exhibit.exhibitsName}
                 </Link>
-                { userRights !== 'user' && (
-                  <div className='exhibition-buttons'>
-                  <button className="setting-button">
-                    Переместить
-                  </button>
-                  <button className="setting-button" onClick={() => {
-                    if (window.confirm('Вы действительно хотите удалить экспонат?')) {
-                      handleDeleteExhibits(exhibit.id);
-                    }
-                  }}>
-                    Удалить
-                  </button>
-                  </div>
-                )}
               </li>
             ))
           ) : (

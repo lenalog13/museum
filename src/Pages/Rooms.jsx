@@ -68,7 +68,7 @@ export default function Rooms() {
                     alert('Failed to add room to exhibition. Please try again.');
                 });
         } else {
-            alert('Пожалуйста, выберите номер комнаты.');
+            alert('Пожалуйста, выберите номер помещения.');
         }
     };
 
@@ -80,11 +80,14 @@ export default function Rooms() {
 
     const handleDeleteRoom = () => {
         if (window.confirm('Вы действительно хотите удалить помещение?')) {
-            setCatalog(prevCatalog => ({
-                ...prevCatalog,
-                rooms: prevCatalog.rooms.filter(room => room.id !== editingRoomId),
-            }));
-            resetForm();
+            Room.deleteRoom(id)
+            .then(() => {
+              fetchRooms();
+              resetForm();
+            })
+            .catch(error => {
+              console.error('Error deleting room:', error);
+            });
         }
     };
 
@@ -157,7 +160,11 @@ export default function Rooms() {
             {userRights !== 'user' && (
                 <div className="pages-buttons">
                     <button className="adding-button" onClick={handleShowModal}> Добавить помещение </button>
-                    <button className="adding-button"> Редактировать описание выставки </button>
+                    <Link className="discription" to={`/exhibition/${id}/description`}>
+                    <button className="adding-button">
+                         Описание выставки 
+                    </button>
+                    </Link>
                 </div>
             )}
             <div className="classList">
@@ -168,7 +175,11 @@ export default function Rooms() {
                                 <Link to={`/exhibition/${id}/room/${item.id}`}>
                                     Помещение {item.number}
                                 </Link>
-                               
+                                {userRights !== 'user' && (
+                                <button className="setting-button" onClick={()=>handleDeleteRoom(item.id)}>
+                                    Удалить
+                                </button>
+                  )}
                             </li>
                         ))
                     ) : (
