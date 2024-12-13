@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef} from 'react';
 import { Link, useParams  } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
 import Header from '../Components/Header'; 
 import Shelving from '../services/Shelving';
+import { Context } from '..';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 
 export default function Showcases() {
+  const { store } = useContext(Context);
 
-  
   function getExhibitionId() {
     const pathname = window.location.pathname;
     const parts = pathname.split('/');
@@ -33,7 +34,8 @@ export default function Showcases() {
   const userRights = 'admin';
 
   const [catalog, setCatalog] = useState({
-    title: 'Витрины и экспонаты',
+    //title: 'Витрины и экспонаты',
+    title: 'Витрины',
     description: [],
     showcases: [
     ],
@@ -251,24 +253,24 @@ useEffect(() => {
     <div>
       <Header title={catalog.title} />
 
-      { userRights != 'user' && (
+      { localStorage.getItem('role') && (
         <div className="pages-buttons">
           <button className="adding-button" onClick={() => setModalVisible(true)}>
             Добавить витрину
           </button> 
-          <button className="adding-button" onClick={() => setModalVisibleExhibit(true)}>
+          {/*<button className="adding-button" onClick={() => setModalVisibleExhibit(true)}>
             Добавить экспонат
           </button>
           <Link className="discription" to={`/exhibition/${exhibitionId}/room/description`}>
             <button className="adding-button">
               Описание помещения
             </button> 
-          </Link>
+          </Link>*/}
         </div>
       )}
 
     <div className='classList'>
-        <h3>Витрины:</h3>
+        {/*<h3>Витрины:</h3>*/}
         <ul>
           {catalog.showcases.length > 0 ? (
             catalog.showcases.map((item) => (
@@ -276,7 +278,7 @@ useEffect(() => {
                 <Link to={`/exhibition/${exhibitionId}/room/showcase/${item.id}`}>
                   витрина {item.number}
                 </Link>
-                { userRights !== 'user' && (
+                { localStorage.getItem('role') && (
                   <button className="setting-button" onClick={() => handleDeleteShowcase(item.id)}>
                   Удалить
                   </button>
@@ -288,7 +290,7 @@ useEffect(() => {
           )}
         </ul>
       </div>
-      <div className='classList'>
+      {/*<div className='classList'>
         <h3>Экспонаты:</h3>
         <ul>
           {catalog.exhibits.length > 0 ? (
@@ -303,7 +305,7 @@ useEffect(() => {
             <li className="list-item"> Тут пока ничего нет 🙁</li>
           )}
         </ul>
-      </div>
+      </div>*/}
 
 
 

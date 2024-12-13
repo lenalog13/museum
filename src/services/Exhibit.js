@@ -1,7 +1,7 @@
 import $api from "../http";
 
 export default class Exhibit {
-    // Method to create a new exhibit
+
     static async createExhibit(exhibitName) {
         const response = await $api.post('/exhibit/create', {
             exhibitName: exhibitName
@@ -9,7 +9,6 @@ export default class Exhibit {
         return response.data;
     }
 
-    // Method to get an exhibit by name
     static getExhibitByName(name) {
         return $api.get('/exhibit/get_by_name', {
             params: {
@@ -18,24 +17,32 @@ export default class Exhibit {
         });
     }
 
-    // Method to get exhibits by shelf ID
     static async getExhibitsByShelfId(shelfId) {
-        const response = await $api.get(`/api/v1/exhibit/get_by_shelf_id/${shelfId}`);
-        return response.data; // Return the list of exhibits
+        const response = await $api.get(`/exhibit/get_by_shelf_id/${shelfId}`);
+        return response.data;
     }
 
-    // Method to add an exhibit to a shelf
     static async addExhibitToShelf(exhibitId, descriptionId, shelfId, exhibitionId) {
-        const response = await $api.post('/api/v1/exhibition/add_exhibit', {
+        const response = await $api.post('/exhibition/add_exhibit', {
             exhibitId: exhibitId,
             descriptionId: descriptionId,
             shelfId: shelfId,
-            roomId: null, // Set roomId to null
+            roomId: null,
             exhibitionId: exhibitionId
         });
-        return response.data; // Return the response data
+        return response.data;
+    }
+
+    static async getExhibitDescriptions(id) {
+        const response = await $api.get(`/exhibit/get_exhibit_descriptions/${id}`);
+        return response.data; 
+    }
+
+    static async createExhibitDescription(description, exhibitId) {
+        const response = await $api.post('/exhibit/create_description', {
+            description: description,
+            exhibitId: exhibitId
+        });
+        return response.data;
     }
 }
-
-
-

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Shelf from '../services/Shelf';
 import Header from '../Components/Header';
-
+import { Context } from '..';
+import React, { useState, useEffect, useContext } from 'react';
 import './List.css';
 import './Setting.css';
 
 export default function Shelves() {
+  const { store } = useContext(Context);
   const { id } = useParams();
   const userRights = 'admin';
 
@@ -106,12 +107,12 @@ export default function Shelves() {
   return (
     <div>
       <Header title={catalog.title} />
-      {userRights !== 'user' && (
+      {localStorage.getItem('role') && (
         <div className="pages-buttons">
           <button className="adding-button" onClick={() => setModalVisible(true)}>Добавить полку</button>
-          <Link className="discription" to={`/exhibition/${id}/room/showcase/description`}>
+          {/*<Link className="discription" to={`/exhibition/${id}/room/showcase/description`}>
             <button className="adding-button">Описание витрины</button>
-          </Link>
+          </Link>*/}
         </div>
       )}
       {loading ? (
@@ -125,7 +126,7 @@ export default function Shelves() {
                   <Link to={`/exhibition/${id}/room/showcase/shelf/${item.id}`}>
                     Полка {item.number}
                   </Link>
-                  {userRights !== 'user' && (
+                  {localStorage.getItem('role') && (
                     <button className="setting-button" onClick={()=>handleDeleteShelf(item.id)}>
                       Удалить
                     </button>

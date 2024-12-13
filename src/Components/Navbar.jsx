@@ -6,7 +6,6 @@ import { Context } from '..';
 export default function Navbar() {
 
   const { store } = useContext(Context);
-  console.log(store)
 
   return (
     <nav className="navbar">
@@ -20,27 +19,27 @@ export default function Navbar() {
           <li>
             <Link to="/">Выставки</Link>
           </li>
-          <li> { store.isAuth? (
+          {/*<li> { localStorage.getItem('role')? (
             <Link to="/qr">Сформировать <br/> qr-коды</Link>
           ):("")}
-          </li>
+          </li>*/}
         </ul>
       </div>
 
       <div className="navbar-right">
         <ul className="navbar-links">
 
-          <li> { store.isRole == 'ADMIN' && (
+          <li> { localStorage.getItem('role') == 'ADMIN' && (
             <Link to="/setting">Настройка</Link>
           )}
           </li>
 
-          <li> { store.isRole == 'ADMIN' && (
+          <li> { localStorage.getItem('role') == 'ADMIN' && (
             <Link to="/backup">Резервная копия</Link>
           )}
           </li>
 
-          <li> { store.isAuth ? (
+          <li> { localStorage.getItem('role') ? (
             <Link className="logout-link" to="/authorization">Выйти</Link>
           ):(
             <Link className="logout-link" to="/authorization">Войти</Link>

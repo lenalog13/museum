@@ -19,6 +19,7 @@ export default class Store {
             localStorage.removeItem('token');
             const response = await Auth.login(username, password);
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('role', response.data.role);
             this.setAuth(true, response.data.role);
             return true;
         } catch(e) {

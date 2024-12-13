@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
 import Header from '../Components/Header';
 import Room from '../services/Room';
+import { Context } from '..';
+import React, { useState, useEffect, useContext } from 'react';
 
 export default function Rooms() {
+    const { store } = useContext(Context);
     const { id } = useParams();
     const userRights = 'admin';
     const [catalog, setCatalog] = useState({
@@ -157,14 +159,14 @@ export default function Rooms() {
     return (
         <div>
             <Header title={catalog.title} />
-            {userRights !== 'user' && (
+            {localStorage.getItem('role') && (
                 <div className="pages-buttons">
                     <button className="adding-button" onClick={handleShowModal}> Добавить помещение </button>
-                    <Link className="discription" to={`/exhibition/${id}/description`}>
+                    {/*<Link className="discription" to={`/exhibition/${id}/description`}>
                     <button className="adding-button">
                          Описание выставки 
                     </button>
-                    </Link>
+                    </Link>*/}
                 </div>
             )}
             <div className="classList">
@@ -175,7 +177,7 @@ export default function Rooms() {
                                 <Link to={`/exhibition/${id}/room/${item.id}`}>
                                     Помещение {item.number}
                                 </Link>
-                                {userRights !== 'user' && (
+                                {localStorage.getItem('role') && (
                                 <button className="setting-button" onClick={()=>handleDeleteRoom(item.id)}>
                                     Удалить
                                 </button>

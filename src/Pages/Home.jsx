@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './List.css';
 import './Setting.css';
 import Header from '../Components/Header';
 import Exhibition from '../services/Exhibition';
+import { Context } from '..';
+import React, { useState, useEffect, useContext } from 'react';
 
 export default function Home() {
+    
+    const { store } = useContext(Context);
     const userRights = 'admin';
     const [catalog, setCatalog] = useState({ title: 'Выставки', exhibition: [] });
     const [modalVisible, setModalVisible] = useState(false);
@@ -157,11 +160,12 @@ export default function Home() {
     useEffect(() => {
         fetchExhibition();
     }, []);
+    console.log(localStorage.getItem('role'))
 
     return (
         <div>
             <Header title={catalog.title} />
-            {userRights !== 'user' && (
+            {localStorage.getItem('role') && (
                 <div className="pages-buttons">
                     <button className="adding-button" onClick={() => setModalVisible(true)}> Добавить выставку </button>
                 </div>
@@ -172,7 +176,7 @@ export default function Home() {
                         catalog.exhibition.map((item) => (
                             <li key={item.id} className="list-item">
                                 <Link to={`/exhibition/${item.id}`}> {item.exhibitionName} </Link>
-                                {userRights !== 'user' && (
+                                {localStorage.getItem('role') && (
                                     <button className="setting-button" onClick={() => handleEditExhibition(item)}> Изменить </button>
                                 )}
                             </li>

@@ -177,6 +177,11 @@
     text-decoration: underline;
 }
 
+.save-button:disabled {
+    color: #a0a0a0;
+    cursor: not-allowed; 
+}
+
 .cancel-button {
     background-color: white;
     color: #007bff;
