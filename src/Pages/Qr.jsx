@@ -25,13 +25,6 @@ export default function Qr() {
     ]
   };
 
-  const formatQr = {
-    exhibitions: ['1 формат qr-кода для выставки', '2 формат qr-кода для выставки'],
-    showcases: ['1 формат qr-кода для витрины', '2 формат qr-кода для витрины'],
-    shelves: ['1 формат qr-кода для полки', '2 формат qr-кода для полки'],
-    exhibits: ['1 формат qr-кода для экспоната', '2 формат qr-кода для экспоната']
-  };
-
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTab, setSelectedTab] = useState('exhibitions');
   const [data, setData] = useState(initialData);
@@ -96,9 +89,6 @@ export default function Qr() {
     return data[selectedTab].filter(item => item.select);
   };
 
-  const getAllFormatsForCurrentTab = () => {
-    return formatQr[selectedTab];
-  };
 
   return (
     <div>
@@ -144,21 +134,6 @@ export default function Qr() {
                   <li key={item.id}>{item[selectedTab + 'Name'] || item[selectedTab + 'sName']}</li>
                 ))
               )}
-            </ul>
-            <label>Выберите формат:</label>
-            <ul className='formatQr'>
-              {getAllFormatsForCurrentTab().map((format, index) => (
-                <li key={index}>
-                  <input
-                    type="radio"
-                    name="qrFormat"
-                    value={format}
-                    checked={selectedFormat === format}
-                    onChange={() => setSelectedFormat(format)}
-                  />
-                  {format}
-                </li>
-              ))}
             </ul>
             <div className="modal-buttons">
               <button className="cancel-button" onClick={() => setModalVisible(false)}>Отменить</button>

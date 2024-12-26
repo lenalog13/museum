@@ -19,10 +19,10 @@ export default function Navbar() {
           <li>
             <Link to="/">Выставки</Link>
           </li>
-          {/*<li> { localStorage.getItem('role')? (
+          {<li> { localStorage.getItem('role')? (
             <Link to="/qr">Сформировать <br/> qr-коды</Link>
           ):("")}
-          </li>*/}
+          </li>}
         </ul>
       </div>
 
