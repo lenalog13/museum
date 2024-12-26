@@ -2,27 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './Qr.css';
 import Header from '../Components/Header';
 import Exhibition from '../services/Exhibition'; // Импортируем сервис для работы с выставками
+import Qr_code from '../services/Qr_code';
 
 export default function Qr() {
   const userRights = 'admin';
 
   const initialData = {
     exhibitions: [],
-    showcases: [
-      { id: 0, showcasesName: 'витрина 1', select: false },
-      { id: 1, showcasesName: 'витрина 2', select: false },
-      { id: 2, showcasesName: 'витрина 3', select: false }
-    ],
-    shelves: [
-      { id: 0, shelvesName: 'полка 1', select: false },
-      { id: 1, shelvesName: 'полка 2', select: false },
-      { id: 2, shelvesName: 'полка 3', select: false }
-    ],
-    exhibits: [
-      { id: 0, exhibitsName: 'экспонат 1', select: false },
-      { id: 1, exhibitsName: 'экспонат 2', select: false },
-      { id: 2, exhibitsName: 'экспонат 3', select: false }
-    ]
+    rooms: [],
+    showcases: [],
+    shelves: [],
+    exhibits: []
   };
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -41,6 +31,58 @@ export default function Qr() {
       setData(prevData => ({
         ...prevData,
         exhibitions
+      }));
+    }).catch(error => {
+      console.error('Ошибка при загрузке данных:', error);
+    });
+    Qr_code.getRooms().then(response => {
+      const rooms = response.data.map((room, index) => ({
+        id: room.id,
+        roomsName: room.number,
+        select: false
+      }));
+      setData(prevData => ({
+        ...prevData,
+        rooms
+      }));
+    }).catch(error => {
+      console.error('Ошибка при загрузке данных:', error);
+    });
+    Qr_code.getShelfs().then(response => {
+      const shelves = response.data.map((shelf, index) => ({
+        id: shelf.id,
+        shelvesName: shelf.number,
+        select: false
+      }));
+      setData(prevData => ({
+        ...prevData,
+        shelves
+      }));
+    }).catch(error => {
+      console.error('Ошибка при загрузке данных:', error);
+    });
+    Qr_code.getShelvings().then(response => {
+      const showcases = response.data.map((showcase, index) => ({
+        id: showcase.id,
+        showcasesName: showcase.number,
+        select: false
+      }));
+      setData(prevData => ({
+        ...prevData,
+        showcases
+      }));
+    }).catch(error => {
+      console.error('Ошибка при загрузке данных:', error);
+    });
+    Qr_code.getExhibits().then(response => {
+      const exhibits = response.data.map((exhibit, index) => ({
+        id: exhibit.id,
+        exhibitsName: exhibit.exhibitName,
+        select: false
+      }));
+      setData(prevData => ({
+        ...prevData,
+        exhibits
       }));
     }).catch(error => {
       console.error('Ошибка при загрузке данных:', error);
@@ -97,6 +139,10 @@ export default function Qr() {
         <button className={selectedTab === 'exhibitions' ? 'selected' : ''}
           onClick={() => handleTabChange('exhibitions')}>
           Выставки
+        </button>
+        <button className={selectedTab === 'rooms' ? 'selected' : ''}
+          onClick={() => handleTabChange('rooms')}>
+          Помещения
         </button>
         <button className={selectedTab === 'showcases' ? 'selected' : ''}
           onClick={() => handleTabChange('showcases')}>
