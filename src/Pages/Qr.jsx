@@ -48,6 +48,7 @@ export default function Qr() {
     }).catch(error => {
       console.error('Ошибка при загрузке данных:', error);
     });
+    /*
     Qr_code.getShelfs().then(response => {
       const shelves = response.data.map((shelf, index) => ({
         id: shelf.id,
@@ -58,6 +59,7 @@ export default function Qr() {
         ...prevData,
         shelves
       }));
+      console.log(shelves)
     }).catch(error => {
       console.error('Ошибка при загрузке данных:', error);
     });
@@ -71,13 +73,16 @@ export default function Qr() {
         ...prevData,
         showcases
       }));
+      console.log(showcases)
     }).catch(error => {
       console.error('Ошибка при загрузке данных:', error);
     });
+    */
     Qr_code.getExhibits().then(response => {
       const exhibits = response.data.map((exhibit, index) => ({
-        id: exhibit.id,
+        id: exhibit.exhibitId,
         exhibitsName: exhibit.exhibitName,
+        descriptionId: exhibit.descriptionId,
         select: false
       }));
       setData(prevData => ({
@@ -88,6 +93,27 @@ export default function Qr() {
       console.error('Ошибка при загрузке данных:', error);
     });
   }, []);
+
+  
+
+  const getQr = () => {
+    if (selectedTab == 'exhibits') {
+      const exhibitId = getSelectedItems().map(item => (
+        item.id
+      ))
+      const descriptionId = getSelectedItems().map(item => (
+        item.descriptionId
+      ))
+      console.log(exhibitId, descriptionId)
+      Qr_code.generateExhibitsQr(exhibitId, descriptionId)
+    } else {
+      const ids = getSelectedItems().map(item => (
+        item.id
+      ))
+      const qrType = "EXHIBITION";
+      Qr_code.generateQr(ids, qrType)
+    }
+  }
 
   const handleSelect = (id) => {
     setData(prevData => {
@@ -183,7 +209,7 @@ export default function Qr() {
             </ul>
             <div className="modal-buttons">
               <button className="cancel-button" onClick={() => setModalVisible(false)}>Отменить</button>
-              <button className="save-button">
+              <button className="save-button" onClick={() => getQr()}>
                 Сформировать
               </button>
             </div>

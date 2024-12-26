@@ -17,4 +17,24 @@ export default class Qr_code {
         return $api.get('/storage_unit/get_all_rooms');
     }
 
+    static generateExhibitsQr(exhibitId, descriptionId) {
+        const url = '/qr/generate_exhibits_qr';
+        const body = {
+            exhibitId: exhibitId,
+            descriptionId: descriptionId
+        };
+
+        return $api.post(url, body);
+    }
+
+    static generateQr(ids, qrType) {
+        const url = '/qr/generate_qr';
+        const body = {
+            ids: ids,
+            qrType: qrType
+        };
+
+        return $api.post(url, body);
+    }
+
 }
