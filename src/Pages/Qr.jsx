@@ -97,15 +97,29 @@ export default function Qr() {
   
 
   const getQr = () => {
-    if (selectedTab == 'exhibits') {
-      const exhibitId = getSelectedItems().map(item => (
-        item.id
-      ))
-      const descriptionId = getSelectedItems().map(item => (
-        item.descriptionId
-      ))
-      console.log(exhibitId, descriptionId)
+    if (selectedTab === 'exhibits') {
+      const exhibitId = getSelectedItems().map(item => item.id);
+      const descriptionId = getSelectedItems().map(item => item.descriptionId);
+
       Qr_code.generateExhibitsQr(exhibitId, descriptionId)
+          .then(response => {
+              // Проверяем, что ответ не пустой
+              if (response.data) {
+                  // Создаем URL для скачивания
+                  const url = window.URL.createObjectURL(new Blob([response.data]));
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.setAttribute('download', 'exhibits_qr_code.pdf'); // Укажите имя файла
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+              } else {
+                  console.error('Ответ пустой');
+              }
+          })
+          .catch(error => {
+              console.error('Ошибка при генерации QR-кода:', error);
+          });
     } else {
       const ids = getSelectedItems().map(item => (
         item.id

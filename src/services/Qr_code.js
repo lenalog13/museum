@@ -27,14 +27,22 @@ export default class Qr_code {
         return $api.post(url, body);
     }
 
-    static generateQr(ids, qrType) {
-        const url = '/qr/generate_qr';
+    static generateExhibitsQr(exhibitId, descriptionId) {
+        const url = '/qr/generate_exhibits_qr';
         const body = {
-            ids: ids,
-            qrType: qrType
+            exhibitId: exhibitId,
+            descriptionId: descriptionId
         };
 
-        return $api.post(url, body);
+            // Устанавливаем заголовок Content-Type и responseType
+    const config = {
+        headers: {
+            'Content-Type': 'application/json' // Укажите нужный тип контента
+        },
+        responseType: 'blob' // Устанавливаем responseType для получения файла
+    };
+    
+        return $api.post(url, body, config);
     }
 
 }
