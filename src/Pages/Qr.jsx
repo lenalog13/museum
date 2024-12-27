@@ -16,7 +16,7 @@ export default function Qr() {
   };
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTab, setSelectedTab] = useState('exhibitions');
+  const [selectedTab, setSelectedTab] = useState('exhibits');
   const [data, setData] = useState(initialData);
   const [selectedFormat, setSelectedFormat] = useState(null);
 
@@ -113,6 +113,7 @@ export default function Qr() {
       const qrType = "EXHIBITION";
       Qr_code.generateQr(ids, qrType)
     }
+    setModalVisible(false);
   }
 
   const handleSelect = (id) => {
@@ -162,22 +163,6 @@ export default function Qr() {
     <div>
       <Header title='Выберите элементы для формирования QR-кодов:' />
       <div className='tabsQr'>
-        <button className={selectedTab === 'exhibitions' ? 'selected' : ''}
-          onClick={() => handleTabChange('exhibitions')}>
-          Выставки
-        </button>
-        <button className={selectedTab === 'rooms' ? 'selected' : ''}
-          onClick={() => handleTabChange('rooms')}>
-          Помещения
-        </button>
-        <button className={selectedTab === 'showcases' ? 'selected' : ''}
-          onClick={() => handleTabChange('showcases')}>
-          Витрины
-        </button>
-        <button className={selectedTab === 'shelves' ? 'selected' : ''}
-          onClick={() => handleTabChange('shelves')}>
-          Полки
-        </button>
         <button className={selectedTab === 'exhibits' ? 'selected' : ''}
           onClick={() => handleTabChange('exhibits')}>
           Экспонаты
@@ -218,4 +203,22 @@ export default function Qr() {
       )}
     </div>
   );
+        /*
+        <button className={selectedTab === 'exhibitions' ? 'selected' : ''}
+          onClick={() => handleTabChange('exhibitions')}>
+          Выставки
+        </button>
+        <button className={selectedTab === 'rooms' ? 'selected' : ''}
+          onClick={() => handleTabChange('rooms')}>
+          Помещения
+        </button>
+        <button className={selectedTab === 'showcases' ? 'selected' : ''}
+          onClick={() => handleTabChange('showcases')}>
+          Витрины
+        </button>
+        <button className={selectedTab === 'shelves' ? 'selected' : ''}
+          onClick={() => handleTabChange('shelves')}>
+          Полки
+        </button>
+      */
 }
